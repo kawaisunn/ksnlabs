@@ -1,309 +1,315 @@
 ﻿# Project Context: ksnlabs Multi-Project Workspace
 
-**Purpose**: Centralized development workspace for Idaho Geological Survey (IGS) projects with emphasis on AI collaboration, repeatable workflows, and knowledge accumulation.
+**Purpose**: Centralized development workspace and coordination hub for Idaho Geological Survey (IGS) research and public works projects.
 
-**Last Updated**: 2026-02-15
+**Last Updated**: February 15, 2026
 
 ---
 
-## Repository Philosophy
+## Overview
 
-### Hybrid Structure Approach
+ksnlabs serves as a **coordination hub** for multiple IGS/KSN projects, providing:
+- Cross-project scripts and utilities
+- AI memory and session continuity (engram system)
+- Shared documentation and templates
+- Git version control for collaboration
+- Knowledge accumulation across sessions
 
-This repository uses a **hybrid structure** where ksnlabs serves as a **coordination hub** while actual projects remain independent:
-
-- **ksnlabs/** = Git repository for coordination, scripts, documentation, engram
-- **C:\dev\ocritd/** = Actual ocritd project (independent directory)
-- **C:\dev\cait/** = Actual cait project (independent directory)
-- **C:\dev\keywrd/** = Actual keywrd project (independent directory)
-- **C:\dev\aggdb/** = Actual aggdb project (independent directory)
-
-**Why Hybrid?**
-1. No disruption to working projects during critical deadlines
-2. Projects maintain their own build systems and workflows
-3. ksnlabs provides cross-project coordination without containing everything
-4. Gradual migration possible - projects can move into ksnlabs later if desired
+**Architecture**: Hybrid structure - ksnlabs coordinates, projects remain independent
 
 ---
 
 ## Active Projects (7)
 
-### 1. aggdb / itdaggdb: ITD Aggregate Materials Database
-**Status**: 🟢 Active (CRITICAL DEADLINE: Feb 20, 2026)  
+### 1. aggdb / itdaggdb
 **Location**: ` C:\dev\aggdb\`  
-**Grant**: RP-315, \,843, 30 months, FHWA-funded  
-**Objective**: GIS-based source management system for aggregate materials across Idaho
+**Type**: Database project  
+**Status**: 🟢 Active - **CRITICAL DEADLINE: Feb 20, 2026**  
+**Grant**: RP-315 (,843, 30 months, FHWA-funded)  
+**Objective**: GIS-based source management system for ITD aggregate materials  
+**Partners**: Idaho Transportation Department & University of Idaho  
 
-**Database Model**: Point-centric, three-entity architecture
-- **SITE**: Discrete geographic location (point)
-- **RESOURCE**: Material type/specification
-- **SOURCE**: Site+Resource pairing (QAMS qualification)
+**Description**: Creating an integrated database and GIS system for managing aggregate material sources statewide. Point-centric three-entity model (Sites → Resources ← Sources) with QAMS qualification tracking.
 
-**Deliverable**: Database design presentation Feb 20, 2026
-
----
-
-### 2. OCRITD: Document Processing Engine
-**Status**: 🟡 Stable (80% complete)  
+### 2. ocritd
 **Location**: ` C:\dev\ocritd\`  
-**Type**: Python application with MSI packaging  
-**Objective**: Extract patterns from 40+ years of ITD test reports, plats, permits
+**Type**: Python application - Document processing  
+**Status**: 🟡 Stable (80% complete)  
+**Objective**: Optical Character Recognition for ITD documents  
 
-**Features**:
-- Optical Character Recognition (OCR)
-- Pattern extraction from historical documents
-- Build system with BUILD.ps1, BUILD_ALL.ps1
-- MSI installer creation via WiX Toolset
+**Description**: Extract patterns from 40+ years of ITD test reports, plats, and permits. Modular architecture with plugin system, MSI packaging via WiX toolset. Critical for RP-315 data extraction.
 
-**Critical for**: RP-315 database (provides historical data insights)
+**Build System**: BUILD.ps1, BUILD_ALL.ps1, VERIFY_BUILD.ps1  
+**Packaging**: WiX 7.0 (MSI installer creation)  
+**Dependencies**: BuildTools/artifacts/ (WiX packages)
 
----
-
-### 3. CAIT: AI Training Framework
-**Status**: 🟡 Development (40% complete)  
+### 3. cait
 **Location**: ` C:\dev\cait\`  
-**Type**: Neural network training framework  
-**Objective**: License-free neural network for public works assistance
+**Type**: AI training framework  
+**Status**: 🟡 Development (40% complete)  
+**Objective**: License-free neural network for public works assistance  
 
-**Features**:
-- Custom training pipeline
-- Virtual environment management
-- Dependency tracking (requirements.txt)
-- Training configuration (training_config.yaml)
+**Description**: Training framework for developing AI models specific to public works and geological survey tasks. Includes venv management, training pipeline, model storage.
 
----
+**Components**: training_framework.py, setup_ai_seed.ps1, training_config.yaml
 
-### 4. KEYWRD: Keyword Analysis System
-**Status**: ⚪ Planned (10% complete)  
+### 4. keywrd
 **Location**: ` C:\dev\keywrd\`  
-**Type**: Keyword extraction and analysis  
-**Objective**: Integration hub for all components
+**Type**: Keyword analysis tool  
+**Status**: ⚪ Planned (10% complete)  
+**Objective**: Central integration hub for all components  
 
----
+**Description**: Keyword extraction and analysis system, intended to serve as integration point between ocritd, cait, and aggdb projects.
 
-### 5. ksnlabs: Coordination Hub
-**Status**: 🟢 Active (100% - Just completed!)  
-**Location**: ` C:\dev\ksnlabs\`  
-**Type**: Git repository for multi-project coordination  
-**Objective**: Provide cross-project scripts, documentation, engram knowledge
-
-**GitHub**: https://github.com/kawaisunn/ksnlabs
-
----
-
-### 6-7. SQL Server Instances
+### 5. MSSQL15.KSN
+**Location**: ` C:\dev\MSSQL15.KSN\`  
+**Type**: SQL Server 2019 instance  
 **Status**: 🟢 Running  
-**Locations**:
-- ` C:\dev\MSSQL15.KSN\` - SQL Server 2019 instance
-- ` C:\dev\SQLS2019\` - SQL Server 2019 instance
+**Objective**: Development database server  
 
-**Purpose**: Database development and testing for RP-315
+**Description**: Active SQL Server instance for database development and testing. **NEVER add to git** (protected by .gitignore).
 
----
+### 6. SQLS2019
+**Location**: ` C:\dev\SQLS2019\`  
+**Type**: SQL Server 2019 instance  
+**Status**: 🟢 Running  
+**Objective**: Development database server  
 
-## Shared Resources
+**Description**: Active SQL Server instance for database development and testing. **NEVER add to git** (protected by .gitignore).
 
-### SQL Database Management Tools
-**Location**: ` scripts/igs-workflows/database-management/`  
-**Tools**:
-- ` export_database.ps1` - Backup SQL Server databases
-- ` export_schema.ps1` - Export schema definitions
-- ` import_database.ps1` - Restore databases
+### 7. ksnlabs (This Repository)
+**Location**: ` C:\dev\ksnlabs\`  
+**Type**: Coordination hub and knowledge repository  
+**Status**: 🟢 Active (100% - just completed git integration!)  
+**Objective**: Multi-project coordination, AI collaboration, knowledge management  
 
-**Documentation**: ` docs/references/DATABASE_MANAGEMENT.md`
-
-**Critical for**: RP-315 database backup/restore operations
-
----
-
-### Claude Desktop Integration
-**Location**: ` scripts/system-admin/windows/`  
-**Tools**:
-- ` deploy_claude_config.ps1` - Deploy Claude Desktop configuration
-
-**Documentation**: ` docs/guides/README_CLAUDE_START.md`
-
-**Purpose**: Automated Claude Desktop setup for AI collaboration
+**Description**: Central repository for cross-project scripts, documentation, engram knowledge system, and session continuity. Connected to GitHub for version control and collaboration.
 
 ---
 
-### Cross-Project Utilities
-**Location**: ` scripts/utilities/`  
-**Purpose**: Common scripts, helpers, automation tools shared across all projects
+## Repository Philosophy
+
+### Hybrid Structure Rationale
+
+**Why projects stay in C:\dev**:
+1. **No disruption**: Projects with working build systems remain intact
+2. **Flexibility**: Each project can have its own git repo if needed
+3. **Safety**: Critical deadline (RP-315) won't be delayed by reorganization
+4. **Gradual migration**: Projects can move into ksnlabs later if desired
+
+**What ksnlabs provides**:
+- Cross-project scripts and utilities
+- AI memory and session continuity
+- Shared documentation and templates
+- Knowledge accumulation (engram system)
+- Git version control
+
+### Token Efficiency
+
+**AI Memory System**:
+- **Old approach**: ~22,500 tokens (markdown session notes)
+- **New approach**: ~5,500 tokens (JSON-LD .ai/ system)
+- **Savings**: 76% reduction in context loading
+
+**Strategy**:
+- Read operations: Cheaper (view existing files)
+- Write operations: More expensive (creating/updating)
+- Batch commits when possible, read frequently, write deliberately
+
+### Session Continuity Strategy
+
+1. **.ai/buffer.jsonld**: Immediate context (5k tokens, fast load)
+2. **engram/session-handovers/**: Detailed session history (JSON files)
+3. **SESSION_STATE.md**: Human-readable current status
+4. **AI reads on session start**: Buffer → Latest handoff → Deep knowledge as needed
 
 ---
 
-## AI Collaboration Framework
+## File Organization
 
-### Engram System (Dual Architecture)
-
-**System 1: .ai/ (Token-Efficient)**
-- Format: JSON-LD (machine-optimized)
-- Token count: ~5,500 (76% reduction from markdown)
-- Files: buffer.jsonld, engram.jsonld, protocol.jsonld
-- Purpose: Fast session startup with minimal token usage
-
-**System 2: engram/ (Comprehensive)**
-- Format: Markdown + JSON (human-readable)
-- Structure: 3-tier memory model
-  - Tier 1: session-handovers/ (Episodic - 30 day retention)
-  - Tier 2: learnings/ (Semantic - permanent insights)
-  - Tier 3: workflows/ (Procedural - proven methods)
-
-**Benefits**:
-- 76% token reduction for AI context loading
-- Complete session continuity
-- Knowledge accumulation across sessions
-- Human-reviewable audit trail
+```
+ksnlabs/
+├── README.md                    # You're here
+├── PROJECT_CONTEXT.md           # This file (deep background)
+├── SESSION_STATE.md             # Current state, all projects
+├── .gitignore                   # Comprehensive protection
+│
+├── .ai/                         # AI memory (JSON-LD, token-efficient)
+│   ├── buffer.jsonld            # Working memory (5k tokens)
+│   ├── engram.jsonld            # Long-term knowledge
+│   ├── protocol.jsonld          # Handoff instructions
+│   ├── architecture.md          # System documentation
+│   └── quarantine/              # Untrusted AI contributions
+│
+├── engram/                      # Session continuity
+│   ├── session-handovers/       # End-of-session JSON files
+│   ├── workflows/               # Proven methods
+│   ├── learnings/               # Extracted insights
+│   └── benchmarks/              # Performance metrics
+│
+├── scripts/                     # Executable scripts
+│   ├── system-admin/            # Windows, Linux, networking
+│   ├── igs-workflows/           # IGS-specific (database, geospatial, etc.)
+│   ├── development/             # Git helpers, environment setup
+│   └── utilities/               # File management, automation
+│
+├── projects/                    # Project references
+│   ├── README.md                # Documents actual project locations
+│   ├── ocritd/                  # Links/docs for C:\dev\ocritd
+│   ├── cait/                    # Links/docs for C:\dev\cait
+│   └── ...
+│
+├── docs/                        # Documentation
+│   ├── architecture/            # System design
+│   ├── guides/                  # How-to guides
+│   ├── references/              # Technical references
+│   └── decisions/               # Architecture decision records
+│
+├── templates/                   # Reusable templates
+└── tests/                       # Validation scripts
+```
 
 ---
 
 ## Session Workflow (For AI)
 
-### Starting a Session:
+### Starting a Session
 1. Read ` .ai/buffer.jsonld` (immediate context, 5k tokens)
 2. Read latest ` engram/session-handovers/{date}.json` (continuity)
-3. Load ` .ai/engram.jsonld` if deep knowledge needed (lazy-load)
-4. Read ` SESSION_STATE.md` (human-readable overview)
-
-### During Session:
-1. Work with files in ` C:\dev\{project}\` (actual project locations)
-2. Use ksnlabs for cross-project scripts and documentation
-3. Document decisions in real-time
-
-### Ending Session:
-1. Create new session handoff in ` engram/session-handovers/`
-2. Update ` .ai/buffer.jsonld` with new context
-3. Extract learnings to ` engram/learnings/` if insights discovered
-4. Update ` SESSION_STATE.md` with progress
-5. Commit changes to GitHub
-
----
-
-## Repository Organization
-
-```
-ksnlabs/
-├── README.md                    # Overview and quick start
-├── SESSION_STATE.md             # Current state, all projects
-├── PROJECT_CONTEXT.md           # This file (deep background)
-├── .gitignore                   # Security (credentials, SQL Server)
-│
-├── .ai/                         # JSON-LD memory architecture
-│   ├── buffer.jsonld            # Working memory
-│   ├── engram.jsonld            # Long-term knowledge
-│   ├── protocol.jsonld          # AI handoff protocol
-│   ├── architecture.md          # System documentation
-│   └── quarantine/              # Untrusted AI contributions
-│
-├── engram/                      # Session continuity system
-│   ├── session-handovers/       # Session JSON files
-│   ├── workflows/               # Proven methods (Tier 3)
-│   ├── learnings/               # Extracted insights (Tier 2)
-│   └── benchmarks/              # Performance tracking
-│
-├── scripts/                     # Executable scripts
-│   ├── system-admin/windows/    # Windows system administration
-│   ├── igs-workflows/           # IGS-specific workflows
-│   │   └── database-management/ # SQL Server tools (CRITICAL)
-│   ├── development/             # Development helpers
-│   └── utilities/               # Common utilities
-│
-├── projects/                    # Project references
-│   └── README.md                # Documents actual locations
-│
-├── docs/                        # Documentation
-│   ├── architecture/            # System design docs
-│   ├── guides/                  # How-to guides
-│   ├── references/              # Reference documentation
-│   └── decisions/               # Architectural decisions
-│
-├── templates/                   # Reusable templates
-│   └── project-structure/       # Project templates
-│
-└── tests/                       # Validation scripts
-    ├── unit/
-    └── integration/
-```
-
----
-
-## Critical Information
-
-### Deadlines
-- **RP-315 Database Design**: February 20, 2026 (5 days from git setup)
-
-### Security
-- **Credentials**: Never committed (protected by .gitignore)
-- **SQL Server**: Instances excluded from git
-- **Sensitive data**: All protected via .gitignore
-
-### Backup Strategy
-- **Primary**: 2TB external drive
-- **Git**: Version control for scripts and documentation
-- **SQL**: Database backup scripts in scripts/igs-workflows/database-management/
-
----
-
-## Working with This Repository
-
-### To work on a specific project:
-```powershell
-# Navigate to actual project directory
-cd C:\dev\ocritd
-
-# Work within project structure
-.\BUILD.ps1
-```
-
-### To use cross-project tools:
-```powershell
-# Navigate to ksnlabs
-cd C:\dev\ksnlabs
-
-# Run utility scripts
-.\scripts\igs-workflows\database-management\export_database.ps1
-
-# Update session state
-# Edit SESSION_STATE.md
-```
-
-### To start an AI collaboration session:
-1. Navigate to ` C:\dev\ksnlabs`
-2. Pull latest: ` git pull`
-3. Review ` SESSION_STATE.md`
-4. AI loads ` .ai/buffer.jsonld` for context
+3. Read ` SESSION_STATE.md` (human-readable status)
+4. Lazy-load ` .ai/engram.jsonld` if deep knowledge needed
 5. Proceed with work
 
+### During Session
+1. Work with files (local reads are cheap)
+2. Create outputs
+3. Document decisions in real-time
+4. Note insights worth preserving
+
+### Ending Session
+1. Create session handoff in ` engram/session-handovers/`
+2. Update ` .ai/buffer.jsonld` with new context
+3. Update ` SESSION_STATE.md` with progress
+4. Extract learnings to ` engram/learnings/` if applicable
+5. Promote methods to ` engram/workflows/` if validated
+6. Commit changes to git (batch if possible)
+
 ---
 
-## License
+## Critical Tools
 
-- **Grant-funded work** (RP-315, OCRITD): MIT License
-- **IGS proprietary** (engram system): Internal use only
-- See individual project licenses for specifics
+### SQL Database Management
+**Location**: ` scripts/igs-workflows/database-management/`  
+**Scripts**:
+- ` export_database.ps1` - Backup databases to .bacpac files
+- ` export_schema.ps1` - Export schema only (no data)
+- ` import_database.ps1` - Restore databases from .bacpac
+
+**Documentation**: ` docs/references/DATABASE_MANAGEMENT.md`  
+**Use**: Essential for RP-315 database work, SQL Server backups
+
+### Git Environment Setup
+**Script**: ` C:\dev\Setup-GitEnv.ps1`  
+**Purpose**: Configure git identity, SSH keys, credential manager  
+**Status**: Already configured
+
+### Claude Desktop Deployment
+**Script**: ` scripts/system-admin/windows/deploy_claude_config.ps1`  
+**Purpose**: Deploy Claude Desktop auto-load configuration  
+**Documentation**: ` docs/guides/README_CLAUDE_START.md`
+
+---
+
+## Protected Content (Never in Git)
+
+### Security (Credentials)
+- ` C:\dev\ksnPWD/` - Password storage
+- ` C:\dev\loginOwnership/` - Login credentials
+- ` *.cer, *.key, *.pem, *.pfx` - Certificate files
+- ` .env, *.secrets` - Environment secrets
+
+### SQL Server Instances
+- ` C:\dev\MSSQL15.KSN/` - SQL Server instance
+- ` C:\dev\SQLS2019/` - SQL Server instance
+
+### Build Artifacts
+- ` C:\dev\BuildTools/artifacts/` - WiX toolset packages (53 files)
+- ` C:\dev\wixSetup_MSIbuildTools/` - MSI build tools
+- Project build outputs (dist/, build/, *.exe, *.msi)
+
+### Archives (Old Versions)
+- ` C:\dev\ocritd_archives/` - Old ocritd versions
+- ` C:\dev\cait_vpast/` - Old cait versions
+- ` C:\dev\ksnpy_archive/` - Archived Python scripts
+- ` C:\dev\ocritd_v0.8.0_with_plugins/` - Preserved per user request
+
+**All protected by**: ` .gitignore`
+
+---
+
+## Critical Deadlines
+
+### RP-315 Database Design Presentation
+**Date**: February 20, 2026 (5 days from now)  
+**Status**: On track  
+**Deliverable**: Database design presentation  
+**Components**: Data dictionary, ERD diagram, SQL schema, sample queries
+
+**Progress**:
+- ✅ Three-entity model defined
+- ✅ 81 database fields identified
+- ✅ Point-centric architecture established
+- 🔄 Data dictionary (next session)
+- ⏳ ERD diagram
+- ⏳ SQL schema
+- ⏳ Sample queries
 
 ---
 
 ## For Future Migration
 
-When migrating other projects into ksnlabs:
+When migrating other projects to ksnlabs:
 1. Create new directory in ` projects/`
-2. Move or reference actual project
+2. Add project README.md with location/status
 3. Update this PROJECT_CONTEXT.md
 4. Update SESSION_STATE.md
-5. Commit changes
-
-Projects may eventually:
-- Move into ` ksnlabs/projects/{name}/` (monorepo)
-- Get individual GitHub repositories (multi-repo)
-- Stay as independent directories (hybrid - current approach)
+5. Reference shared resources as needed
+6. Consider if project should move into ` ksnlabs/` or stay independent
 
 ---
 
+## License
+
+**MIT License** for grant-funded work (RP-315, OCRITD publicly-funded components)  
+**Proprietary** for IGS internal tools and workflows  
+**See LICENSE file** for full details
+
+---
+
+## Technical Details
+
 **Repository**: https://github.com/kawaisunn/ksnlabs  
-**Owner**: kawaisunn (Christopher Tate)  
-**Email**: kawaisunn@gmail.com  
-**Organization**: Idaho Geological Survey (IGS)  
+**Owner**: kawaisunn  
+**Primary Developer**: Christopher Tate (kawaisunn)  
+**Email**: kawaisunn@gmail.com (GitHub: 261088879+kawaisunn@users.noreply.github.com)  
 **AI Collaboration**: Claude (Anthropic)  
-**Updated**: 2026-02-15 (Git setup complete)
+
+**Git Configuration**:
+- Remote: ` git@github.com:kawaisunn/ksnlabs.git`
+- Branch: master (local), main (remote)
+- Credential Helper: manager-core (Windows)
+- SSH Key: ` C:\Users\kawaisunn\.ssh\id_ed25519_kawaisunn`
+
+**System**:
+- OS: Windows
+- Python: Custom offline environment
+- SQL Server: 2019 (two instances)
+- Build Tools: WiX 7.0, MSBuild, PowerShell
+
+---
+
+**Created**: 2026-02-13 (Session 01)  
+**Updated**: 2026-02-15 (Git integration complete)  
+**Projects**: 7 active  
+**Structure**: Hybrid (coordination hub + independent projects)  
+**Status**: Production-ready, git-connected, engram-enabled
