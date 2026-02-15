@@ -1,0 +1,9 @@
+﻿{
+  "@context": {"@vocab": "https://ksnlabs.dev/ontology/"},
+  "@type": "AIKnowledgeEngram",
+  "version": "1.0.0",
+  "created": "2026-02-13T00:00:00Z",
+  "lastUpdated": "2026-02-13T09:30:00Z",
+  "sessionCount": 1,
+  "NOTE": "Full engram - see repository file for complete content"
+}

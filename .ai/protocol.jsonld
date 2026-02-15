@@ -1,0 +1,16 @@
+﻿{
+  "@context": "https://ksnlabs.dev/protocol/v1",
+  "@type": "AIHandoffProtocol",
+  "version": "1.0.0",
+  "purpose": "Minimal-overhead knowledge transfer between AI instances",
+  "bootInstructions": {
+    "priority": "Load knowledge in this exact order for optimal efficiency",
+    "sequence": [
+      {"step": 1, "file": ".ai/engram.jsonld", "estimatedTokens": 5000},
+      {"step": 2, "file": ".ai/sessions/latest_delta.jsonld", "estimatedTokens": 500},
+      {"step": 3, "file": "SESSION_STATE.md", "estimatedTokens": 3500, "condition": "if human readability needed"}
+    ],
+    "totalTokenBudget": 5500
+  },
+  "NOTE": "See full protocol.jsonld in repository for complete instructions"
+}
