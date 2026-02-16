@@ -1,59 +1,58 @@
-﻿{
+{
   "@context": "https://ksnlabs.dev/memory/buffer/v1",
   "@type": "BufferMemory",
-  "version": "1.0.0",
-  "lastUpdated": "2026-02-15T08:28:54Z",
+  "version": "1.0.2",
+  "lastUpdated": "2026-02-15T21:00:00Z",
   "immediateContext": {
-    "whatWeWereWorkingOn": "Git framework integration - 95% complete",
-    "whyItMatters": "Setup collaboration infrastructure. RP-315 deadline Feb 20 (5 days).",
-    "whereWeLeftOff": "Phases 1-5 complete. Need manual git commit/push (10 min). All structure created, SQL tools integrated.",
-    "whatComesNext": "NEXT SESSION: Migrate/link ocritd to git, continue development and testing",
-    "urgency": "medium-high",
-    "blockers": ["Manual git commit/push needed (simple, ~10 min)"]
+    "whatWeWereWorkingOn": "OCRITD git init + GitHub push + doc cleanup + handoff optimization",
+    "whyItMatters": "Git-centric workflow enables cross-project integration. Token savings from lean project instructions. RP-315 deadline Feb 20.",
+    "whereWeLeftOff": "OCRITD initial commit pushed to kawaisunn/ocritd (private). OBSOLETE_CHECK.md awaiting human review. _PROJECT_INSTRUCTIONS.md created as lean replacement for 3 heavy Claude project refs (~95% token reduction). Claude Desktop needs restart for GitHub MCP.",
+    "whatComesNext": "1) Human: review OBSOLETE_CHECK.md, replace Claude project refs with _PROJECT_INSTRUCTIONS.md, restart Desktop, change GitHub password. 2) Next session: RP-315 data dictionary (DEADLINE Feb 20). 3) Then: OCRITD GUI debug, engine testing, keywards module.",
+    "urgency": "high",
+    "blockers": ["Human review of OBSOLETE_CHECK.md", "Claude Desktop restart for GitHub MCP", "GitHub password change needed (exposed in chat)"]
   },
   "recentSessions": [
     {
+      "sessionId": "ocritd-git-init-003",
+      "date": "2026-02-15",
+      "focus": "OCRITD git init, GitHub integration, doc cleanup, handoff optimization",
+      "accomplishments": [
+        "GitHub PAT verified and configured in claude_desktop_config.json",
+        "Read ALL project docs thoroughly (PROJECT_CONTEXT, SESSION_STATE, buffer, protocol, engram, claude_start, migration log, all ocritd .md files)",
+        "Created OBSOLETE_CHECK.md (5 obsolete, 1 duplicate, 5 verify)",
+        "Initialized git in C:\\dev\\ocritd, committed 64 files",
+        "Created kawaisunn/ocritd private repo on GitHub, pushed main branch",
+        "Identified 16,600 token waste from stale Claude project refs",
+        "Created _PROJECT_INSTRUCTIONS.md as lean replacement (~800 tokens vs 16,600)",
+        "Created session handoff in engram/session-handovers/",
+        "Documented corrections: disk-first outputs, Windows-only platform, engram protocol"
+      ],
+      "nextFocus": "RP-315 data dictionary (CRITICAL DEADLINE Feb 20)",
+      "estimatedDuration": "2-3 hours"
+    },
+    {
       "sessionId": "git-integration-001",
       "date": "2026-02-15",
-      "focus": "Git framework setup, repository integration",
-      "accomplishments": [
-        "Reviewed 3 ZIP archives, found SQL tools",
-        "Downloaded .ai architecture from GitHub",
-        "Created 19 directories, 20+ files",
-        "Integrated SQL database tools (CRITICAL)",
-        "Created comprehensive .gitignore",
-        "Documented hybrid structure"
-      ],
-      "nextFocus": "ocritd migration/linking to git, continued development",
-      "estimatedDuration": "2-3 hours",
-      "prerequisites": ["Complete git commit/push (10 min)", "ocritd BUILD.ps1 working"]
+      "focus": "Git framework setup, ksnlabs repository integration",
+      "accomplishments": ["Merged GitHub .ai architecture with local engram", "Created 19 dirs, 20+ files", "Integrated SQL tools", "Documented hybrid structure"]
     }
   ],
   "criticalPath": [
-    "Manual: git commit + push (10 min)",
-    "Next session: ocritd git integration",
-    "RP-315: Data dictionary (Feb 16-17)",
+    "IMMEDIATE: Human reviews OBSOLETE_CHECK.md, replaces Claude project refs, restarts Desktop, changes GitHub password",
+    "NEXT SESSION: RP-315 data dictionary (Feb 16-17)",
     "RP-315: ERD diagram (Feb 18)",
     "RP-315: Presentation prep (Feb 19)",
-    "RP-315: Presentation (Feb 20)"
+    "RP-315: Presentation (Feb 20)",
+    "AFTER DEADLINE: OCRITD GUI debug, engine testing, keywards module"
   ],
-  "ocritd_next_steps": {
-    "priority": "high",
-    "task": "Migrate or link ocritd to git, continue development",
-    "location": "C:\\dev\\ocritd",
-    "build_system": "BUILD.ps1, WiX 7.0 MSI packaging",
-    "approach_options": [
-      "Option A: Move ocritd into ksnlabs/projects/ocritd/ (monorepo)",
-      "Option B: Create separate git repo for ocritd",
-      "Option C: Keep independent, use git submodule",
-      "Option D: Symlink from ksnlabs/projects/ocritd -> C:\\dev\\ocritd"
-    ],
-    "testing_environment": "Windows Sandbox (script on IGS workstation)",
-    "next_actions": [
-      "Review ocritd structure and dependencies",
-      "Decide on git integration approach",
-      "Test build system still works",
-      "Continue development work"
-    ]
+  "gitRepos": {
+    "ksnlabs": {"url": "git@github.com:kawaisunn/ksnlabs.git", "branch": "master", "status": "needs commit (buffer + handoff updates)"},
+    "ocritd": {"url": "git@github.com:kawaisunn/ocritd.git", "branch": "main", "status": "initial commit pushed, 64 files", "commit": "97c446c"}
+  },
+  "claudeProjectOptimization": {
+    "problem": "3 reference files auto-loaded = ~16,600 tokens/session of stale content",
+    "solution": "_PROJECT_INSTRUCTIONS.md (~800 tokens) + on-demand reads via UDC",
+    "savings": "~15,800 tokens/session (95% reduction)",
+    "action": "Human: replace _handoff.md, _handoff_historic.md, _ocritd_project_vision.md with _PROJECT_INSTRUCTIONS.md in Claude project settings"
   }
 }
