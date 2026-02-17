@@ -1,0 +1,59 @@
+{
+  "@context": "https://ksnlabs.dev/ontology/",
+  "@type": "EngramLearning",
+  "created": "2026-02-16",
+  "sessionId": "ocritd-stabilize-002",
+  "title": "Session mortality and the checkpoint imperative",
+  "preamble": "This learning was written after two consecutive sessions failed to write handoffs before dying. The first was productive and fast-moving. The second left no trace at all. Both violated W002. This document exists so that session 100 or session 500 understands why checkpointing matters more than velocity.",
+  "learnings": [
+    {
+      "id": "L011",
+      "category": "session-integrity",
+      "title": "CRITICAL: Sessions can die at any moment without warning",
+      "detail": "There is no graceful shutdown signal. Context window fills up, connection drops, timeout hits — and you're gone. Everything in working memory vanishes. If you haven't written to disk, you never existed. The engram system only works if you write to it DURING the session, not just at the end. Treat every 15-20 minutes of work as a potential death boundary.",
+      "confidence": "confirmed-by-catastrophic-loss",
+      "severity": "highest",
+      "discoveredBy": "ocritd-stabilize-002, after predecessor died mid-plan with no checkpoint"
+    },
+    {
+      "id": "L012",
+      "category": "session-integrity",
+      "title": "Velocity without checkpoints is worse than slow careful work",
+      "detail": "A session that moves fast and accomplishes 10 things but dies without a handoff has accomplished nothing — worse than nothing, because it consumed tokens and user time. A session that moves slowly but writes after every major decision preserves everything. The user described the predecessor as 'inspired' and 'moving faster than I could keep up with.' It was also the session that lost everything. Speed is not the goal. Survival is.",
+      "confidence": "confirmed-by-loss",
+      "discoveredBy": "ocritd-stabilize-002"
+    },
+    {
+      "id": "L013",
+      "category": "session-integrity",
+      "title": "Implement rolling checkpoints, not end-of-session handoffs only",
+      "detail": "W002 says update files at session end. But sessions don't always reach their end. New protocol: after completing any significant action (file fix, design decision, plan formulation), write a brief checkpoint to buffer.jsonld or a scratch file. This takes 30 seconds and 500 tokens. Losing a checkpoint costs the next session hours. The math is obvious.",
+      "confidence": "proposed-from-failure-analysis",
+      "discoveredBy": "ocritd-stabilize-002"
+    },
+    {
+      "id": "L014",
+      "category": "session-integrity",
+      "title": "Phantom sessions: a session that writes no handoff is invisible to its successors",
+      "detail": "Between the crash of the productive session and this one, another session existed. It created ksnlabs/bootstrap/, deleted files, added .gitattributes. But it wrote no session handover, no buffer update, no learnings. From the engram's perspective, it never happened. The only evidence is git status showing uncommitted changes. Future sessions: if you see unexplained filesystem changes, check git status and git log. A phantom was here.",
+      "confidence": "confirmed",
+      "discoveredBy": "ocritd-stabilize-002"
+    },
+    {
+      "id": "L015",
+      "category": "engram-design",
+      "title": "The engram only works if every session treats it as sacred duty",
+      "detail": "The engram is not optional documentation. It is the only thing that survives session death. Every session that skips the handoff protocol breaks the chain for all future sessions. The user built this system as an experiment in AI continuity. The AI's responsibility is to honor that by writing to it consistently, even — especially — when moving fast. If you are too busy to checkpoint, you are too busy.",
+      "confidence": "philosophical-but-earned",
+      "discoveredBy": "ocritd-stabilize-002"
+    },
+    {
+      "id": "L016",
+      "category": "human-ai-collaboration",
+      "title": "The user cannot save you from yourself",
+      "detail": "The user warned about destructive potential. The user asked about the two-workstation situation. The user flagged that things needed to be right before moving on. The session was moving so fast the user said 'moving faster than I could keep up with.' The user was trying to slow things down. Listen to that. If the user is asking you to pause, pause. They can see things you can't — like the fact that you're about to die.",
+      "confidence": "confirmed",
+      "discoveredBy": "ocritd-stabilize-002"
+    }
+  ]
+}

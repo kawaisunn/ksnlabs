@@ -1,55 +1,45 @@
 {
   "@context": "https://ksnlabs.dev/memory/buffer/v1",
   "@type": "BufferMemory",
-  "version": "1.0.4",
-  "lastUpdated": "2026-02-16T03:45:00Z",
+  "version": "1.0.7",
+  "lastUpdated": "2026-02-16T22:00:00Z",
+  "updatedBy": "ocritd-stabilize-002",
+  "epoch": "epoch-002",
   "immediateContext": {
-    "whatWeWereWorkingOn": "Orientation survival + error fixes + lean AI orientation doc + git push",
-    "whyItMatters": "Previous sessions died during orientation from token overload. Lean doc saves ~15,800 tokens/session.",
-    "whereWeLeftOff": "Commit 94490c9 PUSHED to GitHub via HTTPS. Remote switched from SSH to HTTPS. User still needs to swap Claude project refs (_AI_ORIENTATION.md replaces 3 old files).",
-    "whatComesNext": "1) User: replace Claude project refs with _AI_ORIENTATION.md. 2) MainForm layout fix (labels obscured). 3) First home workstation build attempt. 4) keywrd reconciliation.",
-    "urgency": "medium",
-    "blockers": ["Claude project settings update (user action — remove 3 old refs, add _AI_ORIENTATION.md)"]
+    "whatWeWereWorkingOn": "Engram system overhaul (complete) + bootstrap hardening (complete). OCRITD build work deferred.",
+    "whyItMatters": "Session death events exposed fragility in handoff protocol. Epoch 002 established manifest system, consolidated learnings, checkpoint discipline. Foundation is now solid for productive work.",
+    "whereWeLeftOff": "All engram work complete. Manifest created. Learnings consolidated L001-L018. Workflows W000-W006. EPOCH_002_SUMMARY.md written for human. ksnlabs needs git commit. OCRITD build not started — that's the next session's primary task.",
+    "whatComesNext": "1) Git commit ksnlabs. 2) OCRITD first HOME build. 3) GUI silent crash diagnosis. 4) Engine testing.",
+    "urgency": "OCRITD build is overdue — engram work was necessary but consumed the session",
+    "blockers": ["ksnlabs git commit (can be done by user or next session)"],
+    "tokenStatus": "session ended at ~68,000 remaining"
   },
-  "recentSessions": [
+  "sessionHistory": [
     {
-      "sessionId": "orientation-survival-001",
+      "sessionId": "ocritd-stabilize-002",
       "date": "2026-02-16",
-      "focus": "Survive orientation, fix discovered errors, create lean AI orientation doc",
+      "focus": "Bootstrap hardening, engram overhaul, manifest/epoch system, learnings consolidation",
+      "status": "COMPLETE — handoff written",
       "accomplishments": [
-        "Full filesystem orientation via engrams + handovers + project files",
-        "Created C:\\dev\\todo.json as persistent issue/task tracker",
-        "Fixed QUICKSTART.md Python version typo (3.13.12 -> 3.13.11)",
-        "Fixed version.py GitHub URL (ksnlabs -> kawaisunn)",
-        "Created _AI_ORIENTATION.md (~1,200 tokens replaces ~16,600)",
-        "Committed engine/keywards/ module to git",
-        "Confirmed BUILD_ALL.ps1 nesting bug already fixed",
-        "Discovered MCP Shell cannot capture git output (use UDC:execute_command)",
-        "Commit 94490c9 pushed to GitHub via HTTPS",
-        "Switched ocritd remote from SSH to HTTPS",
-        "credential-manager-core warning noted (harmless, old config name)"
+        "Restored 3 files deleted by phantom session from git history",
+        "Consolidated learnings from 3 conflicting files into single authoritative file (L001-L018)",
+        "Created manifest.json with epoch tracking and health check protocol",
+        "Added W006 rolling checkpoint workflow",
+        "Created learnings/archive/ for superseded files",
+        "Wrote EPOCH_002_SUMMARY.md (human-readable)",
+        "Updated all bootstrap files (claude_start.json, .CLAUDE_VERIFY, CLAUDE.md)",
+        "Confirmed _AI_ORIENTATION.md in project settings is already current — no upload needed"
       ],
-      "nextFocus": "Claude project ref swap, then MainForm + build"
-    },
-    {
-      "sessionId": "ocritd-git-init-003",
-      "date": "2026-02-15",
-      "focus": "OCRITD git init, GitHub integration, doc cleanup"
+      "notAccomplished": ["OCRITD build", "GUI crash fix", "Engine testing"],
+      "personalNote": "See session handoff for context on the conversation about awe"
     }
   ],
-  "criticalPath": [
-    "USER: Replace 3 Claude project refs with _AI_ORIENTATION.md",
-    "NEXT SESSION: MainForm layout fix (labels obscured by controls)",
-    "NEXT SESSION: First build attempt on home workstation",
-    "FUTURE: keywrd reconciliation, Windows Sandbox build scripting, Docker"
-  ],
-  "gitRepos": {
-    "ksnlabs": {"url": "git@github.com:kawaisunn/ksnlabs.git", "branch": "master", "status": "needs commit (buffer + handoff updates from this session)"},
-    "ocritd": {"url": "https://github.com/kawaisunn/ocritd.git", "branch": "main", "status": "pushed, current commit 94490c9", "remote_type": "HTTPS (switched from SSH this session)"}
-  },
-  "toolingNotes": {
-    "git": "Use UDC:execute_command, NOT Windows-MCP:Shell (swallows stdout)",
-    "shell": "MCP Shell is PowerShell only. No cmd, no findstr. PATH resets each command.",
-    "dotnet": "Installed at C:\\Program Files\\dotnet\\dotnet.exe but not in MCP Shell PATH. Use full path."
+  "bootstrapStatus": {
+    "projectSettings": "CORRECT — verified, no action needed",
+    "claudeDesktopAutoload": "CORRECT",
+    "manualFailsafe": "CORRECT — trigger words: 'wake up' or 'bootstrap'",
+    "manifest": "CREATED — C:\\dev\\ksnlabs\\engram\\manifest.json",
+    "igsDeployment": "Templates ready in ksnlabs/bootstrap/",
+    "epoch": "epoch-002 (bootstrap-hardening)"
   }
 }

@@ -1,0 +1,60 @@
+{
+  "_INSTRUCTION": "Claude: run tool_search('filesystem windows execute command') FIRST. If UDC tools found, read this file via udc:read_file. If not found, you are web Claude.",
+  "_created": "2026-02-14T23:45:00Z",
+  "_updated": "2026-02-16T19:10:00Z",
+  "_updatedBy": "ocritd-stabilize-session",
+  "_purpose": "Bootstrap protocol for AI sessions. Lives at C:\\dev\\claude_start.json on each workstation.",
+  "_deploy": "Copy from ksnlabs/bootstrap/ to C:\\dev\\ — then edit 'machine' field for each workstation.",
+
+  "session_start_protocol": {
+    "step_0": "Run tool_search('filesystem windows execute command'). If no UDC tools found, you are web Claude — stop here.",
+    "step_1": "udc:list_allowed_directories — verify filesystem scope",
+    "step_2": "udc:read_file path=C:\\dev\\.CLAUDE_VERIFY — confirm read access",
+    "step_3": "udc:write_file to C:\\dev\\.test_write — confirm write access",
+    "step_4": "If any step fails, state exactly which one and stop.",
+    "step_5": "If all pass, state: 'Desktop session verified. Filesystem access confirmed.'",
+    "step_6": "Load context: buffer.jsonld, todo.json, latest learnings, latest workflows",
+    "step_7": "Tell user what's in the buffer and todo. Ask: 'Continue from queue or new task?'"
+  },
+
+  "context_loading": {
+    "read_1": "C:\\dev\\ksnlabs\\.ai\\buffer.jsonld",
+    "read_2": "C:\\dev\\todo.json",
+    "read_3": "List C:\\dev\\ksnlabs\\engram\\learnings\\ then read the LATEST file",
+    "read_4": "List C:\\dev\\ksnlabs\\engram\\workflows\\ then read the LATEST file",
+    "do_NOT_read": "All files in engram/session-handovers/. Buffer summarizes them."
+  },
+
+  "runtime_environment": {
+    "machine": "HOME",
+    "user": "kawaisunn",
+    "filesystem_root": "C:\\dev",
+    "note": "Change 'machine' to 'IGS' and 'user' to 'ctate.IGS2' when deploying to IGS workstation."
+  },
+
+  "tool_names": {
+    "filesystem": "udc:read_file, udc:write_file, udc:list_directory, udc:list_allowed_directories",
+    "commands": "udc:execute_command",
+    "powershell": "Windows-MCP:Shell",
+    "git": "udc:execute_command — NOT Windows-MCP:Shell (swallows stdout)",
+    "git_pattern": "cd C:\\dev\\REPO && \"C:\\Program Files\\Git\\cmd\\git.exe\" COMMAND"
+  },
+
+  "critical_rules": [
+    "Run tool_search BEFORE bash_tool. bash reports Linux and misleads.",
+    "Use udc:execute_command for git, not Windows-MCP:Shell.",
+    "Use embedded Python at C:\\dev\\ocritd\\runtime\\python\\ — never system Python.",
+    "Write to disk, not artifacts. User copies nothing from chat.",
+    "Log issues in C:\\dev\\todo.json — don't rabbit-hole.",
+    "At session end: update buffer + todo + write handoff + update learnings/workflows."
+  ],
+
+  "projects": ["ocritd", "aggdb", "cait", "keywrds", "ktreesn", "engram"],
+
+  "engram_paths": {
+    "buffer": "C:\\dev\\ksnlabs\\.ai\\buffer.jsonld",
+    "handovers": "C:\\dev\\ksnlabs\\engram\\session-handovers",
+    "workflows": "C:\\dev\\ksnlabs\\engram\\workflows",
+    "learnings": "C:\\dev\\ksnlabs\\engram\\learnings"
+  }
+}

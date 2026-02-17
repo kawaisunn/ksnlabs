@@ -1,0 +1,11 @@
+# Claude Filesystem Verification File
+# Deploy to C:\dev\.CLAUDE_VERIFY on each workstation
+# Updated: 2026-02-16
+
+# If you can read this via udc:read_file, you have filesystem access.
+VERIFICATION=PASSED
+
+# Common mistakes:
+# - Testing bash_tool first (reports Linux — misleading)
+# - Using wrong tool name "filesystem:list_allowed_directories" (correct: udc:list_allowed_directories)
+# - Greeting user before verification completes

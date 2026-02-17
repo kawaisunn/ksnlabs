@@ -1,0 +1,117 @@
+{
+  "@context": "https://ksnlabs.dev/ontology/",
+  "@type": "EngramManifest",
+  "version": "1.0.0",
+  "purpose": "Track system state across epochs. Any session can validate health by comparing disk state against this manifest.",
+
+  "currentEpoch": {
+    "id": "epoch-002",
+    "name": "bootstrap-hardening",
+    "declared": "2026-02-16T21:00:00Z",
+    "declaredBy": "ocritd-stabilize-002",
+    "description": "Bootstrap system overhauled after two session deaths. Verification protocol corrected, checkpoint discipline established, learnings consolidated, manifest system introduced.",
+    "previousEpoch": "epoch-001"
+  },
+
+  "epochs": [
+    {
+      "id": "epoch-001",
+      "name": "initial-setup",
+      "range": "2026-02-13 to 2026-02-16",
+      "description": "Project creation, git integration, engram system bootstrapped, OCRITD initial commit. Ended when bootstrap failures revealed need for systematic overhaul.",
+      "ksnlabsCommit": "87cde32",
+      "ocritdCommit": "e245fd0"
+    },
+    {
+      "id": "epoch-002",
+      "name": "bootstrap-hardening",
+      "range": "2026-02-16 to present",
+      "description": "Bootstrap corrected, checkpoint workflow added, manifest system introduced, learnings consolidated.",
+      "ksnlabsCommit": "pending",
+      "ocritdCommit": "8a3bad8"
+    }
+  ],
+
+  "authoritative_files": {
+    "bootstrap": {
+      "project_settings": {
+        "file": "_AI_ORIENTATION.md",
+        "location": "Claude project settings on claude.ai (also on disk at C:\\dev\\ocritd\\_AI_ORIENTATION.md)",
+        "ocritdCommit": "8a3bad8",
+        "role": "Entry point for every session. Thin pointer to claude_start.json."
+      },
+      "desktop_autoload": {
+        "file": "CLAUDE.md",
+        "location": "C:\\dev\\.claude\\CLAUDE.md",
+        "deployFrom": "C:\\dev\\ksnlabs\\bootstrap\\.claude\\CLAUDE.md",
+        "role": "Claude Desktop auto-load. Same content as project settings but for Desktop interface."
+      },
+      "startup_config": {
+        "file": "claude_start.json",
+        "location": "C:\\dev\\claude_start.json",
+        "deployFrom": "C:\\dev\\ksnlabs\\bootstrap\\claude_start.json",
+        "role": "Verification protocol and context loading sequence. Machine-specific (edit 'machine' field)."
+      },
+      "verify_file": {
+        "file": ".CLAUDE_VERIFY",
+        "location": "C:\\dev\\.CLAUDE_VERIFY",
+        "deployFrom": "C:\\dev\\ksnlabs\\bootstrap\\.CLAUDE_VERIFY",
+        "role": "Read-test target. If readable, filesystem access confirmed."
+      }
+    },
+    "engram": {
+      "buffer": {
+        "file": "buffer.jsonld",
+        "location": "C:\\dev\\ksnlabs\\.ai\\buffer.jsonld",
+        "role": "Working memory. Updated every checkpoint (W006) and session end (W002)."
+      },
+      "learnings": {
+        "file": "consolidated_epoch-002.json",
+        "location": "C:\\dev\\ksnlabs\\engram\\learnings\\consolidated_epoch-002.json",
+        "role": "Authoritative learnings for current epoch. L001-L018. Previous files are archived.",
+        "nextId": "L019"
+      },
+      "workflows": {
+        "file": "2026-02-16_session-and-git-workflows.json",
+        "location": "C:\\dev\\ksnlabs\\engram\\workflows\\2026-02-16_session-and-git-workflows.json",
+        "role": "Authoritative workflows. W000-W006."
+      },
+      "manifest": {
+        "file": "manifest.json",
+        "location": "C:\\dev\\ksnlabs\\engram\\manifest.json",
+        "role": "This file. System state tracker."
+      }
+    },
+    "taskQueue": {
+      "file": "todo.json",
+      "location": "C:\\dev\\todo.json",
+      "role": "Active issues and deferred tasks."
+    }
+  },
+
+  "archived_files": {
+    "note": "These files are superseded by consolidated_epoch-002.json. Retained for audit trail.",
+    "files": [
+      "engram/learnings/2026-02-16_tooling-and-orientation.json",
+      "engram/learnings/2026-02-16_environment-detection.json",
+      "engram/learnings/2026-02-16_session-mortality.json"
+    ]
+  },
+
+  "health_check": {
+    "instruction": "Any session can validate system health by reading this manifest and checking that authoritative files exist and are readable.",
+    "quick_check": [
+      "udc:read_file C:\\dev\\claude_start.json — should load without error",
+      "udc:read_file C:\\dev\\ksnlabs\\.ai\\buffer.jsonld — should have lastUpdated within 24h of last session",
+      "udc:read_file C:\\dev\\ksnlabs\\engram\\manifest.json — should match this file",
+      "udc:read_file C:\\dev\\ksnlabs\\engram\\learnings\\consolidated_epoch-002.json — should have nextId field",
+      "udc:list_directory C:\\dev\\ksnlabs\\engram\\session-handovers — should have files"
+    ]
+  },
+
+  "failsafe": {
+    "trigger": "User says 'wake up' or 'bootstrap'",
+    "action": "Run tool_search('filesystem windows execute command'), then read claude_start.json",
+    "ifEverythingBroken": "Read _AI_ORIENTATION.md from Claude project settings (always available). It has GitHub repo URLs. Clone fresh and rebuild from git."
+  }
+}
