@@ -1,0 +1,71 @@
+{
+  "@context": "https://ksnlabs.dev/ontology/",
+  "@type": "EngramWorkflow",
+  "created": "2026-02-16",
+  "sessionId": "orientation-survival-001",
+  "lastUpdated": "2026-02-16T18:15:00Z",
+  "updatedBy": "ocritd-stabilize-session",
+  "workflows": [
+    {
+      "id": "W000",
+      "title": "FIRST: Environment discovery (BEFORE anything else)",
+      "priority": "CRITICAL — this is step zero, before greeting the user",
+      "steps": [
+        "Run tool_search('filesystem windows execute command') to discover MCP tools",
+        "If UDC tools found: use udc:read_file on C:\\dev\\claude_start.json",
+        "If claude_start.json loads: follow its verification protocol (list_allowed_directories, read .CLAUDE_VERIFY, write test)",
+        "If all pass: state 'Desktop session verified. Filesystem access confirmed.'",
+        "If tool_search finds nothing: state 'I am web Claude without filesystem access' and work from GitHub/web only",
+        "ONLY THEN proceed to W001 (context loading)"
+      ],
+      "antipattern": "Testing bash_tool first. bash_tool runs in a Linux sandbox that exists alongside Windows MCP tools. It will report Linux and mislead you into thinking you have no Windows access. This has happened in EVERY session that skipped this workflow.",
+      "trigger": "User says anything. Or session starts. This is always step zero."
+    },
+    {
+      "id": "W001",
+      "title": "Session startup — load context (after W000 passes)",
+      "steps": [
+        "udc:read_file C:\\dev\\ksnlabs\\.ai\\buffer.jsonld — what happened last, what's next",
+        "udc:read_file C:\\dev\\todo.json — active issue/task queue with priorities",
+        "udc:read_file C:\\dev\\ksnlabs\\engram\\learnings\\<latest>.json — hard-won knowledge (DO NOT relearn)",
+        "State to user: buffer summary, todo highlights, any blockers",
+        "Ask: continue from queue or new task?"
+      ],
+      "note": "Do NOT read all handovers. Buffer summarizes them. Only read a specific handover if deep history needed on one topic."
+    },
+    {
+      "id": "W002",
+      "title": "Session shutdown — handoff protocol (MANDATORY)",
+      "steps": [
+        "Update C:\\dev\\todo.json — mark completed items, add new issues discovered",
+        "Update C:\\dev\\ksnlabs\\.ai\\buffer.jsonld — where you left off, what comes next, blockers",
+        "Write C:\\dev\\ksnlabs\\engram\\session-handovers\\YYYY-MM-DD_description.json — full session record",
+        "Update or create learnings in C:\\dev\\ksnlabs\\engram\\learnings\\ if anything new discovered",
+        "Update or create workflows in C:\\dev\\ksnlabs\\engram\\workflows\\ if any new procedures validated",
+        "Remind user of any pending user-actions (uploads, git pushes, etc.)"
+      ],
+      "note": "Every session that skipped this left the next session blind. Your successor depends on you."
+    },
+    {
+      "id": "W003",
+      "title": "Git operations via MCP",
+      "steps": [
+        "Use UDC:execute_command, NOT Windows-MCP:Shell",
+        "Pattern: cd C:\\dev\\REPO && \"C:\\Program Files\\Git\\cmd\\git.exe\" COMMAND",
+        "If SSH fails: git remote set-url origin https://github.com/kawaisunn/REPO.git"
+      ],
+      "antipattern": "Windows-MCP:Shell swallows all git stdout. You will see empty output and think nothing happened."
+    },
+    {
+      "id": "W004",
+      "title": "Error discovery protocol",
+      "steps": [
+        "Find the error",
+        "Log it in C:\\dev\\todo.json with file path, line, and minimum description",
+        "MOVE ON — do not investigate or fix unless explicitly directed",
+        "At session end, report all discovered errors to user"
+      ],
+      "note": "This prevents the rabbit-holing that has killed multiple sessions."
+    }
+  ]
+}

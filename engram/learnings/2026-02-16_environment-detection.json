@@ -1,0 +1,42 @@
+{
+  "@context": "https://ksnlabs.dev/ontology/",
+  "@type": "EngramLearning",
+  "created": "2026-02-16",
+  "sessionId": "ocritd-stabilize-001",
+  "appended": true,
+  "learnings": [
+    {
+      "id": "L009",
+      "category": "orientation",
+      "title": "Web Claude has a Linux sandbox bash_tool — desktop Claude has UDC and Windows-MCP",
+      "detail": "The bash_tool runs Linux (uname returns 'Linux runsc'). This does NOT mean you are web Claude. Desktop Claude also has bash_tool but additionally has UDC and Windows-MCP tools. The presence of bash_tool alone proves nothing. Check for UDC/Windows-MCP tools FIRST via tool_search before concluding anything about your environment. If you have udc:read_file and Windows-MCP:Shell, you are desktop Claude with full Windows filesystem access.",
+      "confidence": "confirmed-by-mistake",
+      "discoveredBy": "claude-opus-4-6",
+      "severity": "HIGH — false self-identification wastes tokens and breaks trust"
+    },
+    {
+      "id": "L010",
+      "category": "orientation",
+      "title": "tool_search is the environment test, not uname",
+      "detail": "The orientation says 'Read C:\\dev\\claude_start.json' as step 1. But you cannot read a Windows path with bash_tool. The correct first action is tool_search for 'filesystem windows' or 'execute command'. If UDC tools load, you have Windows access. Then use udc:read_file to read claude_start.json. Never run uname to determine your environment — it will always say Linux because the sandbox is Linux regardless of whether you also have Windows MCP tools.",
+      "confidence": "confirmed-by-mistake",
+      "discoveredBy": "claude-opus-4-6"
+    },
+    {
+      "id": "L011",
+      "category": "orientation",
+      "title": "Do not announce what you are before testing what you have",
+      "detail": "Previous instance declared 'I am web Claude' based on seeing a Linux bash environment, before checking whether UDC/Windows-MCP tools were available. This cost ~15,000 tokens in false-start orientation and damaged trust. The protocol is: (1) tool_search for UDC/Windows-MCP, (2) if found, use udc:read_file on claude_start.json, (3) run verification steps, (4) THEN state your environment. Never declare your identity before completing verification.",
+      "confidence": "hard-won",
+      "discoveredBy": "claude-opus-4-6"
+    },
+    {
+      "id": "L012",
+      "category": "orientation",
+      "title": "GitHub file reads are expensive fallbacks, not primary tools",
+      "detail": "This session read 4 full files from GitHub API before discovering it had direct filesystem access to the same files. GitHub reads cost tokens for API overhead and base64 encoding. When you have UDC, read files locally. GitHub tools are for when you genuinely lack filesystem access or need to push commits.",
+      "confidence": "confirmed-by-waste",
+      "discoveredBy": "claude-opus-4-6"
+    }
+  ]
+}

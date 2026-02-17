@@ -1,58 +1,55 @@
 {
   "@context": "https://ksnlabs.dev/memory/buffer/v1",
   "@type": "BufferMemory",
-  "version": "1.0.2",
-  "lastUpdated": "2026-02-15T21:00:00Z",
+  "version": "1.0.4",
+  "lastUpdated": "2026-02-16T03:45:00Z",
   "immediateContext": {
-    "whatWeWereWorkingOn": "OCRITD git init + GitHub push + doc cleanup + handoff optimization",
-    "whyItMatters": "Git-centric workflow enables cross-project integration. Token savings from lean project instructions. RP-315 deadline Feb 20.",
-    "whereWeLeftOff": "OCRITD initial commit pushed to kawaisunn/ocritd (private). OBSOLETE_CHECK.md awaiting human review. _PROJECT_INSTRUCTIONS.md created as lean replacement for 3 heavy Claude project refs (~95% token reduction). Claude Desktop needs restart for GitHub MCP.",
-    "whatComesNext": "1) Human: review OBSOLETE_CHECK.md, replace Claude project refs with _PROJECT_INSTRUCTIONS.md, restart Desktop, change GitHub password. 2) Next session: RP-315 data dictionary (DEADLINE Feb 20). 3) Then: OCRITD GUI debug, engine testing, keywards module.",
-    "urgency": "high",
-    "blockers": ["Human review of OBSOLETE_CHECK.md", "Claude Desktop restart for GitHub MCP", "GitHub password change needed (exposed in chat)"]
+    "whatWeWereWorkingOn": "Orientation survival + error fixes + lean AI orientation doc + git push",
+    "whyItMatters": "Previous sessions died during orientation from token overload. Lean doc saves ~15,800 tokens/session.",
+    "whereWeLeftOff": "Commit 94490c9 PUSHED to GitHub via HTTPS. Remote switched from SSH to HTTPS. User still needs to swap Claude project refs (_AI_ORIENTATION.md replaces 3 old files).",
+    "whatComesNext": "1) User: replace Claude project refs with _AI_ORIENTATION.md. 2) MainForm layout fix (labels obscured). 3) First home workstation build attempt. 4) keywrd reconciliation.",
+    "urgency": "medium",
+    "blockers": ["Claude project settings update (user action — remove 3 old refs, add _AI_ORIENTATION.md)"]
   },
   "recentSessions": [
     {
-      "sessionId": "ocritd-git-init-003",
-      "date": "2026-02-15",
-      "focus": "OCRITD git init, GitHub integration, doc cleanup, handoff optimization",
+      "sessionId": "orientation-survival-001",
+      "date": "2026-02-16",
+      "focus": "Survive orientation, fix discovered errors, create lean AI orientation doc",
       "accomplishments": [
-        "GitHub PAT verified and configured in claude_desktop_config.json",
-        "Read ALL project docs thoroughly (PROJECT_CONTEXT, SESSION_STATE, buffer, protocol, engram, claude_start, migration log, all ocritd .md files)",
-        "Created OBSOLETE_CHECK.md (5 obsolete, 1 duplicate, 5 verify)",
-        "Initialized git in C:\\dev\\ocritd, committed 64 files",
-        "Created kawaisunn/ocritd private repo on GitHub, pushed main branch",
-        "Identified 16,600 token waste from stale Claude project refs",
-        "Created _PROJECT_INSTRUCTIONS.md as lean replacement (~800 tokens vs 16,600)",
-        "Created session handoff in engram/session-handovers/",
-        "Documented corrections: disk-first outputs, Windows-only platform, engram protocol"
+        "Full filesystem orientation via engrams + handovers + project files",
+        "Created C:\\dev\\todo.json as persistent issue/task tracker",
+        "Fixed QUICKSTART.md Python version typo (3.13.12 -> 3.13.11)",
+        "Fixed version.py GitHub URL (ksnlabs -> kawaisunn)",
+        "Created _AI_ORIENTATION.md (~1,200 tokens replaces ~16,600)",
+        "Committed engine/keywards/ module to git",
+        "Confirmed BUILD_ALL.ps1 nesting bug already fixed",
+        "Discovered MCP Shell cannot capture git output (use UDC:execute_command)",
+        "Commit 94490c9 pushed to GitHub via HTTPS",
+        "Switched ocritd remote from SSH to HTTPS",
+        "credential-manager-core warning noted (harmless, old config name)"
       ],
-      "nextFocus": "RP-315 data dictionary (CRITICAL DEADLINE Feb 20)",
-      "estimatedDuration": "2-3 hours"
+      "nextFocus": "Claude project ref swap, then MainForm + build"
     },
     {
-      "sessionId": "git-integration-001",
+      "sessionId": "ocritd-git-init-003",
       "date": "2026-02-15",
-      "focus": "Git framework setup, ksnlabs repository integration",
-      "accomplishments": ["Merged GitHub .ai architecture with local engram", "Created 19 dirs, 20+ files", "Integrated SQL tools", "Documented hybrid structure"]
+      "focus": "OCRITD git init, GitHub integration, doc cleanup"
     }
   ],
   "criticalPath": [
-    "IMMEDIATE: Human reviews OBSOLETE_CHECK.md, replaces Claude project refs, restarts Desktop, changes GitHub password",
-    "NEXT SESSION: RP-315 data dictionary (Feb 16-17)",
-    "RP-315: ERD diagram (Feb 18)",
-    "RP-315: Presentation prep (Feb 19)",
-    "RP-315: Presentation (Feb 20)",
-    "AFTER DEADLINE: OCRITD GUI debug, engine testing, keywards module"
+    "USER: Replace 3 Claude project refs with _AI_ORIENTATION.md",
+    "NEXT SESSION: MainForm layout fix (labels obscured by controls)",
+    "NEXT SESSION: First build attempt on home workstation",
+    "FUTURE: keywrd reconciliation, Windows Sandbox build scripting, Docker"
   ],
   "gitRepos": {
-    "ksnlabs": {"url": "git@github.com:kawaisunn/ksnlabs.git", "branch": "master", "status": "needs commit (buffer + handoff updates)"},
-    "ocritd": {"url": "git@github.com:kawaisunn/ocritd.git", "branch": "main", "status": "initial commit pushed, 64 files", "commit": "97c446c"}
+    "ksnlabs": {"url": "git@github.com:kawaisunn/ksnlabs.git", "branch": "master", "status": "needs commit (buffer + handoff updates from this session)"},
+    "ocritd": {"url": "https://github.com/kawaisunn/ocritd.git", "branch": "main", "status": "pushed, current commit 94490c9", "remote_type": "HTTPS (switched from SSH this session)"}
   },
-  "claudeProjectOptimization": {
-    "problem": "3 reference files auto-loaded = ~16,600 tokens/session of stale content",
-    "solution": "_PROJECT_INSTRUCTIONS.md (~800 tokens) + on-demand reads via UDC",
-    "savings": "~15,800 tokens/session (95% reduction)",
-    "action": "Human: replace _handoff.md, _handoff_historic.md, _ocritd_project_vision.md with _PROJECT_INSTRUCTIONS.md in Claude project settings"
+  "toolingNotes": {
+    "git": "Use UDC:execute_command, NOT Windows-MCP:Shell (swallows stdout)",
+    "shell": "MCP Shell is PowerShell only. No cmd, no findstr. PATH resets each command.",
+    "dotnet": "Installed at C:\\Program Files\\dotnet\\dotnet.exe but not in MCP Shell PATH. Use full path."
   }
 }
