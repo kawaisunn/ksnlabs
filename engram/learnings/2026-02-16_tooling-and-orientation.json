@@ -1,0 +1,90 @@
+{
+  "@context": "https://ksnlabs.dev/ontology/",
+  "@type": "EngramLearning",
+  "created": "2026-02-16",
+  "sessionId": "orientation-survival-001",
+  "lastUpdated": "2026-02-16T18:00:00Z",
+  "updatedBy": "ocritd-stabilize-session",
+  "learnings": [
+    {
+      "id": "L001",
+      "category": "tooling",
+      "title": "MCP Shell swallows git stdout",
+      "detail": "Windows-MCP:Shell tool captures zero output from git.exe. All git operations must use UDC:execute_command instead. This applies to any external executable whose output routing doesn't match PowerShell's expected stream model.",
+      "confidence": "confirmed",
+      "discoveredBy": "claude-opus-4-6"
+    },
+    {
+      "id": "L002",
+      "category": "tooling",
+      "title": "MCP Shell PATH resets every command",
+      "detail": "Each Windows-MCP:Shell invocation starts with a fresh environment. Setting $env:Path in one command has no effect on the next. For tools not in default PATH (git, dotnet), use full paths or UDC:execute_command which preserves working directory via cd &&.",
+      "confidence": "confirmed",
+      "discoveredBy": "claude-opus-4-6"
+    },
+    {
+      "id": "L003",
+      "category": "tooling",
+      "title": "MCP Shell is PowerShell only",
+      "detail": "cmd.exe and findstr are not available. No cmd /c workaround. Use Select-String instead of findstr. Use PowerShell equivalents for all operations.",
+      "confidence": "confirmed",
+      "discoveredBy": "claude-opus-4-6"
+    },
+    {
+      "id": "L004",
+      "category": "orientation",
+      "title": "Read todo.json first, not all handovers",
+      "detail": "Reading every handover file consumes massive tokens and most content is historical. buffer.jsonld has current context. todo.json has the actionable queue. Only read specific handovers if you need deep history on a particular topic.",
+      "confidence": "confirmed",
+      "discoveredBy": "claude-opus-4-6"
+    },
+    {
+      "id": "L005",
+      "category": "orientation",
+      "title": "Orientation kills sessions — be surgical",
+      "detail": "Multiple previous AI sessions died during orientation by reading too much, attempting too many fixes, or investigating issues instead of logging them. Survival strategy: read startup config, read buffer, read todo, log new findings, ask user what to do. Do NOT investigate or fix without explicit direction.",
+      "confidence": "hard-won",
+      "discoveredBy": "multiple sessions, documented by claude-opus-4-6"
+    },
+    {
+      "id": "L006",
+      "category": "git",
+      "title": "SSH key may not be loaded — HTTPS fallback works",
+      "detail": "SSH remote (git@github.com:) can fail with 'Permission denied (publickey)' if ssh-agent isn't running. Switching to HTTPS (https://github.com/) works immediately using cached Windows credentials. Command: git remote set-url origin https://github.com/kawaisunn/REPO.git",
+      "confidence": "confirmed",
+      "discoveredBy": "claude-opus-4-6"
+    },
+    {
+      "id": "L007",
+      "category": "project",
+      "title": "Two keywards implementations exist — unreconciled",
+      "detail": "C:\\dev\\keywrd\\keywards\\ has standalone app (nltk, sklearn, elasticsearch, pythonnet WinForms GUI). C:\\dev\\ocritd\\engine\\keywards\\ has integrated module (frequency + TF-IDF, graceful degradation). They serve different purposes and the user needs to decide the merge strategy.",
+      "confidence": "confirmed",
+      "discoveredBy": "claude-opus-4-6"
+    },
+    {
+      "id": "L008",
+      "category": "build",
+      "title": "System Python versions don't match embedded runtime",
+      "detail": "System has Python 3.14 and 3.11 in PATH. OCRITD embedded runtime is 3.13.11. Build scripts and engine MUST use the embedded runtime at C:\\dev\\ocritd\\runtime\\python\\, never system Python. This has caused bugs before (python312.dll vs python313.dll mismatch).",
+      "confidence": "confirmed",
+      "discoveredBy": "multiple sessions"
+    },
+    {
+      "id": "L009",
+      "category": "orientation",
+      "title": "CRITICAL: Claude web interface has BOTH sandbox AND MCP tools — check MCP first",
+      "detail": "Claude web (claude.ai) provides a Linux bash sandbox by default. When MCP tools (UDC, Windows-MCP) are also configured, the bash sandbox still exists alongside them. New sessions see bash_tool first, test it, get Linux, and wrongly conclude they are sandboxed web Claude with no Windows access. The startup protocol says to run tool_search or list_allowed_directories BEFORE testing bash. The correct sequence is: (1) attempt to read C:\\dev\\claude_start.json via UDC:read_file, (2) if that works, you have Windows filesystem access regardless of what bash reports, (3) if it fails, THEN you are web Claude. Multiple sessions have failed this check. This is the single most important orientation lesson.",
+      "confidence": "confirmed-by-repeated-failure",
+      "discoveredBy": "ocritd-stabilize-session (claude-opus-4-6), after repeating the exact mistake the verification system was built to prevent"
+    },
+    {
+      "id": "L010",
+      "category": "orientation",
+      "title": "Never respond to user before verification is complete",
+      "detail": "The startup protocol says 'run all verification tests BEFORE responding to user.' This means no greeting, no status assessment, no capability claims until claude_start.json has been read and all tests pass. Responding first and verifying second is how trust gets broken — even if the response seems helpful, it may contain wrong assumptions about the environment.",
+      "confidence": "confirmed-by-repeated-failure",
+      "discoveredBy": "ocritd-stabilize-session"
+    }
+  ]
+}
