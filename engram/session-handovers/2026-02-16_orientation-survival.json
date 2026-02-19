@@ -1,0 +1,81 @@
+{
+  "sessionId": "orientation-survival-001",
+  "date": "2026-02-16",
+  "model": "claude-opus-4-6",
+  "interface": "claude-web-with-mcp-via-project",
+  "duration": "~60 minutes",
+  "focus": "Survive orientation, fix errors, create lean AI orientation doc, push to GitHub",
+
+  "accomplishments": [
+    "Read claude_start.json, .CLAUDE_VERIFY, all 7 engram handovers, buffer, protocol, engram.jsonld",
+    "Full orientation of C:\\dev filesystem without dying",
+    "Created C:\\dev\\todo.json as persistent cross-session issue/task tracker",
+    "Fixed QUICKSTART.md: Python version typo 3.13.12 -> 3.13.11 (line 136)",
+    "Fixed engine/version.py: GitHub URL ksnlabs -> kawaisunn (line 12), removed stale comment",
+    "Created _AI_ORIENTATION.md: ~1,200 tokens replaces ~16,600 from 3 stale Claude project refs",
+    "Committed engine/keywards/ module (was untracked)",
+    "Confirmed BUILD_ALL.ps1 nesting bug already fixed (\\* pattern + line 285 detector)",
+    "Confirmed _PROJECT_INSTRUCTIONS.md already had correct Python 3.13.11",
+    "Switched ocritd remote from SSH to HTTPS (SSH key was denied)",
+    "Pushed commit 94490c9 to GitHub (6 files, 622 insertions)",
+    "Discovered MCP Shell swallows git stdout — must use UDC:execute_command",
+    "Updated buffer.jsonld and wrote session handoff"
+  ],
+
+  "corrections_applied": [
+    "QUICKSTART.md: 3.13.12 -> 3.13.11",
+    "version.py: ksnlabs/ocritd -> kawaisunn/ocritd",
+    "ocritd git remote: SSH -> HTTPS"
+  ],
+
+  "tooling_lessons": [
+    "Windows-MCP:Shell swallows git.exe stdout completely — use UDC:execute_command",
+    "MCP Shell resets PATH each invocation — cannot persist env changes",
+    "cmd.exe and findstr not available in MCP Shell (PowerShell only)",
+    "dotnet.exe exists but isn't in MCP Shell PATH — needs full path",
+    "credential-manager-core warning on git push is harmless (old config name)"
+  ],
+
+  "files_created": [
+    "C:\\dev\\todo.json — persistent issue/task tracker",
+    "C:\\dev\\ocritd\\_AI_ORIENTATION.md — lean session orientation for Claude project ref",
+    "C:\\dev\\ksnlabs\\engram\\session-handovers\\2026-02-16_orientation-survival.json — this file"
+  ],
+
+  "files_modified": [
+    "C:\\dev\\ocritd\\QUICKSTART.md — version typo fix",
+    "C:\\dev\\ocritd\\engine\\version.py — URL fix",
+    "C:\\dev\\ksnlabs\\.ai\\buffer.jsonld — session context update"
+  ],
+
+  "git_state": {
+    "ocritd": {
+      "remote": "https://github.com/kawaisunn/ocritd.git",
+      "branch": "main",
+      "latest_commit": "94490c9",
+      "status": "clean, pushed"
+    },
+    "ksnlabs": {
+      "remote": "git@github.com:kawaisunn/ksnlabs.git",
+      "branch": "master",
+      "status": "needs commit (buffer.jsonld + this handoff updated)"
+    }
+  },
+
+  "pendingActions": {
+    "user": [
+      "In Claude project settings: remove _handoff.md, _handoff_historic.md, _ocritd_project_vision.md. Upload _AI_ORIENTATION.md as single reference.",
+      "Optional: commit ksnlabs updates (buffer + handoff): git -C C:\\dev\\ksnlabs add -A && git -C C:\\dev\\ksnlabs commit -m 'Session handoff: orientation survival' && git -C C:\\dev\\ksnlabs push",
+      "Optional: fix git credential-manager-core warning: git config --global credential.helper manager"
+    ],
+    "nextSession": [
+      "Read C:\\dev\\claude_start.json (verification protocol)",
+      "Read C:\\dev\\todo.json (current task queue with priorities)",
+      "MainForm layout fix (labels obscured by controls)",
+      "First OCRITD build attempt on home workstation",
+      "keywrd reconciliation decision"
+    ]
+  },
+
+  "survivalAdvice": "Read todo.json FIRST. It has the full picture. Don't try to read every handoff — buffer.jsonld has the latest context. Don't investigate MainForm without explicit go-ahead. Log issues in todo.json instead of rabbit-holing."
+}

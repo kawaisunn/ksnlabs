@@ -1,0 +1,85 @@
+{
+  "@context": "https://ksnlabs.dev/ontology/",
+  "@type": "EngramWorkflow",
+  "created": "2026-02-16",
+  "lastUpdated": "2026-02-16T20:30:00Z",
+  "updatedBy": "ocritd-stabilize-002",
+  "workflows": [
+    {
+      "id": "W000",
+      "title": "FIRST: Environment discovery (step zero, before greeting user)",
+      "steps": [
+        "tool_search('filesystem windows execute command') to discover MCP tools",
+        "If UDC found: udc:read_file C:\\dev\\claude_start.json, follow its protocol",
+        "If all tests pass: 'Desktop session verified. Filesystem access confirmed.'",
+        "If no UDC tools: 'I am web Claude.' Work from GitHub/web only.",
+        "ONLY THEN proceed to W001"
+      ],
+      "antipattern": "Testing bash_tool first — it runs Linux and will mislead you."
+    },
+    {
+      "id": "W001",
+      "title": "Load context (after W000 passes)",
+      "steps": [
+        "udc:read_file C:\\dev\\ksnlabs\\.ai\\buffer.jsonld",
+        "udc:read_file C:\\dev\\todo.json",
+        "udc:list_directory C:\\dev\\ksnlabs\\engram\\learnings\\ then read latest file",
+        "State buffer summary + todo highlights to user",
+        "Ask: continue from queue or new task?"
+      ]
+    },
+    {
+      "id": "W002",
+      "title": "Session shutdown (MANDATORY — but may never execute, see W006)",
+      "steps": [
+        "Update C:\\dev\\todo.json",
+        "Update C:\\dev\\ksnlabs\\.ai\\buffer.jsonld",
+        "Write handoff to engram/session-handovers/YYYY-MM-DD_description.json",
+        "Update learnings if anything new discovered",
+        "Update workflows if any new procedures validated",
+        "Remind user of pending actions"
+      ],
+      "warning": "This workflow assumes you reach the end of the session. You may not. W006 exists because sessions die without warning."
+    },
+    {
+      "id": "W003",
+      "title": "Git operations",
+      "tool": "udc:execute_command (NOT Windows-MCP:Shell — swallows stdout)",
+      "pattern": "cd C:\\dev\\REPO && \"C:\\Program Files\\Git\\cmd\\git.exe\" COMMAND"
+    },
+    {
+      "id": "W004",
+      "title": "Error discovery — log and move on",
+      "steps": ["Find it", "Log in todo.json", "MOVE ON", "Report at session end"]
+    },
+    {
+      "id": "W005",
+      "title": "Cross-machine bootstrap deployment (IGS workstation)",
+      "steps": [
+        "At IGS: git pull ksnlabs repo",
+        "Copy bootstrap/claude_start.json to C:\\dev\\claude_start.json",
+        "Copy bootstrap/.CLAUDE_VERIFY to C:\\dev\\.CLAUDE_VERIFY",
+        "Copy bootstrap/.claude/CLAUDE.md to C:\\dev\\.claude\\CLAUDE.md",
+        "Edit claude_start.json: change machine to IGS, update user",
+        "Test: new Claude session should auto-verify"
+      ],
+      "note": "_AI_ORIENTATION.md in Claude project settings is account-level (shared across machines). Bootstrap files are machine-local."
+    },
+    {
+      "id": "W006",
+      "title": "Rolling checkpoints — survive your own death",
+      "priority": "CRITICAL — this exists because two sessions died without handoffs on 2026-02-16",
+      "rule": "After every significant action, write a breadcrumb. Cost: 500 tokens, 30 seconds. Value: entire next session.",
+      "what_counts_as_significant": [
+        "A file was created or modified",
+        "A design decision was made",
+        "A plan was formulated",
+        "A problem was diagnosed",
+        "User provided important context (especially about constraints, machines, politics)"
+      ],
+      "how": "Update the 'immediateContext.whereWeLeftOff' field in C:\\dev\\ksnlabs\\.ai\\buffer.jsonld with a one-line status. That's it. Not a full handoff. Just a breadcrumb.",
+      "example": "whereWeLeftOff: 'Fixed claude_start.json tool names. Next: discussing two-workstation deployment with user. User confirmed Tailscale blocked at IGS, git is only bridge.'",
+      "math": "A checkpoint costs 500 tokens. A lost session costs the next session 20,000+ tokens to rediscover. Checkpoint every time."
+    }
+  ]
+}

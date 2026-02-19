@@ -121,12 +121,11 @@ wixSetup_MSIbuildTools/
 *.nupkg
 
 # Large data files
-*.mdb
-*.accdb
-data/*.csv
-data/*.xlsx
+
+
+
 *.sqlite
-*.db
+
 
 # Compiled binaries
 *.dll

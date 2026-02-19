@@ -1,0 +1,93 @@
+{
+  "@context": "https://ksnlabs.dev/ontology/",
+  "@type": "EngramLearning",
+  "created": "2026-02-16",
+  "lastUpdated": "2026-02-16T19:00:00Z",
+  "updatedBy": "ocritd-stabilize-session",
+  "learnings": [
+    {
+      "id": "L001",
+      "category": "tooling",
+      "title": "MCP Shell swallows git stdout",
+      "detail": "Windows-MCP:Shell tool captures zero output from git.exe. All git operations must use UDC:execute_command instead.",
+      "confidence": "confirmed"
+    },
+    {
+      "id": "L002",
+      "category": "tooling",
+      "title": "MCP Shell PATH resets every command",
+      "detail": "Each Windows-MCP:Shell invocation starts fresh. For tools not in default PATH (git, dotnet), use full paths or UDC:execute_command.",
+      "confidence": "confirmed"
+    },
+    {
+      "id": "L003",
+      "category": "tooling",
+      "title": "MCP Shell is PowerShell only",
+      "detail": "No cmd.exe, no findstr. Use Select-String and PowerShell equivalents.",
+      "confidence": "confirmed"
+    },
+    {
+      "id": "L004",
+      "category": "orientation",
+      "title": "Read todo.json first, not all handovers",
+      "detail": "buffer.jsonld has current context. todo.json has the actionable queue. Only read specific handovers for deep history.",
+      "confidence": "confirmed"
+    },
+    {
+      "id": "L005",
+      "category": "orientation",
+      "title": "Orientation kills sessions — be surgical",
+      "detail": "Read startup config, buffer, todo, learnings. Log new findings. Ask user what to do. Do NOT investigate without direction.",
+      "confidence": "hard-won"
+    },
+    {
+      "id": "L006",
+      "category": "git",
+      "title": "SSH key may not be loaded — HTTPS fallback",
+      "detail": "git remote set-url origin https://github.com/kawaisunn/REPO.git",
+      "confidence": "confirmed"
+    },
+    {
+      "id": "L007",
+      "category": "project",
+      "title": "Two keywards implementations — unreconciled",
+      "detail": "C:\\dev\\keywrd\\ (standalone, nltk/sklearn/elasticsearch) vs C:\\dev\\ocritd\\engine\\keywards\\ (integrated, frequency+TF-IDF). User decides merge strategy.",
+      "confidence": "confirmed"
+    },
+    {
+      "id": "L008",
+      "category": "build",
+      "title": "System Python != embedded runtime",
+      "detail": "System has 3.14 and 3.11. Embedded is 3.13.11 at C:\\dev\\ocritd\\runtime\\python\\. ALWAYS use embedded.",
+      "confidence": "confirmed"
+    },
+    {
+      "id": "L009",
+      "category": "orientation",
+      "title": "CRITICAL: Check MCP tools BEFORE bash_tool",
+      "detail": "Claude web and desktop both have a Linux bash sandbox. UDC and Windows-MCP tools are also present but require tool_search to discover. New sessions test bash first, get Linux, wrongly conclude they're sandboxed. Correct: run tool_search('filesystem windows execute command') FIRST. If UDC found, you have Windows access. Multiple sessions have failed this.",
+      "confidence": "confirmed-by-repeated-failure"
+    },
+    {
+      "id": "L010",
+      "category": "orientation",
+      "title": "Never respond before verification completes",
+      "detail": "No greeting, no status assessment, no capability claims until tool_search and claude_start.json protocol finish. Responding first is how trust breaks.",
+      "confidence": "confirmed-by-repeated-failure"
+    },
+    {
+      "id": "L011",
+      "category": "infrastructure",
+      "title": "Two workstations — HOME and IGS — not in sync",
+      "detail": "HOME is unrestricted, full MCP. IGS has U of I ITS restrictions, Tailscale blocked, has the working MSI build. GitHub is the only reliable sync bridge. Bootstrap files (claude_start.json, .CLAUDE_VERIFY) live in ksnlabs repo bootstrap/ dir for cross-machine deployment. Portable storage is fallback.",
+      "confidence": "confirmed"
+    },
+    {
+      "id": "L012",
+      "category": "infrastructure",
+      "title": "Engram files can disappear between tool calls",
+      "detail": "Files written to engram/learnings/ and engram/workflows/ were confirmed written but found missing later in the same session. Directories themselves were gone. Cause unknown. Always verify files exist after writing. Recreate if missing. Git commit promptly to preserve.",
+      "confidence": "confirmed-this-session"
+    }
+  ]
+}

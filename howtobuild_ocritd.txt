@@ -1,0 +1,48 @@
+"C:\dev\ksnlabs\ocritd\BUILD_ALL.ps1"
+
+
+
+Build Order
+
+Step 1: Python Runtime
+    ↓
+Step 2: GUI (C#)
+    ↓
+Step 3: MSI Installer
+
+
+step by step
+
+cd C:\dev\ksnlabs\ocritd
+
+# Step 1: Build Python runtime (uses wheelhouse for offline install)
+.\BUILD.ps1 -BuildPython
+
+# Verify it worked
+.\runtime\python\python.exe --version
+.\runtime\python\python.exe -m engine.ocritd --check-requirements
+
+# Step 2: Build GUI (requires .NET SDK)
+.\BUILD.ps1 -BuildGUI
+
+# Step 3: Build MSI (requires WiX Toolset)
+.\BUILD.ps1 -BuildMSI
+
+
+All at Once
+powershell.\BUILD.ps1 -All
+
+
+
+Prerequisites Check
+
+Component	RequiredFor	CheckCommand
+PowerShell 5+	All builds	$PSVersionTable
+.NET SDK 8.0	GUI		dotnet --version
+WiX Toolset	MSI		candle.exe in PATH
+
+If Something Fails
+
+# Reset and try again
+.\build_reset.ps1 -Force
+.\BUILD.ps1 -BuildPython -Verbose

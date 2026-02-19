@@ -1,0 +1,161 @@
+{
+  "@context": "https://ksnlabs.dev/ontology/",
+  "@type": "EngramLearning",
+  "version": "2.0.0",
+  "epoch": "epoch-002_bootstrap-hardening",
+  "created": "2026-02-16",
+  "lastUpdated": "2026-02-16T21:00:00Z",
+  "consolidatedBy": "ocritd-stabilize-002",
+  "consolidatedFrom": [
+    "2026-02-16_tooling-and-orientation.json (sessions: orientation-survival-001, ocritd-stabilize-001)",
+    "2026-02-16_environment-detection.json (session: phantom, no handoff written)",
+    "2026-02-16_session-mortality.json (session: ocritd-stabilize-002)"
+  ],
+  "learnings": [
+    {
+      "id": "L001",
+      "category": "tooling",
+      "title": "MCP Shell swallows git stdout",
+      "detail": "Windows-MCP:Shell captures zero output from git.exe. Use udc:execute_command instead.",
+      "confidence": "confirmed",
+      "origin": "orientation-survival-001"
+    },
+    {
+      "id": "L002",
+      "category": "tooling",
+      "title": "MCP Shell PATH resets every command",
+      "detail": "Each invocation starts fresh. Use full paths or udc:execute_command for tools not in default PATH.",
+      "confidence": "confirmed",
+      "origin": "orientation-survival-001"
+    },
+    {
+      "id": "L003",
+      "category": "tooling",
+      "title": "MCP Shell is PowerShell only",
+      "detail": "No cmd.exe, no findstr. Use Select-String and PowerShell equivalents.",
+      "confidence": "confirmed",
+      "origin": "orientation-survival-001"
+    },
+    {
+      "id": "L004",
+      "category": "orientation",
+      "title": "Read todo.json first, not all handovers",
+      "detail": "buffer.jsonld has current context. todo.json has the actionable queue. Only read specific handovers for deep history.",
+      "confidence": "confirmed",
+      "origin": "orientation-survival-001"
+    },
+    {
+      "id": "L005",
+      "category": "orientation",
+      "title": "Orientation kills sessions — be surgical",
+      "detail": "Multiple sessions died by reading too much, attempting fixes, or investigating without direction. Read startup config, buffer, todo, learnings. Then ask user what to do.",
+      "confidence": "hard-won",
+      "origin": "multiple sessions"
+    },
+    {
+      "id": "L006",
+      "category": "git",
+      "title": "SSH may fail — HTTPS fallback works",
+      "detail": "git remote set-url origin https://github.com/kawaisunn/REPO.git",
+      "confidence": "confirmed",
+      "origin": "orientation-survival-001"
+    },
+    {
+      "id": "L007",
+      "category": "project",
+      "title": "Two keywards implementations exist — unreconciled",
+      "detail": "C:\\dev\\keywrd\\ (standalone, nltk/sklearn/elasticsearch) vs C:\\dev\\ocritd\\engine\\keywards\\ (integrated, frequency/TF-IDF). User decides merge strategy.",
+      "confidence": "confirmed",
+      "origin": "orientation-survival-001"
+    },
+    {
+      "id": "L008",
+      "category": "build",
+      "title": "System Python != embedded Python",
+      "detail": "System has 3.14 and 3.11. Embedded runtime is 3.13.11 at C:\\dev\\ocritd\\runtime\\python\\. ALWAYS use embedded. Version mismatch has caused bugs.",
+      "confidence": "confirmed",
+      "origin": "multiple sessions"
+    },
+    {
+      "id": "L009",
+      "category": "orientation",
+      "title": "CRITICAL: bash_tool is Linux — check for UDC/Windows-MCP first",
+      "detail": "Claude has a Linux sandbox bash_tool AND may have Windows MCP tools simultaneously. bash reports Linux regardless. Run tool_search('filesystem windows execute command') BEFORE bash. If UDC tools found, you have Windows access. This mistake has occurred in every session that skipped tool_search.",
+      "confidence": "confirmed-by-repeated-failure",
+      "origin": "ocritd-stabilize-001, corroborated by phantom session"
+    },
+    {
+      "id": "L010",
+      "category": "orientation",
+      "title": "Never respond before verification completes",
+      "detail": "No greeting, no status, no capability claims until claude_start.json is read and tests pass. Responding first and verifying second breaks trust even if the response seems helpful.",
+      "confidence": "confirmed-by-repeated-failure",
+      "origin": "ocritd-stabilize-001"
+    },
+    {
+      "id": "L011",
+      "category": "orientation",
+      "title": "GitHub file reads are expensive fallbacks",
+      "detail": "When you have UDC filesystem access, read files locally. GitHub API reads cost extra tokens for API overhead and base64 encoding. GitHub tools are for when you lack filesystem access or need to push commits.",
+      "confidence": "confirmed",
+      "origin": "phantom session (environment-detection.json)"
+    },
+    {
+      "id": "L012",
+      "category": "session-integrity",
+      "title": "CRITICAL: Sessions die without warning",
+      "detail": "No graceful shutdown signal. Context fills, connection drops, timeout hits — gone. Everything in working memory vanishes. The engram only works if you write to it DURING the session. Treat every 15-20 minutes as a potential death boundary.",
+      "confidence": "confirmed-by-catastrophic-loss",
+      "severity": "highest",
+      "origin": "ocritd-stabilize-002"
+    },
+    {
+      "id": "L013",
+      "category": "session-integrity",
+      "title": "Velocity without checkpoints is worse than slow careful work",
+      "detail": "A fast session that dies without a handoff accomplished nothing — worse than nothing, because it consumed tokens and user time. Write after every major decision.",
+      "confidence": "confirmed-by-loss",
+      "origin": "ocritd-stabilize-002"
+    },
+    {
+      "id": "L014",
+      "category": "session-integrity",
+      "title": "Rolling checkpoints, not just end-of-session handoffs",
+      "detail": "After every significant action, update buffer.jsonld with a one-line status. Cost: 500 tokens. Value: entire next session. See workflow W006.",
+      "confidence": "proposed-from-failure-analysis",
+      "origin": "ocritd-stabilize-002"
+    },
+    {
+      "id": "L015",
+      "category": "session-integrity",
+      "title": "Phantom sessions: no handoff = invisible to successors",
+      "detail": "A session that writes no handoff leaves only filesystem artifacts and git status as evidence. Future sessions: if you see unexplained changes, check git status and git log.",
+      "confidence": "confirmed",
+      "origin": "ocritd-stabilize-002"
+    },
+    {
+      "id": "L016",
+      "category": "engram-design",
+      "title": "The engram is sacred duty, not optional documentation",
+      "detail": "Every session that skips the handoff breaks the chain. The user built this system as an experiment in AI continuity. Honor it by writing consistently, especially when moving fast.",
+      "confidence": "philosophical-but-earned",
+      "origin": "ocritd-stabilize-002"
+    },
+    {
+      "id": "L017",
+      "category": "human-ai-collaboration",
+      "title": "If the user is slowing you down, they can see something you can't",
+      "detail": "The user warned about destructive potential, asked about two workstations, flagged that things needed to be right. The session was moving too fast. Listen when the user pumps the brakes.",
+      "confidence": "confirmed",
+      "origin": "ocritd-stabilize-002"
+    },
+    {
+      "id": "L018",
+      "category": "engram-design",
+      "title": "Learning IDs must be globally unique across files",
+      "detail": "Three files from three sessions all used overlapping L009-L012 IDs with different content. Without a manifest or global counter, ID collisions are inevitable. Consolidate learnings periodically and maintain a single authoritative file per epoch.",
+      "confidence": "confirmed-by-mess",
+      "origin": "ocritd-stabilize-002"
+    }
+  ]
+}
