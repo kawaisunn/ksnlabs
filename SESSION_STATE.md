@@ -1,8 +1,8 @@
 # Session State - All Projects
 
-**Last Updated**: 2026-02-15, OCRITD Git Init Session
+**Last Updated**: 2026-02-19, RP-315 v2 Schema Normalization Session
 **Active Session**: Handoff complete
-**Next Session Focus**: RP-315 Data Dictionary (DEADLINE Feb 20)
+**Next Session Focus**: RP-315 SQL generation + remaining table builds (DEADLINE Feb 20)
 
 ---
 
@@ -10,7 +10,7 @@
 
 | Project | Location | Status | Progress | Next Milestone |
 |---------|----------|--------|----------|----------------|
-| **aggdb** | C:\dev\aggdb | Active | 25% | RP-315 Presentation (Feb 20) |
+| **aggdb** | C:\dev\aggdb | Active | 50% | RP-315 Presentation (Feb 20) |
 | **ocritd** | C:\dev\ocritd | Stable | 80% | GUI debug, engine testing |
 | **cait** | C:\dev\cait | Dev | 40% | Training pipeline |
 | **keywrd** | C:\dev\keywrd | Planned | 10% | TBD |
@@ -24,53 +24,57 @@
 
 | Repo | GitHub URL | Branch | Last Commit |
 |------|-----------|--------|-------------|
-| ksnlabs | kawaisunn/ksnlabs (public) | master | 919a4e4 - Git integration |
-| ocritd | kawaisunn/ocritd (private) | main | 97c446c - Initial commit, 64 files |
+| ksnlabs | kawaisunn/ksnlabs (public) | main | v2 schema normalization |
+| ocritd | kawaisunn/ocritd (private) | main | 97c446c - Initial commit |
 
 ---
 
-## Just Completed (2026-02-15 Evening Session)
+## Just Completed (2026-02-19 Session)
 
-- Verified GitHub PAT, configured in claude_desktop_config.json
-- Read all project docs thoroughly before acting
-- Created OBSOLETE_CHECK.md for ocritd doc cleanup
-- Initialized git in C:\dev\ocritd (64 files committed)
-- Created kawaisunn/ocritd private repo, pushed to GitHub
-- Identified 16,600 token waste from Claude project auto-loading
-- Created _PROJECT_INSTRUCTIONS.md as lean replacement (~95% savings)
-- Session handoff written to engram/session-handovers/
+### RP-315 v2 Schema Design (major milestone)
+- Critiqued and replaced v1 flat schema with proper normalization
+- Complete 81-field ITD spec mapping to normalized entities
+- Evolved Party model → Entity model through interactive design
+- Split EntityType (what it IS) from EntityRole (what it DOES at a site)
+- Document consolidation: 13+ link columns → single Document table
+- QAMS → Document + Certification extension pattern
+- TestResult chains through Document for full traceability
+- Built interactive ERD diagrams and drag-drop workspaces
+- Pushed v2_DataModel.md and v2_EntityModel.md to GitHub
 
----
-
-## Human Actions Needed Before Next Session
-
-1. **Review OBSOLETE_CHECK.md** in C:\dev\ocritd\ (mark dispositions)
-2. **Replace Claude project refs**: Swap _handoff.md, _handoff_historic.md, _ocritd_project_vision.md with _PROJECT_INSTRUCTIONS.md
-3. **Restart Claude Desktop** (activates GitHub MCP with new PAT)
-4. **Change GitHub password** (was exposed in chat — URGENT)
-5. **Commit ksnlabs updates**: `cd C:\dev\ksnlabs && git add -A && git commit -m "Session handoff: ocritd git init" && git push`
+### Current v2 Schema Tables
+**Core**: Site, SiteName, Entity, EntityAddress, EntityLink, Document, Certification, TestResult
+**Spatial**: Access, Polygon, SpatialOther
+**Lookups**: LU_Commodity, LU_OwnerType, LU_OperationalStatus, LU_AccessType, LU_AccuracyLevel, LU_TestType, LU_EntityType, LU_EntityRole, LU_NameType, LU_DocType, LU_PolygonType, LU_PLSSPolygon
+**Total**: 23 tables (reduced from 28 via Entity model consolidation)
 
 ---
 
 ## Critical Deadline: RP-315
 
-**Database design presentation due: February 20, 2026** (5 days)
+**Database design presentation due: February 20, 2026** (TOMORROW)
 
 Remaining deliverables:
-- Data dictionary (Feb 16-17)
-- ERD diagram (Feb 18)
-- Presentation prep (Feb 19)
-- Presentation (Feb 20)
+- ~~Data model document~~ ✅ v2_DataModel.md
+- ~~Entity model~~ ✅ v2_EntityModel.md
+- ~~ERD diagram~~ ✅ v2_ERD.html
+- Build remaining tables interactively (Site, Document, Test, Access, Spatial)
+- Generate v2_Create_Schema.sql
+- Populate lookup INSERT statements
+- Deploy to BIGSPIDER\KSN
+- Presentation prep
 
 ---
 
-## OCRITD Status Detail
+## Key Files
 
-**Git**: Initialized, pushed to kawaisunn/ocritd (private)
-**MSI**: Builds successfully (v0.8.0)
-**GUI**: Launches but no window appears (needs debug)
-**Engine**: Functional, needs real-document testing
-**Next**: After RP-315 deadline — GUI debug, engine test, keywards module
+| File | Location | Purpose |
+|------|----------|--------|
+| ITD Spec | C:\dev\MSSQL15.KSN\2026.01.22.DRAFT.DatabaseFields 4.xlsx | 81-field specification |
+| v1 Schema | aggdb/sql/v1_Create_Schema.sql | Superseded flat schema |
+| v2 Data Model | aggdb/v2_DataModel.md | Complete field mapping |
+| v2 Entity Model | aggdb/v2_EntityModel.md | Entity/Contact detail |
+| v2 SQL (pending) | aggdb/sql/v2_Create_Schema.sql | Not yet generated |
 
 ---
 

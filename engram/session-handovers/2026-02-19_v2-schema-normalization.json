@@ -1,0 +1,99 @@
+{
+  "sessionId": "rp315-v2-normalization-001",
+  "date": "2026-02-19",
+  "duration": "~3 hours",
+  "model": "claude-opus-4-6",
+  "interface": "claude-web-mcp",
+  "focus": "RP-315 v2 database schema: complete normalization of 81 ITD spec fields, Entity model design, interactive ERD workspace",
+
+  "accomplishments": [
+    "Critiqued v1 flat schema — identified contact info embedding, CityStateZip mess, no history preservation",
+    "Completed full 81-field mapping from ITD spec to normalized entities",
+    "Banned 'Source' from all table/field names — replaced with unambiguous terminology",
+    "Designed initial 28-table structure: 14 core/spatial + 14 lookups",
+    "Built Party model with Person/Organization subtypes, ContactMethod, Address",
+    "Consolidated 13+ document link columns into single Document table with DocType lookup",
+    "QAMS → Document + Certification extension pattern",
+    "TestResult chains through Document (Site → Document → TestResult → LU_TestType)",
+    "Avoidance areas as Polygon spatial features, not text fields",
+    "Created interactive HTML ERD diagram (v2_ERD.html) — color-coded by layer",
+    "Created React drag-and-drop workspace for field reorganization (v2_builder.jsx)",
+    "Evolved Party model → Entity model during interactive table building",
+    "Split EntityType (what it IS: Person/LLC/Inc) from EntityRole (what it DOES: Owner/Operator)",
+    "Added SiteID to EntityLink junction — critical for site-to-entity-to-role chain",
+    "EntityAddress bundles address+email+web+phone+fax as one contact card",
+    "Built final Entity workspace (v2_entity_builder.jsx) with relationship diagram",
+    "Pushed v2_DataModel.md and v2_EntityModel.md to GitHub"
+  ],
+
+  "designDecisions": [
+    {
+      "decision": "Entity model over Party model",
+      "rationale": "Generic NameOne/Two/Three flexes for people and businesses. EntityType carries classification (Person, LLC, Inc, Co, Corp, Agency). EntityRole carries site relationship."
+    },
+    {
+      "decision": "EntityType and EntityRole as separate lookups",
+      "rationale": "Type = what the entity IS (orthogonal to site). Role = what the entity DOES at a specific site. A Person can be an Owner. An LLC can be an Operator. Cannot query these independently if combined."
+    },
+    {
+      "decision": "EntityAddress as bundled contact card",
+      "rationale": "Address, email, web, phone, fax all describe how to reach someone. One record = one snapshot. Junction connects entity to address at site with role and dates."
+    },
+    {
+      "decision": "Document table absorbs all link columns",
+      "rationale": "Plat, permit, deed, photos, imagery, QAMS, IR142, access docs — all share link+type+date structure. One table with DocType lookup. Sites can have multiple of each over time."
+    },
+    {
+      "decision": "SiteName table for identifiers",
+      "rationale": "ITD number, IGS number, common names, aliases — all are identifiers of different types. One table with NameType lookup handles current and historical names."
+    }
+  ],
+
+  "filesCreated": [
+    "aggdb/v2_DataModel.md — Complete 81-field mapping and table structures",
+    "aggdb/v2_EntityModel.md — Entity/Contact model detail",
+    "v2_ERD.html — Interactive HTML ERD diagram (outputs only)",
+    "v2_builder.jsx — React drag-drop workspace (outputs only)",
+    "v2_entity_builder.jsx — React Entity model workspace (outputs only)"
+  ],
+
+  "currentSchema": {
+    "coreTables": ["Site", "SiteName", "Entity", "EntityAddress", "EntityLink", "Document", "Certification", "TestResult"],
+    "spatialTables": ["Access", "Polygon", "SpatialOther"],
+    "lookupTables": ["LU_Commodity", "LU_OwnerType", "LU_OperationalStatus", "LU_AccessType", "LU_AccuracyLevel", "LU_TestType", "LU_EntityType", "LU_EntityRole", "LU_NameType", "LU_DocType", "LU_PolygonType", "LU_PLSSPolygon"],
+    "totalTables": 23,
+    "specFieldsCovered": 81,
+    "specFieldsInvented": 0
+  },
+
+  "entityModelValues": {
+    "LU_EntityType": ["Person", "Co.", "Inc.", "Ltd.", "LLC", "LLP", "Corp.", "Agency", "Bureau", "Trust", "Partnership", "Other"],
+    "LU_EntityRole": ["Owner", "Operator", "Lessee", "ITD Liaison", "Lab", "Contractor", "Consultant", "Permittee", "Contact", "Other"]
+  },
+
+  "pendingActions": {
+    "human": [
+      "Review v2_DataModel.md and v2_EntityModel.md for accuracy",
+      "Use drag-drop workspace to finalize field placement if needed",
+      "Confirm table naming before SQL generation"
+    ],
+    "nextSession": [
+      "Build remaining tables in interactive workspace (Site, Document, Test, Access, Spatial)",
+      "Generate v2_Create_Schema.sql from finalized model",
+      "Populate lookup table INSERT statements",
+      "Prepare presentation materials for Feb 20 deadline",
+      "Deploy to BIGSPIDER\\KSN SQL Server instance"
+    ]
+  },
+
+  "criticalContext": {
+    "deadline": "2026-02-20 — Rebecca presents database schema to ITD stakeholders",
+    "constraint": "81 ITD spec fields exactly — nothing invented, nothing lost",
+    "platform": "SQL Server + ESRI ArcGIS Enterprise SDE",
+    "sqlInstance": "BIGSPIDER\\KSN",
+    "specFile": "C:\\dev\\MSSQL15.KSN\\2026.01.22.DRAFT.DatabaseFields 4.xlsx",
+    "v1Schema": "aggdb/sql/v1_Create_Schema.sql (superseded)"
+  },
+
+  "keyInsight": "The ITD spec describes data needs, NOT database structure. The 81 fields are scattered illogically — the designer's job is to normalize them into proper entities. Entity model evolution (Party→Entity) happened through interactive table building where user defined field names and the AI identified structural issues (mixed type/role, missing site reference). The split of EntityType (what it IS) from EntityRole (what it DOES) was the critical insight."
+}
