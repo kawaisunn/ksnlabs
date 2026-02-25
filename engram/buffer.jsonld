@@ -1,0 +1,57 @@
+{
+  "@context": "https://schema.org",
+  "@type": "DigitalDocument",
+  "name": "engram-buffer",
+  "description": "Working memory buffer — latest session state",
+  "dateModified": "2026-02-25T15:30:00-07:00",
+  "version": "epoch-003",
+
+  "active_session": {
+    "status": "HANDOVER_COMPLETE",
+    "model": "claude-opus-4.6-web",
+    "machine": "HOME/BIGSPIDER",
+    "session_id": "opus46-web-epoch003-002",
+    "handover": "handovers/handover_20260225_session2.md"
+  },
+
+  "current_task": {
+    "name": "OCRITD v0.9 JSON Output Redesign",
+    "status": "CODE_NOT_STARTED",
+    "spec_file": "C:\\dev\\ocritd\\docs\\JSON_OUTPUT_SPEC_v0.9.md",
+    "primary_target": "C:\\dev\\ocritd\\engine\\core\\processor.py _write_outputs()",
+    "scope": [
+      "Restructure JSON to header/body/footer",
+      "File-level metadata in header",
+      "Page break tallying in footer",
+      "Convert images/text to PDF pipeline",
+      "Skip copy source dir checkbox in GUI"
+    ],
+    "NOT_this_round": [
+      "keywords/tags extraction",
+      "PLSS parsing",
+      "entity extraction",
+      "cait integration",
+      "content-based dupe detection",
+      "file renaming/metadata writeback"
+    ]
+  },
+
+  "recent_accomplishments": [
+    "OCRITD v0.8 first successful build+run on HOME (2520 objects)",
+    "Fixed ResolveAppBase() for dev mode path resolution",
+    "Fixed module invocation (-m engine with PYTHONPATH)",
+    "Added 3 missing CLI arguments (--skip-encrypted, --ext-filter, --no-index)",
+    "Captured JSON_OUTPUT_SPEC_v0.9.md with full user requirements",
+    "Updated spec with user clarifications (test data flag, UNC+mapped paths, OCR all)"
+  ],
+
+  "key_user_decisions": {
+    "json_format": "header/body/footer three-section structure",
+    "ocr_strategy": "OCR all documents, check text layer first",
+    "file_conversion": "word/text/jpg/raster all convert to PDF first",
+    "source_paths": "one instance UNC + mapped, then shorthand",
+    "test_data": "flag in header: INCLUDES TEST DATA",
+    "keywords": "critical foundation for future — renaming, dupes, metadata all depend on it",
+    "cait": "central intelligence for OCR cleanup, dates, PLSS, georef, SQL"
+  }
+}
