@@ -69,7 +69,7 @@
         "file": "consolidated_epoch-002.json",
         "location": "C:\\dev\\ksnlabs\\engram\\learnings\\consolidated_epoch-002.json",
         "role": "Authoritative learnings for current epoch. L001-L018. Previous files are archived.",
-        "nextId": "L019"
+        "nextId": "L024"
       },
       "workflows": {
         "file": "2026-02-16_session-and-git-workflows.json",
@@ -81,6 +81,11 @@
         "location": "C:\\dev\\ksnlabs\\engram\\manifest.json",
         "role": "This file. System state tracker."
       }
+    },
+    "sessionRegistry": {
+      "file": "session-registry.json",
+      "location": "C:\\dev\\ksnlabs\\engram\\session-registry.json",
+      "role": "Canonical log of all sessions. Model, machine, outcome, contributions. Phantom detection."
     },
     "taskQueue": {
       "file": "todo.json",

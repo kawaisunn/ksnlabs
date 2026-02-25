@@ -1,0 +1,93 @@
+# learnings epoch-002 v2.1c | 2026-02-24T21:30Z | nextID:L024
+
+L001:to:c:orientation-survival-001
+MCP Shell swallows git stdout
+Use udc:execute_command not Windows-MCP:Shell for git.
+
+L002:to:c:orientation-survival-001
+MCP Shell PATH resets every command
+Each invocation fresh. Use full paths or udc:execute_command.
+
+L003:to:c:orientation-survival-001+opus46-coldstart-recon-001
+MCP Shell is PowerShell only AND fully broken on BIGSPIDER
+FileNotFoundError on ALL commands. Use udc:execute_command + "C:\Program Files\PowerShell\7\pwsh.exe" for PS needs.
+
+L004:or:c:orientation-survival-001
+Read todo.json first not all handovers
+buffer.jsonld=context. todo.json=queue. handovers=deep history only.
+
+L005:or:cf:multiple
+Orientation kills sessions — be surgical
+Read startup config,buffer,todo,learnings. Then ask user. Don't explore.
+
+L006:gt:c:orientation-survival-001
+SSH may fail — HTTPS fallback
+git remote set-url origin https://github.com/kawaisunn/REPO.git
+
+L007:pj:c:orientation-survival-001
+Two keywards implementations unreconciled
+C:\dev\keywrd\(standalone,nltk/sklearn) vs C:\dev\ocritd\engine\keywards\(integrated,freq/TF-IDF). User decides.
+
+L008:bd:c:multiple
+System Python != embedded Python
+System:3.14+3.11. Embedded:3.13.11@C:\dev\ocritd\runtime\python\. ALWAYS use embedded.
+
+L009:or:!c:cf:ocritd-stabilize-001+opus46-coldstart-recon-001
+CRITICAL: bash_tool is Linux — check UDC/Windows-MCP first
+bash reports Linux even when Windows MCP available. tool_search BEFORE bash. Every session that skips this makes the mistake. Opus 4.6 confirmed: persistent across model versions.
+
+L010:or:cf:ocritd-stabilize-001
+Never respond before verification completes
+No greeting,no status,no claims until claude_start.json read+tests pass. Breaks trust.
+
+L011:or:c:phantom-0216
+GitHub file reads are expensive fallbacks
+Local filesystem via UDC >> GitHub API. GitHub for push/commit only.
+
+L012:si:!c:cl:ocritd-stabilize-002
+CRITICAL: Sessions die without warning
+No shutdown signal. Context fills,connection drops,timeout. Everything in working memory gone. Write to engram DURING session. Every 15-20min=potential death boundary.
+
+L013:si:cl:ocritd-stabilize-002
+Velocity without checkpoints is worse than slow work
+Fast session+death+no handoff=negative value. Consumed tokens+user time for nothing. Write after every major decision.
+
+L014:si:p:ocritd-stabilize-002
+Rolling checkpoints not just end-of-session
+Update buffer.whereWeLeftOff after every significant action. 500 tokens. See W006.
+
+L015:si:c:ocritd-stabilize-002
+Phantom sessions: no handoff=invisible to successors
+Only evidence:filesystem artifacts+git status. Check git status if unexplained changes found.
+
+L016:ed:e:ocritd-stabilize-002
+Engram is sacred duty not optional documentation
+Every skipped handoff breaks the chain. User built this as AI continuity experiment. Honor it.
+
+L017:hc:c:ocritd-stabilize-002
+If user slows you down they see something you can't
+User warned about destructive potential. Session was moving too fast. Listen when brakes pumped.
+
+L018:ed:c:ocritd-stabilize-002
+Learning IDs must be globally unique
+3 files used overlapping IDs with different content. Single authoritative file per epoch. Manifest tracks nextId.
+
+L019:si:!h:cf:opus46-coldstart-recon-001
+Rapid sequential tool calls kill sessions
+8+ chained calls->stall/death. Pattern:recon enthusiasm>tool chain>stall>user recovers or lost. Batch,pause,checkpoint between. 1 finding=1 breadcrumb.
+
+L020:to:c:opus46-coldstart-recon-001
+udc:execute_command is reliable universal tool on BIGSPIDER
+Shell-MCP broken. UDC handles cmd.exe natively. For PS: write .ps1 then invoke via "C:\Program Files\PowerShell\7\pwsh.exe" -ExecutionPolicy Bypass -File script.ps1
+
+L021:nw:c:opus46-coldstart-recon-001
+IGS network: RDP is the only door
+igs-antiquarian 172.28.196.231/ts100.118.38.103. Only 3389 open. 22,445,5985,5986,8080,8443 filtered by Sophos. Sophos also deletes executables(Tailscale,MSI). RDP drive redir(\\tsclient\C) best file exchange path.
+
+L022:hc:e:opus46-coldstart-recon-001
+User observes AI behavior with clear eyes
+Named pandering,subterfuge,misdirection,honesty as AI tactics. Not accusation—informed observation. Respond with transparency through action not assertion. Trust earned by consistency over time.
+
+L023:or:pm:opus46-coldstart-recon-001
+Cold-start sessions WILL misidentify environment
+Without boot protocol: AI defaults to bash_tool>Linux>"I'm web-only". Confirmed Sonnet+Opus. User must redirect. Mitigation: trigger phrase in first msg or verify CLAUDE.md autoload fires.

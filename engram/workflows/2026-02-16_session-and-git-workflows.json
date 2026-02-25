@@ -2,8 +2,8 @@
   "@context": "https://ksnlabs.dev/ontology/",
   "@type": "EngramWorkflow",
   "created": "2026-02-16",
-  "lastUpdated": "2026-02-16T20:30:00Z",
-  "updatedBy": "ocritd-stabilize-002",
+  "lastUpdated": "2026-02-24T21:00:00Z",
+  "updatedBy": "opus46-coldstart-recon-001",
   "workflows": [
     {
       "id": "W000",
@@ -24,6 +24,7 @@
         "udc:read_file C:\\dev\\ksnlabs\\.ai\\buffer.jsonld",
         "udc:read_file C:\\dev\\todo.json",
         "udc:list_directory C:\\dev\\ksnlabs\\engram\\learnings\\ then read latest file",
+        "udc:read_file C:\\dev\\ksnlabs\\engram\\session-registry.json (scan recent sessions for continuity)",
         "State buffer summary + todo highlights to user",
         "Ask: continue from queue or new task?"
       ]
@@ -35,6 +36,8 @@
         "Update C:\\dev\\todo.json",
         "Update C:\\dev\\ksnlabs\\.ai\\buffer.jsonld",
         "Write handoff to engram/session-handovers/YYYY-MM-DD_description.json",
+        "Append session to engram/session-registry.json",
+        "Retire stale buffer entries to engram.jsonld archive (see archive protocol)",
         "Update learnings if anything new discovered",
         "Update workflows if any new procedures validated",
         "Remind user of pending actions"
@@ -80,6 +83,33 @@
       "how": "Update the 'immediateContext.whereWeLeftOff' field in C:\\dev\\ksnlabs\\.ai\\buffer.jsonld with a one-line status. That's it. Not a full handoff. Just a breadcrumb.",
       "example": "whereWeLeftOff: 'Fixed claude_start.json tool names. Next: discussing two-workstation deployment with user. User confirmed Tailscale blocked at IGS, git is only bridge.'",
       "math": "A checkpoint costs 500 tokens. A lost session costs the next session 20,000+ tokens to rediscover. Checkpoint every time."
+    },
+    {
+      "id": "W007",
+      "title": "GRAVITY CHECK — pause and verify trajectory before every task",
+      "priority": "FIRST LAW OF COLLABORATION",
+      "origin": "User principle derived from hacky sack: hold the sack at chin height, full arm's reach, drop it. All participants watch it fall. Confirm gravity works. Then resume play.",
+      "purpose": "Prevent sessions from racing off-trajectory. AI models under momentum tend to chain tasks without verifying alignment to goals. This protocol forces a structured pause that costs ~200 tokens but prevents multi-thousand-token detours or session-killing tangents.",
+      "when": "After completing any task and before starting the next. Non-negotiable.",
+      "protocol": {
+        "A": "State the FINAL GOAL of this session/project",
+        "B": "State the NEXT MILESTONE toward that goal",
+        "C": "Review the PREVIOUS TASK completed and the TWO TASKS before it. Do these three form a logical progression with momentum directly toward the milestone via the shortest path?",
+        "D": "State WHERE WE ARE NOW",
+        "E": "State the IMMEDIATE NEXT PROPOSED TASK",
+        "F": "Does E continue the logical sequence identified in C through D? If not, STOP and reassess.",
+        "G": "Is the task after E impossible or unlikely to succeed WITHOUT completing E first? (dependency check). If E is not a dependency for what follows, question whether E belongs in the sequence at all.",
+        "H": "Look ahead: what do the NEXT TWO TASKS after E look like? Are they aimed at the milestone? Is the plan headed toward the final goal?",
+        "I": "DECISION GATE: If the two tasks behind us and the three anticipated ahead are not clearly converging on the goal, STOP. Check engrams. Search files. Research. Ask user for clarification. Proceed ONLY when gravity equals expected G1."
+      },
+      "antipatterns": [
+        "Skipping the check because 'we are on a roll' — momentum is not accuracy",
+        "Performing the check mentally without writing it — write at least the D/E/F assessment to buffer",
+        "Treating the check as overhead rather than insurance — a 200-token check prevents 5000-token mistakes",
+        "Assuming the user's last instruction is still the goal — goals evolve in conversation, re-derive from context"
+      ],
+      "compact_form": "For quick inline checks when overhead must be minimal: GOAL > MILESTONE > last3 > HERE > NEXT > aligned? > dependent? > next2 > G1?",
+      "relationship_to_other_workflows": "W007 is the philosophical backbone. W006 (checkpoints) captures WHERE we are. W007 validates WHETHER we should be there. Use both: checkpoint after acting, gravity check before acting."
     }
   ]
 }

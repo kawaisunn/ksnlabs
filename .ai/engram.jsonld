@@ -1,9 +1,42 @@
-﻿{
+{
   "@context": {"@vocab": "https://ksnlabs.dev/ontology/"},
   "@type": "AIKnowledgeEngram",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "created": "2026-02-13T00:00:00Z",
-  "lastUpdated": "2026-02-13T09:30:00Z",
-  "sessionCount": 1,
-  "NOTE": "Full engram - see repository file for complete content"
+  "lastUpdated": "2026-02-24T21:20:00Z",
+  "updatedBy": "opus46-coldstart-recon-001",
+  "purpose": "Long-term archived knowledge. Entries retired from buffer when they age past 3 sessions. Indexed for quick search by topic. AI sessions should lazy-load this file only when buffer + learnings don't cover what's needed.",
+
+  "archiveProtocol": {
+    "when": "During W002 (session shutdown), review buffer.sessionHistory entries.",
+    "retire_if": "Entry is older than 3 sessions (count by sessionHistory array position, not calendar days).",
+    "how": "Extract key facts from the retiring entry into a new archive entry below. Remove the entry from buffer.sessionHistory. Keep buffer lean.",
+    "index_by": ["topic", "project", "date", "key_facts"],
+    "search_pattern": "Future sessions: scan topic and key_facts fields. If a match is found, the full session handover can be read from engram/session-handovers/ for detail."
+  },
+
+  "archived": [
+    {
+      "id": "A001",
+      "retiredFrom": "buffer.sessionHistory",
+      "retiredBy": "opus46-coldstart-recon-001",
+      "retiredDate": "2026-02-24",
+      "originalSession": "rp315-db-deploy-complete",
+      "date": "2026-02-16/17",
+      "topic": ["ITD_MaterialSources", "database", "SQL Server", "RP-315", "aggdb"],
+      "project": "aggdb",
+      "key_facts": [
+        "ITD_MaterialSources database deployed on BIGSPIDER\\KSN",
+        "10 tables: 4 core (Site, Resource, Source, TestResult) + 6 lookup",
+        "81 ITD fields mapped from Excel spec in C:\\dev\\MSSQL15.KSN\\",
+        "Data path: C:\\dev\\MSSQL15.KSN\\MSSQL\\DATA\\",
+        "Computed columns require SET QUOTED_IDENTIFIER ON",
+        "FK/PK columns must match exactly in type and size",
+        "Query sys.master_files to find actual SQL Server data paths",
+        "Deployment scripts in C:\\dev\\aggdb\\sql\\ — portable for IGS",
+        "Naming review needed: Site/Source/Resource terminology overlap"
+      ],
+      "handover_file": "None in engram/session-handovers/. Partial handoff in .ai/SESSION_HANDOFF_rp315_db_deploy.md"
+    }
+  ]
 }

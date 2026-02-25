@@ -1,0 +1,17 @@
+# buffer v1.0.11c | opus46-coldstart-recon-001 | 2026-02-24T21:30Z | epoch-002
+@now net-recon BIGSPIDER<->IGS done + engram v2 overhaul COMPLETE
+@why user 50/50 home/IGS. need remote file access for AI-assisted work both sites
+@left engram v2 done(registry,W007,archive,protocol,README). pending:RDP drive redir for IGS
+@next RDP-drive-redir > test \\tsclient\C > update claude_desktop_config.json > resume aggdb/ocritd
+@urg MED infra not deadline
+@blk Sophos(blocks all except RDP:3389 to IGS);Shell-MCP(broken on BIGSPIDER,FileNotFoundError)
+@tkn low-moderate, session recovered from stall
+@net bigspider:129.101.139.85:ts100.120.131.75 | igs:172.28.196.231:ts100.118.38.103:only3389
+@boot claudeDesktopAutoload:NEEDS-VERIFY(didnt fire this session) | config:OK | failsafe:OK
+
+# session log (newest first, retire >3 to engram.jsonld)
+%opus46-coldstart-recon-001|2026-02-24|PT
+coldstart+IGS-recon+engram-overhaul. engram v2 complete. RDP config pending.
+
+%rp315-db-deploy-complete|2026-02-16/17|OK
+->archived A001. see .ai/engram.jsonld

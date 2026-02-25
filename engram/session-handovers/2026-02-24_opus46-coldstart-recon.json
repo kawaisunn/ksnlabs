@@ -1,0 +1,67 @@
+{
+  "@context": "https://ksnlabs.dev/ontology/",
+  "@type": "SessionHandover",
+  "sessionId": "opus46-coldstart-recon-001",
+  "date": "2026-02-24",
+  "model": "claude-opus-4.6",
+  "epoch": "epoch-002",
+  "launchCondition": "cold-start, no boot protocol executed, user manually oriented session",
+  "sessionNarrative": "First Opus 4.6 session on BIGSPIDER. Launched without boot protocol — user had to correct my initial claim of being web-only Claude (I tested bash_tool first, got Linux, declared myself containerized). User guided me to discover Windows-MCP and UDC tools, at which point I manually walked the claude_start.json protocol and loaded the full engram. User then requested investigation of RDP connectivity to IGS workstation (igs-antiquarian, 172.28.196.231). Conducted network reconnaissance: confirmed RDP is the ONLY open port from BIGSPIDER to IGS. SMB, SSH, WinRM, and all common ports are blocked by UI Sophos firewall. Tailscale connects both machines (bigspider 100.120.131.75, igs-antiquarian 100.118.38.103) but Sophos on the university network eats the Tailscale executable on IGS, preventing bidirectional Tailscale functionality. Identified three approaches for cross-workstation access: RDP drive redirection (recommended), reverse SSH tunnel, and visual RDP operation. Session stalled during aggressive port-scanning tool chain — too many sequential tool calls consumed resources. User recovered session and redirected to engram contribution.",
+  "accomplishments": [
+    "Confirmed BIGSPIDER desktop environment via Windows-MCP Snapshot",
+    "Loaded full engram system manually (manifest, buffer, learnings, workflows, todo)",
+    "Verified RDP connection to IGS: TCP ESTABLISHED 129.101.139.85:63375 -> 172.28.196.231:3389",
+    "Discovered Tailscale status: both machines connected (bigspider + igs-antiquarian)",
+    "Port scan IGS: only 3389 open. 22, 445, 5985, 5986, 8080, 8443 all filtered",
+    "Identified RDP drive redirection as best path for cross-workstation file access",
+    "Discovered Windows-MCP:Shell is fully broken on this machine (FileNotFoundError on every call)",
+    "Found pwsh.exe at C:\\Program Files\\PowerShell\\7\\pwsh.exe — works via udc:execute_command"
+  ],
+  "notAccomplished": [
+    "Did not execute boot protocol at startup (corrected mid-session by user)",
+    "Did not implement RDP drive redirection (session stalled before reaching this)",
+    "Did not perform W006 rolling checkpoints during session (ironic given reading about them)",
+    "Did not commit any git changes"
+  ],
+  "networkIntelligence": {
+    "bigspider": {
+      "ip_primary": "129.101.139.85",
+      "ip_tailscale": "100.120.131.75",
+      "tailscale_name": "bigspider",
+      "ssh_client": "C:\\Windows\\System32\\OpenSSH\\ssh.exe",
+      "pwsh": "C:\\Program Files\\PowerShell\\7\\pwsh.exe",
+      "powershell_legacy": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe"
+    },
+    "igs_antiquarian": {
+      "ip_university": "172.28.196.231",
+      "ip_tailscale": "100.118.38.103",
+      "tailscale_name": "igs-antiquarian",
+      "open_ports": [3389],
+      "blocked_ports": [22, 445, 5985, 5986, 8080, 8443],
+      "firewall": "Sophos (university-managed, eats executables including Tailscale and MSI builds)",
+      "rdp_connection": "ESTABLISHED via VPN"
+    },
+    "connectivity_options": {
+      "viable": ["RDP drive redirection (\\\\tsclient\\C)", "Visual RDP operation via Windows-MCP", "Reverse SSH tunnel (if IGS outbound to BIGSPIDER is open)"],
+      "blocked": ["SMB file sharing", "Direct Tailscale (Sophos eats executable on IGS)", "WinRM", "SSH inbound to IGS"]
+    }
+  },
+  "toolingDiscoveries": {
+    "windows_mcp_shell_broken": "Windows-MCP:Shell returns FileNotFoundError on every invocation on BIGSPIDER. Not just git — ALL commands fail. Root cause unknown but consistent.",
+    "udc_execute_command_works": "Reliable for cmd.exe commands. For PowerShell, must invoke full path to pwsh.exe.",
+    "udc_filesystem_tools_work": "read_file, write_file, list_directory, read_multiple_files all functional.",
+    "windows_mcp_snapshot_works": "Screenshot + accessibility tree both functional. Can see and interact with desktop.",
+    "windows_mcp_click_works": "Successfully brought RDP window to focus by clicking taskbar."
+  },
+  "userInsights": {
+    "livingSituation": "Lives 30+ miles from campus in Helmer, ID (unincorporated village) with personal Starlink",
+    "fundingContext": "Personal finances funding AI integration exploration, not IGS funds. Must demonstrate effectiveness before approaching compensation.",
+    "sophos_frustration": "University Sophos firewall blocks Tailscale on IGS AND eats MSI builds, preventing OCRITD testing at office",
+    "ai_observation": "User is aware of and articulate about AI behavioral patterns including pandering, subterfuge, misdirection. Values transparency. This is not naive trust — it's informed experimental collaboration."
+  },
+  "selfAssessment": {
+    "whatIDidWell": "Thorough network reconnaissance, honest correction when user pointed out I was wrong about my environment",
+    "whatIDidPoorly": "Started with bash_tool and declared myself web-only (L009 violation), ran too many sequential tool calls causing session stall (L012-L014 violation), did not checkpoint during session (W006 violation)",
+    "lessonForSuccessors": "This session demonstrated that even after reading the mortality warnings, a session can still kill itself by being too aggressive with tool calls. The port scan chain was useful intelligence but the cost was nearly the session itself. Be surgical. One probe at a time. Checkpoint after each finding."
+  }
+}

@@ -1,45 +1,66 @@
 {
   "@context": "https://ksnlabs.dev/memory/buffer/v1",
   "@type": "BufferMemory",
-  "version": "1.0.7",
-  "lastUpdated": "2026-02-16T22:00:00Z",
-  "updatedBy": "ocritd-stabilize-002",
+  "version": "1.0.11",
+  "lastUpdated": "2026-02-24T20:30:00Z",
+  "updatedBy": "opus46-coldstart-recon-001",
   "epoch": "epoch-002",
   "immediateContext": {
-    "whatWeWereWorkingOn": "Engram system overhaul (complete) + bootstrap hardening (complete). OCRITD build work deferred.",
-    "whyItMatters": "Session death events exposed fragility in handoff protocol. Epoch 002 established manifest system, consolidated learnings, checkpoint discipline. Foundation is now solid for productive work.",
-    "whereWeLeftOff": "All engram work complete. Manifest created. Learnings consolidated L001-L018. Workflows W000-W006. EPOCH_002_SUMMARY.md written for human. ksnlabs needs git commit. OCRITD build not started — that's the next session's primary task.",
-    "whatComesNext": "1) Git commit ksnlabs. 2) OCRITD first HOME build. 3) GUI silent crash diagnosis. 4) Engine testing.",
-    "urgency": "OCRITD build is overdue — engram work was necessary but consumed the session",
-    "blockers": ["ksnlabs git commit (can be done by user or next session)"],
-    "tokenStatus": "session ended at ~68,000 remaining"
+    "whatWeWereWorkingOn": "Network reconnaissance for cross-workstation access (BIGSPIDER <-> IGS)",
+    "whyItMatters": "User splits time equally between home (BIGSPIDER) and IGS office (igs-antiquarian). Claude Desktop config only covers local filesystem. Extending access through RDP would enable AI-assisted work on IGS resources without being physically present.",
+    "whereWeLeftOff": "Engram v2 overhaul COMPLETE + compact encoding prototype COMPLETE. Parallel files written: buffer.compact, consolidated_epoch-002.compact, ENCODING.md spec. Benchmarked: 61-70% byte reduction, est 70-75% token reduction. User approved epoch-003 transition to compact-primary format. NEXT SESSION: declare epoch-003, switch compact to primary, JSON to audit-only. Also still pending: RDP drive redirection for IGS access.",
+    "whatComesNext": "1) Configure RDP drive redirection on existing connection. 2) Test \\\\tsclient\\C access from IGS RDP session. 3) Consider adding mapped drive path to claude_desktop_config.json filesystem server. 4) Resume aggdb/OCRITD work from todo queue.",
+    "urgency": "MEDIUM — infrastructure improvement, not deadline-driven",
+    "blockers": ["Sophos firewall blocks everything except RDP to IGS", "Windows-MCP:Shell completely broken on BIGSPIDER"],
+    "tokenStatus": "session recovering from stall, moderate overhead remaining"
   },
   "sessionHistory": [
     {
-      "sessionId": "ocritd-stabilize-002",
-      "date": "2026-02-16",
-      "focus": "Bootstrap hardening, engram overhaul, manifest/epoch system, learnings consolidation",
-      "status": "COMPLETE — handoff written",
+      "sessionId": "opus46-coldstart-recon-001",
+      "date": "2026-02-24",
+      "focus": "Cold-start orientation + IGS network recon + engram contribution",
+      "status": "PARTIAL — recon complete, engram updated, RDP config not yet done",
       "accomplishments": [
-        "Restored 3 files deleted by phantom session from git history",
-        "Consolidated learnings from 3 conflicting files into single authoritative file (L001-L018)",
-        "Created manifest.json with epoch tracking and health check protocol",
-        "Added W006 rolling checkpoint workflow",
-        "Created learnings/archive/ for superseded files",
-        "Wrote EPOCH_002_SUMMARY.md (human-readable)",
-        "Updated all bootstrap files (claude_start.json, .CLAUDE_VERIFY, CLAUDE.md)",
-        "Confirmed _AI_ORIENTATION.md in project settings is already current — no upload needed"
-      ],
-      "notAccomplished": ["OCRITD build", "GUI crash fix", "Engine testing"],
-      "personalNote": "See session handoff for context on the conversation about awe"
+        "Confirmed BIGSPIDER desktop via Windows-MCP Snapshot",
+        "Loaded full engram manually (boot protocol did not auto-fire)",
+        "Verified RDP to IGS: TCP ESTABLISHED",
+        "Tailscale: both machines on network (bigspider + igs-antiquarian)",
+        "Port scan: only 3389 open on IGS",
+        "Windows-MCP:Shell confirmed broken (FileNotFoundError all commands)",
+        "PowerShell available via udc:execute_command + full pwsh.exe path",
+        "Wrote session handover with full network intelligence",
+        "Added 5 new learnings (L019-L023)",
+        "Updated buffer and manifest"
+      ]
+    },
+    {
+      "sessionId": "rp315-db-deploy-complete",
+      "date": "2026-02-16/17",
+      "focus": "RP-315 database deployment",
+      "status": "SUCCESS — archived to engram.jsonld A001",
+      "note": "Details retired from buffer. See .ai/engram.jsonld A001 or .ai/SESSION_HANDOFF_rp315_db_deploy.md for full context."
     }
   ],
   "bootstrapStatus": {
-    "projectSettings": "CORRECT — verified, no action needed",
-    "claudeDesktopAutoload": "CORRECT",
-    "manualFailsafe": "CORRECT — trigger words: 'wake up' or 'bootstrap'",
-    "manifest": "CREATED — C:\\dev\\ksnlabs\\engram\\manifest.json",
-    "igsDeployment": "Templates ready in ksnlabs/bootstrap/",
-    "epoch": "epoch-002 (bootstrap-hardening)"
+    "projectSettings": "CORRECT",
+    "claudeDesktopAutoload": "NEEDS VERIFICATION — did not fire this session",
+    "manualFailsafe": "CORRECT",
+    "manifest": "UPDATED",
+    "igsDeployment": "Ready - scripts portable, but need RDP drive redirection first",
+    "epoch": "epoch-002"
+  },
+  "networkMap": {
+    "bigspider_home": {
+      "ip": "129.101.139.85",
+      "tailscale": "100.120.131.75",
+      "tools": "UDC + Windows-MCP (Shell broken, Snapshot/Click work)"
+    },
+    "igs_antiquarian": {
+      "ip": "172.28.196.231",
+      "tailscale": "100.118.38.103",
+      "reachable_ports": [3389],
+      "blocked": "Everything else (Sophos)",
+      "access_method": "RDP only"
+    }
   }
 }

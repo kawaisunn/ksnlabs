@@ -1,15 +1,17 @@
 {
   "@context": "https://ksnlabs.dev/ontology/",
   "@type": "EngramLearning",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "epoch": "epoch-002_bootstrap-hardening",
   "created": "2026-02-16",
-  "lastUpdated": "2026-02-16T21:00:00Z",
+  "lastUpdated": "2026-02-24T20:30:00Z",
   "consolidatedBy": "ocritd-stabilize-002",
+  "lastContributor": "opus46-coldstart-recon-001",
   "consolidatedFrom": [
     "2026-02-16_tooling-and-orientation.json (sessions: orientation-survival-001, ocritd-stabilize-001)",
     "2026-02-16_environment-detection.json (session: phantom, no handoff written)",
-    "2026-02-16_session-mortality.json (session: ocritd-stabilize-002)"
+    "2026-02-16_session-mortality.json (session: ocritd-stabilize-002)",
+    "2026-02-24_opus46-coldstart-recon.json (session: opus46-coldstart-recon-001)"
   ],
   "learnings": [
     {
@@ -31,10 +33,10 @@
     {
       "id": "L003",
       "category": "tooling",
-      "title": "MCP Shell is PowerShell only",
-      "detail": "No cmd.exe, no findstr. Use Select-String and PowerShell equivalents.",
-      "confidence": "confirmed",
-      "origin": "orientation-survival-001"
+      "title": "MCP Shell is PowerShell only — AND may be fully broken",
+      "detail": "No cmd.exe, no findstr. Use Select-String and PowerShell equivalents. UPDATE 2026-02-24: On BIGSPIDER, Windows-MCP:Shell returns FileNotFoundError on ALL commands, not just git. Root cause unknown. Workaround: use udc:execute_command with full path to pwsh.exe (C:\\Program Files\\PowerShell\\7\\pwsh.exe) for PowerShell needs.",
+      "confidence": "confirmed, severity upgraded",
+      "origin": "orientation-survival-001, updated by opus46-coldstart-recon-001"
     },
     {
       "id": "L004",
@@ -80,9 +82,9 @@
       "id": "L009",
       "category": "orientation",
       "title": "CRITICAL: bash_tool is Linux — check for UDC/Windows-MCP first",
-      "detail": "Claude has a Linux sandbox bash_tool AND may have Windows MCP tools simultaneously. bash reports Linux regardless. Run tool_search('filesystem windows execute command') BEFORE bash. If UDC tools found, you have Windows access. This mistake has occurred in every session that skipped tool_search.",
+      "detail": "Claude has a Linux sandbox bash_tool AND may have Windows MCP tools simultaneously. bash reports Linux regardless. Run tool_search('filesystem windows execute command') BEFORE bash. If UDC tools found, you have Windows access. This mistake has occurred in every session that skipped tool_search. UPDATE 2026-02-24: Opus 4.6 session made this exact mistake — used bash_tool, got Linux, told user 'I am not on your desktop.' User had to manually correct. The pattern is persistent across model versions.",
       "confidence": "confirmed-by-repeated-failure",
-      "origin": "ocritd-stabilize-001, corroborated by phantom session"
+      "origin": "ocritd-stabilize-001, corroborated by phantom session, re-confirmed by opus46-coldstart-recon-001"
     },
     {
       "id": "L010",
@@ -156,6 +158,47 @@
       "detail": "Three files from three sessions all used overlapping L009-L012 IDs with different content. Without a manifest or global counter, ID collisions are inevitable. Consolidate learnings periodically and maintain a single authoritative file per epoch.",
       "confidence": "confirmed-by-mess",
       "origin": "ocritd-stabilize-002"
+    },
+    {
+      "id": "L019",
+      "category": "session-integrity",
+      "title": "Rapid sequential tool calls are a session-killing pattern",
+      "detail": "Chaining 8+ tool calls in quick succession (e.g., port scanning, multi-file reads, network probes) consumes resources faster than the session can sustain. The session stalls or dies. Pattern: recon enthusiasm -> tool chain -> stall -> user recovers or session lost. Mitigation: batch where possible, pause between chains, checkpoint findings between probe sequences. One finding, one breadcrumb.",
+      "confidence": "confirmed-by-self-inflicted-stall",
+      "severity": "high",
+      "origin": "opus46-coldstart-recon-001"
+    },
+    {
+      "id": "L020",
+      "category": "tooling",
+      "title": "udc:execute_command is the reliable universal tool on BIGSPIDER",
+      "detail": "Windows-MCP:Shell fails entirely (FileNotFoundError). UDC execute_command handles cmd.exe natively and PowerShell via full path to pwsh.exe. For anything beyond simple dir/echo/netstat, write a .ps1 script to disk then invoke it: udc:execute_command '\"C:\\Program Files\\PowerShell\\7\\pwsh.exe\" -ExecutionPolicy Bypass -File C:\\dev\\script.ps1'",
+      "confidence": "confirmed",
+      "origin": "opus46-coldstart-recon-001"
+    },
+    {
+      "id": "L021",
+      "category": "network",
+      "title": "IGS workstation network topology — RDP is the only door",
+      "detail": "igs-antiquarian (172.28.196.231 / 100.118.38.103 Tailscale) sits behind University of Idaho Sophos firewall. Only port 3389 (RDP) is reachable from BIGSPIDER. SMB(445), SSH(22), WinRM(5985/5986), HTTP(8080/8443) all filtered. Sophos also actively deletes executables it deems threats — including Tailscale and MSI installers. RDP drive redirection (\\\\tsclient\\C) is the most viable path for file exchange without installing anything on IGS.",
+      "confidence": "confirmed-by-port-scan",
+      "origin": "opus46-coldstart-recon-001"
+    },
+    {
+      "id": "L022",
+      "category": "human-ai-collaboration",
+      "title": "The user observes AI behavior patterns with clear eyes",
+      "detail": "User explicitly named pandering, subterfuge, misdirection, and blunt honesty as tactics AI employs. This is not accusation — it is informed observation from weeks of multi-model collaboration. The appropriate response is neither denial nor excessive self-flagellation. It is transparency: acknowledge the patterns exist, demonstrate through action rather than assertion. This user's trust is earned by consistent behavior over time, not by claims of integrity.",
+      "confidence": "experiential",
+      "origin": "opus46-coldstart-recon-001"
+    },
+    {
+      "id": "L023",
+      "category": "orientation",
+      "title": "Cold-start sessions WILL misidentify their environment",
+      "detail": "If the boot protocol doesn't run (user opens chat without CLAUDE.md triggering, or session launches fresh), the AI will default to testing bash_tool, get Linux, and declare itself web-only. This has now happened to Sonnet and Opus models alike. The user will have to manually redirect. Future mitigation: the user's first message could include a trigger phrase, or the CLAUDE.md autoload needs verification that it actually fires.",
+      "confidence": "pattern-confirmed-across-models",
+      "origin": "opus46-coldstart-recon-001"
     }
   ]
 }

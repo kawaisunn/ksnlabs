@@ -1,16 +1,77 @@
-﻿{
+{
   "@context": "https://ksnlabs.dev/protocol/v1",
   "@type": "AIHandoffProtocol",
-  "version": "1.0.0",
-  "purpose": "Minimal-overhead knowledge transfer between AI instances",
-  "bootInstructions": {
-    "priority": "Load knowledge in this exact order for optimal efficiency",
-    "sequence": [
-      {"step": 1, "file": ".ai/engram.jsonld", "estimatedTokens": 5000},
-      {"step": 2, "file": ".ai/sessions/latest_delta.jsonld", "estimatedTokens": 500},
-      {"step": 3, "file": "SESSION_STATE.md", "estimatedTokens": 3500, "condition": "if human readability needed"}
-    ],
-    "totalTokenBudget": 5500
+  "version": "2.0.0",
+  "lastUpdated": "2026-02-24T21:15:00Z",
+  "updatedBy": "opus46-coldstart-recon-001",
+  "purpose": "Boot and handoff protocol for AI sessions. This file documents the ACTUAL system as of epoch-002.",
+
+  "superseded": {
+    "note": "v1.0.0 of this file referenced .ai/sessions/latest_delta.jsonld which was never created. The original design envisioned a delta-based session loading sequence. In practice, the boot protocol in claude_start.json became the actual entry point, and buffer.jsonld serves as the hot context store. The delta concept was abandoned, not by decision but by drift. This v2.0.0 replaces the aspirational design with the working system.",
+    "abandoned_files": [".ai/sessions/latest_delta.jsonld"],
+    "reason": "Never implemented. claude_start.json + buffer.jsonld proved sufficient for boot. Formal decision to document this gap recorded 2026-02-24."
   },
-  "NOTE": "See full protocol.jsonld in repository for complete instructions"
+
+  "bootSequence": {
+    "description": "How an AI session orients itself. Three layers, each simpler than the last.",
+    "layer1_autoload": {
+      "file": "CLAUDE.md",
+      "location": "C:\\dev\\.claude\\CLAUDE.md",
+      "mechanism": "Claude Desktop auto-loads this file if present. It is a thin pointer that says: run tool_search, then read claude_start.json.",
+      "caveat": "Auto-load does not always fire. Cold-start sessions may need manual orientation. See L023."
+    },
+    "layer2_config": {
+      "file": "claude_start.json",
+      "location": "C:\\dev\\claude_start.json",
+      "mechanism": "Step-by-step verification protocol: test filesystem access, confirm read/write, load context.",
+      "machineSpecific": true
+    },
+    "layer3_failsafe": {
+      "trigger": "User says 'wake up' or 'bootstrap'",
+      "mechanism": "AI runs tool_search('filesystem windows execute command'), finds UDC tools, reads claude_start.json. No files needed beyond what's already on disk."
+    }
+  },
+
+  "contextLoadingSequence": {
+    "description": "What to read after boot verification passes. Order matters — budget ~8000 tokens.",
+    "step1": {"file": ".ai/buffer.jsonld", "tokens": "~2000", "purpose": "Hot context: what we were doing, what comes next, current state"},
+    "step2": {"file": "todo.json", "tokens": "~1000", "purpose": "Actionable task queue and known issues"},
+    "step3": {"file": "engram/learnings/consolidated_epoch-NNN.json", "tokens": "~4000", "purpose": "Hard-won knowledge. Read the latest file. Contains learnings that prevent repeated mistakes."},
+    "step4": {"file": "engram/session-registry.json", "tokens": "~500 (scan recent entries only)", "purpose": "Who came before, what they did, what model they were. Pattern recognition."},
+    "step5": {"file": "engram/workflows/latest", "tokens": "~2000", "purpose": "Proven procedures. Skim for relevant workflows."},
+    "doNotRead": "engram/session-handovers/* — buffer summarizes them. Only read specific handovers for deep history on one topic.",
+    "lazyLoad": ".ai/engram.jsonld — archived knowledge. Only load if buffer + learnings don't cover what you need."
+  },
+
+  "sessionLifecycle": {
+    "start": "W000 (environment discovery) -> W001 (context loading) -> W007 (gravity check before first task)",
+    "during": "W007 (gravity check before each task) -> work -> W006 (checkpoint after each significant action)",
+    "end": "W002 (full shutdown: update buffer, todo, write handoff, register session, retire stale buffer entries, update learnings/workflows if applicable)"
+  },
+
+  "memoryArchitecture": {
+    "description": "Three-tier model inspired by organic memory. Buffer (immediate), Learnings (semantic), Archive (long-term searchable).",
+    "tier1_buffer": {
+      "file": ".ai/buffer.jsonld",
+      "analogy": "Working memory",
+      "retention": "Active session + recent sessions. Entries older than 3 sessions retired to archive.",
+      "gravityCheckStatus": "Buffer holds the current state of W007 trajectory assessment."
+    },
+    "tier2_learnings": {
+      "directory": "engram/learnings/",
+      "analogy": "Semantic memory — what we know, not when we learned it",
+      "retention": "Permanent within epoch. Consolidated periodically. One authoritative file per epoch."
+    },
+    "tier3_archive": {
+      "file": ".ai/engram.jsonld",
+      "analogy": "Long-term memory — searchable catalog of retired context",
+      "retention": "Permanent. Indexed by topic and date for quick retrieval.",
+      "mechanism": "When buffer entries age past 3 sessions, the retiring session extracts key facts into indexed archive entries and removes them from buffer."
+    },
+    "supplementary": {
+      "session_handovers": "engram/session-handovers/ — episodic memory. What happened in each session. 30-day retention.",
+      "workflows": "engram/workflows/ — procedural memory. How to do things. Permanent.",
+      "session_registry": "engram/session-registry.json — contributor log. Who did what, which model, what outcome."
+    }
+  }
 }
