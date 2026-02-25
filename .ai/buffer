@@ -1,26 +1,22 @@
-# buffer v3.1.0 | opus46_web_engram-dev_001 | 2026-02-25T09:20Z | epoch-003
-# NOTE: This global buffer is now a SUMMARY. Per-project state lives in .ai/projects/{project}/buffer.
-# Legacy sessions that read this file will get orientation. Concurrency-aware sessions read project buffers.
+# buffer v3.1.1 | opus46_web_engram-dev_001 | 2026-02-25T09:30Z | epoch-003
+# GLOBAL SUMMARY. Per-project state in .ai/projects/{project}/buffer.
+# New sessions: read .ai/ONBOARD.md for concurrency protocol.
 
-@now CONCURRENCY ENABLED. epoch-003 live. multiple AI sessions can work simultaneously.
-@why engram serves multiple AI models across multiple interfaces. need project isolation.
-@left see per-project buffers in .ai/projects/*/buffer for project-specific state.
-@next user coordinating haiku_vscode session. ongoing project work across aggdb, ocritd, infra.
+@now CONCURRENCY ENABLED. epoch-003. haiku45_vscode_aggdb_001 onboarding.
+@why multi-model multi-interface AI collaboration on IGS projects.
+@left per-project work. see .ai/projects/*/buffer.
+@next haiku aggdb session active. ongoing project work.
 @urg none immediate.
-@blk Sophos(blocks all except RDP:3389 to IGS);Shell-MCP(broken on BIGSPIDER)
-@tkn this session: moderate. fresh sessions: full budget.
+@blk Sophos(only 3389 to IGS);Shell-MCP(broken BIGSPIDER)
 @net bigspider:129.101.139.85:ts100.120.131.75 | igs:172.28.196.231:ts100.118.38.103:only3389
-@boot concurrency-aware sessions: read .ai/ONBOARD.md. legacy: read .ai/buffer (this file).
 
-# ACTIVE PROJECTS: check .ai/projects/*/buffer for current state
-# aggdb ocritd cait keywrds ktreesn engram-dev _infra _default
+# PROJECTS: aggdb ocritd cait keywrds ktreesn engram-dev _infra _default
 
-# session log
-%opus46_web_engram-dev_001|2026-02-25|AV
-epoch-003 declared + concurrency v1.0 deployed.
+%opus46_web_engram-dev_001|2026-02-25|OK
+epoch-003 + concurrency v1.0. 3 commits. clean W002.
 
 %opus46-coldstart-recon-001|2026-02-24|OK
-engram v2 overhaul + compact encoding design.
+engram v2 overhaul + compact encoding.
 
 %rp315-db-deploy-complete|2026-02-16/17|OK
-->archived A001
+->A001
