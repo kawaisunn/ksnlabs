@@ -1,0 +1,20 @@
+# buffer v3.0.0 | opus46-web-epoch003-001 | 2026-02-25T08:30Z | epoch-003
+@now epoch-003 declared. compact encoding is primary. JSON audit-only.
+@why engram system operational. pivot from infrastructure to project work.
+@left epoch transition done. pending: RDP drive redir, OCRITD build, aggdb work
+@next resume deferred tasks from todo.json: OCRITD HOME build, aggdb testing, RDP config
+@urg MED — no deadline pressure this session, positioning for productive sessions ahead
+@blk Sophos(blocks all except RDP:3389 to IGS);Shell-MCP(broken on BIGSPIDER)
+@tkn fresh session, full budget available
+@net bigspider:129.101.139.85:ts100.120.131.75 | igs:172.28.196.231:ts100.118.38.103:only3389
+@boot claudeai-web session. UDC+GitHub tools available. No Windows-MCP this session.
+
+# session log (newest first, retire >3 to engram.jsonld)
+%opus46-web-epoch003-001|2026-02-25|ACTIVE
+epoch-003 declaration+git commit+compact cutover. web claude session w/ UDC+GitHub.
+
+%opus46-coldstart-recon-001|2026-02-24|OK
+coldstart+IGS-recon+engram-v2-overhaul. compact encoding designed. epoch-003 prep complete.
+
+%rp315-db-deploy-complete|2026-02-16/17|OK
+->archived A001. see .ai/engram.jsonld

@@ -1,16 +1,16 @@
 {
   "@context": "https://ksnlabs.dev/ontology/",
   "@type": "EngramManifest",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "purpose": "Track system state across epochs. Any session can validate health by comparing disk state against this manifest.",
 
   "currentEpoch": {
-    "id": "epoch-002",
-    "name": "bootstrap-hardening",
-    "declared": "2026-02-16T21:00:00Z",
-    "declaredBy": "ocritd-stabilize-002",
-    "description": "Bootstrap system overhauled after two session deaths. Verification protocol corrected, checkpoint discipline established, learnings consolidated, manifest system introduced.",
-    "previousEpoch": "epoch-001"
+    "id": "epoch-003",
+    "name": "compact-operational",
+    "declared": "2026-02-25T08:30:00Z",
+    "declaredBy": "opus46-web-epoch003-001",
+    "description": "Compact encoding becomes primary format (~70% token savings). JSON files retained as .audit suffix for human review. Engram system transitions from infrastructure project to operational tool supporting actual IGS project work.",
+    "previousEpoch": "epoch-002"
   },
 
   "epochs": [
@@ -19,62 +19,72 @@
       "name": "initial-setup",
       "range": "2026-02-13 to 2026-02-16",
       "description": "Project creation, git integration, engram system bootstrapped, OCRITD initial commit. Ended when bootstrap failures revealed need for systematic overhaul.",
-      "ksnlabsCommit": "87cde32",
-      "ocritdCommit": "e245fd0"
+      "ksnlabsCommit": "87cde32"
     },
     {
       "id": "epoch-002",
       "name": "bootstrap-hardening",
-      "range": "2026-02-16 to present",
-      "description": "Bootstrap corrected, checkpoint workflow added, manifest system introduced, learnings consolidated.",
-      "ksnlabsCommit": "pending",
-      "ocritdCommit": "8a3bad8"
+      "range": "2026-02-16 to 2026-02-25",
+      "description": "Bootstrap corrected, checkpoint workflow added, manifest system introduced, learnings consolidated. Engram v2.0.0 overhaul: session registry, W007 gravity check, archive activation, compact encoding designed. Closed with commit 85c2503.",
+      "ksnlabsCommit": "85c2503"
+    },
+    {
+      "id": "epoch-003",
+      "name": "compact-operational",
+      "range": "2026-02-25 to present",
+      "description": "Compact encoding primary. Engram is operational infrastructure, not the project itself. Focus shifts to IGS deliverables: aggdb, OCRITD, ITD workflows.",
+      "ksnlabsCommit": "pending"
     }
   ],
 
   "authoritative_files": {
     "bootstrap": {
-      "project_settings": {
-        "file": "_AI_ORIENTATION.md",
-        "location": "Claude project settings on claude.ai (also on disk at C:\\dev\\ocritd\\_AI_ORIENTATION.md)",
-        "ocritdCommit": "8a3bad8",
-        "role": "Entry point for every session. Thin pointer to claude_start.json."
-      },
       "desktop_autoload": {
         "file": "CLAUDE.md",
         "location": "C:\\dev\\.claude\\CLAUDE.md",
-        "deployFrom": "C:\\dev\\ksnlabs\\bootstrap\\.claude\\CLAUDE.md",
-        "role": "Claude Desktop auto-load. Same content as project settings but for Desktop interface."
+        "deployFrom": "C:\\dev\\ksnlabs\\bootstrap\\.claude\\CLAUDE.md"
       },
       "startup_config": {
         "file": "claude_start.json",
         "location": "C:\\dev\\claude_start.json",
         "deployFrom": "C:\\dev\\ksnlabs\\bootstrap\\claude_start.json",
-        "role": "Verification protocol and context loading sequence. Machine-specific (edit 'machine' field)."
+        "machineSpecific": true
       },
       "verify_file": {
         "file": ".CLAUDE_VERIFY",
         "location": "C:\\dev\\.CLAUDE_VERIFY",
-        "deployFrom": "C:\\dev\\ksnlabs\\bootstrap\\.CLAUDE_VERIFY",
-        "role": "Read-test target. If readable, filesystem access confirmed."
+        "deployFrom": "C:\\dev\\ksnlabs\\bootstrap\\.CLAUDE_VERIFY"
       }
     },
     "engram": {
       "buffer": {
-        "file": "buffer.jsonld",
-        "location": "C:\\dev\\ksnlabs\\.ai\\buffer.jsonld",
-        "role": "Working memory. Updated every checkpoint (W006) and session end (W002)."
+        "file": "buffer",
+        "location": "C:\\dev\\ksnlabs\\.ai\\buffer",
+        "format": "compact (ENCODING.md v1.0)",
+        "audit": "C:\\dev\\ksnlabs\\.ai\\buffer.jsonld.audit"
       },
       "learnings": {
-        "file": "consolidated_epoch-002.json",
-        "location": "C:\\dev\\ksnlabs\\engram\\learnings\\consolidated_epoch-002.json",
-        "role": "Authoritative learnings for current epoch. L001-L018. Previous files are archived.",
+        "file": "consolidated_epoch-003",
+        "location": "C:\\dev\\ksnlabs\\engram\\learnings\\consolidated_epoch-003",
+        "format": "compact (ENCODING.md v1.0)",
+        "audit": "C:\\dev\\ksnlabs\\engram\\learnings\\consolidated_epoch-002.json.audit",
         "nextId": "L024"
       },
       "workflows": {
         "file": "2026-02-16_session-and-git-workflows.json",
         "location": "C:\\dev\\ksnlabs\\engram\\workflows\\2026-02-16_session-and-git-workflows.json",
-        "role": "Authoritative workflows. W000-W006."
+        "format": "JSON (compact conversion deferred — workflow structure benefits from readability)",
+        "note": "Convert to compact when workflow count exceeds 15"
+      },
+      "encoding_spec": {
+        "file": "ENCODING.md",
+        "location": "C:\\dev\\ksnlabs\\.ai\\ENCODING.md",
+        "role": "Compact format specification. Read this to parse buffer and learnings."
+      },
+      "archive": {
+        "file": "engram.jsonld",
+        "location": "C:\\dev\\ksnlabs\\.ai\\engram.jsonld",
+        "format": "JSON-LD (archive retains structured format for indexed search)"
       },
       "manifest": {
         "file": "manifest.json",
@@ -84,39 +94,38 @@
     },
     "sessionRegistry": {
       "file": "session-registry.json",
-      "location": "C:\\dev\\ksnlabs\\engram\\session-registry.json",
-      "role": "Canonical log of all sessions. Model, machine, outcome, contributions. Phantom detection."
+      "location": "C:\\dev\\ksnlabs\\engram\\session-registry.json"
     },
     "taskQueue": {
       "file": "todo.json",
-      "location": "C:\\dev\\todo.json",
-      "role": "Active issues and deferred tasks."
+      "location": "C:\\dev\\todo.json"
     }
   },
 
-  "archived_files": {
-    "note": "These files are superseded by consolidated_epoch-002.json. Retained for audit trail.",
-    "files": [
-      "engram/learnings/2026-02-16_tooling-and-orientation.json",
-      "engram/learnings/2026-02-16_environment-detection.json",
-      "engram/learnings/2026-02-16_session-mortality.json"
-    ]
+  "contextLoadingSequence": {
+    "note": "Updated for epoch-003 compact format. Budget ~4000 tokens (down from ~8000).",
+    "step1": {"file": ".ai/ENCODING.md", "tokens": "~300", "purpose": "Learn compact format (skip if already known)"},
+    "step2": {"file": ".ai/buffer", "tokens": "~500", "purpose": "Hot context: what we were doing, what comes next"},
+    "step3": {"file": "todo.json", "tokens": "~500", "purpose": "Actionable task queue"},
+    "step4": {"file": "engram/learnings/consolidated_epoch-003", "tokens": "~1500", "purpose": "Hard-won knowledge"},
+    "step5": {"file": "engram/session-registry.json", "tokens": "~500 (scan recent)", "purpose": "Who came before"},
+    "step6": {"file": "engram/workflows/latest", "tokens": "~1000", "purpose": "Proven procedures"},
+    "lazyLoad": ".ai/engram.jsonld — only if buffer+learnings insufficient"
   },
 
   "health_check": {
-    "instruction": "Any session can validate system health by reading this manifest and checking that authoritative files exist and are readable.",
     "quick_check": [
-      "udc:read_file C:\\dev\\claude_start.json — should load without error",
-      "udc:read_file C:\\dev\\ksnlabs\\.ai\\buffer.jsonld — should have lastUpdated within 24h of last session",
-      "udc:read_file C:\\dev\\ksnlabs\\engram\\manifest.json — should match this file",
-      "udc:read_file C:\\dev\\ksnlabs\\engram\\learnings\\consolidated_epoch-002.json — should have nextId field",
-      "udc:list_directory C:\\dev\\ksnlabs\\engram\\session-handovers — should have files"
+      "udc:read_file C:\\dev\\claude_start.json",
+      "udc:read_file C:\\dev\\ksnlabs\\.ai\\buffer",
+      "udc:read_file C:\\dev\\ksnlabs\\engram\\manifest.json",
+      "udc:read_file C:\\dev\\ksnlabs\\engram\\learnings\\consolidated_epoch-003",
+      "udc:list_directory C:\\dev\\ksnlabs\\engram\\session-handovers"
     ]
   },
 
   "failsafe": {
     "trigger": "User says 'wake up' or 'bootstrap'",
-    "action": "Run tool_search('filesystem windows execute command'), then read claude_start.json",
-    "ifEverythingBroken": "Read _AI_ORIENTATION.md from Claude project settings (always available). It has GitHub repo URLs. Clone fresh and rebuild from git."
+    "action": "tool_search('filesystem windows execute command'), then read claude_start.json",
+    "ifEverythingBroken": "Read _AI_ORIENTATION.md from Claude project settings. Clone from GitHub. Rebuild."
   }
 }

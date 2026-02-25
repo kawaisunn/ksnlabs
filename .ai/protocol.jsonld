@@ -2,8 +2,8 @@
   "@context": "https://ksnlabs.dev/protocol/v1",
   "@type": "AIHandoffProtocol",
   "version": "2.0.0",
-  "lastUpdated": "2026-02-24T21:15:00Z",
-  "updatedBy": "opus46-coldstart-recon-001",
+  "lastUpdated": "2026-02-25T08:30:00Z",
+  "updatedBy": "opus46-web-epoch003-001",
   "purpose": "Boot and handoff protocol for AI sessions. This file documents the ACTUAL system as of epoch-002.",
 
   "superseded": {
@@ -34,11 +34,11 @@
 
   "contextLoadingSequence": {
     "description": "What to read after boot verification passes. Order matters — budget ~8000 tokens.",
-    "step1": {"file": ".ai/buffer.jsonld", "tokens": "~2000", "purpose": "Hot context: what we were doing, what comes next, current state"},
+    "step1": {"file": ".ai/buffer.jsonld", "tokens": "~500", "purpose": "Hot context: what we were doing, what comes next, current state"},
     "step2": {"file": "todo.json", "tokens": "~1000", "purpose": "Actionable task queue and known issues"},
-    "step3": {"file": "engram/learnings/consolidated_epoch-NNN.json", "tokens": "~4000", "purpose": "Hard-won knowledge. Read the latest file. Contains learnings that prevent repeated mistakes."},
+    "step3": {"file": "engram/learnings/consolidated_epoch-NNN.json", "tokens": "~1500", "purpose": "Hard-won knowledge. Read the latest file. Contains learnings that prevent repeated mistakes."},
     "step4": {"file": "engram/session-registry.json", "tokens": "~500 (scan recent entries only)", "purpose": "Who came before, what they did, what model they were. Pattern recognition."},
-    "step5": {"file": "engram/workflows/latest", "tokens": "~2000", "purpose": "Proven procedures. Skim for relevant workflows."},
+    "step5": {"file": "engram/workflows/latest", "tokens": "~500", "purpose": "Proven procedures. Skim for relevant workflows."},
     "doNotRead": "engram/session-handovers/* — buffer summarizes them. Only read specific handovers for deep history on one topic.",
     "lazyLoad": ".ai/engram.jsonld — archived knowledge. Only load if buffer + learnings don't cover what you need."
   },
@@ -75,3 +75,4 @@
     }
   }
 }
+

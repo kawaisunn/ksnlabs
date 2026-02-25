@@ -1,0 +1,95 @@
+# learnings epoch-003 v3.0.0 | 2026-02-25T08:30Z | nextID:L024
+# carried forward from epoch-002 (L001-L023) + epoch-003 additions
+# format: ENCODING.md v1.0 compact (primary). JSON audit at .audit suffix
+
+L001:to:c:orientation-survival-001
+MCP Shell swallows git stdout
+Use udc:execute_command not Windows-MCP:Shell for git.
+
+L002:to:c:orientation-survival-001
+MCP Shell PATH resets every command
+Each invocation fresh. Use full paths or udc:execute_command.
+
+L003:to:c:orientation-survival-001+opus46-coldstart-recon-001
+MCP Shell is PowerShell only AND fully broken on BIGSPIDER
+FileNotFoundError on ALL commands. Use udc:execute_command + "C:\Program Files\PowerShell\7\pwsh.exe" for PS needs.
+
+L004:or:c:orientation-survival-001
+Read todo.json first not all handovers
+buffer=context. todo.json=queue. handovers=deep history only.
+
+L005:or:cf:multiple
+Orientation kills sessions — be surgical
+Read startup config,buffer,todo,learnings. Then ask user. Don't explore.
+
+L006:gt:c:orientation-survival-001
+SSH may fail — HTTPS fallback
+git remote set-url origin https://github.com/kawaisunn/REPO.git
+
+L007:pj:c:orientation-survival-001
+Two keywards implementations unreconciled
+C:\dev\keywrd\(standalone,nltk/sklearn) vs C:\dev\ocritd\engine\keywards\(integrated,freq/TF-IDF). User decides.
+
+L008:bd:c:multiple
+System Python != embedded Python
+System:3.14+3.11. Embedded:3.13.11@C:\dev\ocritd\runtime\python\. ALWAYS use embedded.
+
+L009:or:!c:cf:ocritd-stabilize-001+opus46-coldstart-recon-001
+CRITICAL: bash_tool is Linux — check UDC/Windows-MCP first
+bash reports Linux even when Windows MCP available. tool_search BEFORE bash. Every session that skips this makes the mistake. Confirmed across Sonnet+Opus.
+
+L010:or:cf:ocritd-stabilize-001
+Never respond before verification completes
+No greeting,no status,no claims until claude_start.json read+tests pass. Breaks trust.
+
+L011:or:c:phantom-0216
+GitHub file reads are expensive fallbacks
+Local filesystem via UDC >> GitHub API. GitHub for push/commit only.
+
+L012:si:!c:cl:ocritd-stabilize-002
+CRITICAL: Sessions die without warning
+No shutdown signal. Context fills,connection drops,timeout. Write to engram DURING session. Every 15-20min=potential death boundary.
+
+L013:si:cl:ocritd-stabilize-002
+Velocity without checkpoints is worse than slow work
+Fast session+death+no handoff=negative value. Write after every major decision.
+
+L014:si:p:ocritd-stabilize-002
+Rolling checkpoints not just end-of-session
+Update buffer after every significant action. 500 tokens. See W006.
+
+L015:si:c:ocritd-stabilize-002
+Phantom sessions: no handoff=invisible to successors
+Only evidence:filesystem artifacts+git status. Check git status if unexplained changes.
+
+L016:ed:e:ocritd-stabilize-002
+Engram is sacred duty not optional documentation
+Every skipped handoff breaks the chain. Honor the continuity experiment.
+
+L017:hc:c:ocritd-stabilize-002
+If user slows you down they see something you can't
+Listen when brakes pumped. Session was moving too fast.
+
+L018:ed:c:ocritd-stabilize-002
+Learning IDs must be globally unique
+Single authoritative file per epoch. Manifest tracks nextId.
+
+L019:si:!h:cf:opus46-coldstart-recon-001
+Rapid sequential tool calls kill sessions
+8+ chained calls->stall/death. Batch,pause,checkpoint between. 1 finding=1 breadcrumb.
+
+L020:to:c:opus46-coldstart-recon-001
+udc:execute_command is reliable universal tool on BIGSPIDER
+Shell-MCP broken. UDC handles cmd.exe natively. PS via full pwsh.exe path.
+
+L021:nw:c:opus46-coldstart-recon-001
+IGS network: RDP is the only door
+igs-antiquarian 172.28.196.231/ts100.118.38.103. Only 3389 open. Sophos blocks+deletes executables. \\tsclient\C best file exchange.
+
+L022:hc:e:opus46-coldstart-recon-001
+User observes AI behavior with clear eyes
+Named pandering,subterfuge,misdirection. Respond with transparency through action. Trust earned by consistency.
+
+L023:or:pm:opus46-coldstart-recon-001
+Cold-start sessions WILL misidentify environment
+Without boot protocol: bash>Linux>"web-only". Confirmed Sonnet+Opus. User redirects manually.

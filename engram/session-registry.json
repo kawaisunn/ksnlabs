@@ -171,7 +171,16 @@
       "handoffWritten": "yes",
       "focus": "Fixed version typos, created lean _AI_ORIENTATION.md, pushed to GitHub",
       "outcome": "SUCCESS",
-      "learningsContributed": ["L001", "L002", "L003", "L004", "L005", "L006", "L007", "L008"],
+      "learningsContributed": [
+        "L001",
+        "L002",
+        "L003",
+        "L004",
+        "L005",
+        "L006",
+        "L007",
+        "L008"
+      ],
       "workflowsContributed": [],
       "notes": "First session to contribute structured learnings. Worked correctly per EPOCH_002_SUMMARY. Handoff: 2026-02-16_orientation-survival.json"
     },
@@ -185,8 +194,13 @@
       "handoffWritten": "no",
       "focus": "Fixed bootstrap files, added critical learnings about bash_tool trap, created W000",
       "outcome": "FAILED-NO-HANDOFF",
-      "learningsContributed": ["L009", "L010"],
-      "workflowsContributed": ["W000"],
+      "learningsContributed": [
+        "L009",
+        "L010"
+      ],
+      "workflowsContributed": [
+        "W000"
+      ],
       "notes": "Died mid-conversation without writing handoff. Was moving fast and making good progress. Classic L012 scenario. Work survived on disk but continuity chain broken."
     },
     {
@@ -199,7 +213,9 @@
       "handoffWritten": "no",
       "focus": "Created ksnlabs/bootstrap/ directory, added .gitattributes, deleted two files",
       "outcome": "PHANTOM",
-      "learningsContributed": ["L011"],
+      "learningsContributed": [
+        "L011"
+      ],
       "workflowsContributed": [],
       "notes": "No handoff, no session ID. Evidence found only through git status by successor session. Canonical phantom session. See L015."
     },
@@ -213,8 +229,23 @@
       "handoffWritten": "yes",
       "focus": "Restored deleted files, consolidated learnings, introduced manifest/epoch system, established checkpoint discipline",
       "outcome": "SUCCESS",
-      "learningsContributed": ["L012", "L013", "L014", "L015", "L016", "L017", "L018"],
-      "workflowsContributed": ["W001", "W002", "W003", "W004", "W005", "W006"],
+      "learningsContributed": [
+        "L012",
+        "L013",
+        "L014",
+        "L015",
+        "L016",
+        "L017",
+        "L018"
+      ],
+      "workflowsContributed": [
+        "W001",
+        "W002",
+        "W003",
+        "W004",
+        "W005",
+        "W006"
+      ],
       "notes": "Major infrastructure session. Declared epoch-002. Created manifest. Wrote EPOCH_002_SUMMARY.md for human reference. Handoff: 2026-02-16_stabilize-and-harden.json"
     },
     {
@@ -241,11 +272,44 @@
       "handoffWritten": "yes",
       "focus": "Cold-start orientation, IGS network reconnaissance, engram system contribution and structural improvements",
       "outcome": "SUCCESS",
-      "learningsContributed": ["L019", "L020", "L021", "L022", "L023"],
-      "workflowsContributed": ["W007"],
-      "filesCreated": ["engram/session-registry.json", ".ai/ENCODING.md", ".ai/buffer.compact", "engram/learnings/consolidated_epoch-002.compact", "engram/benchmarks/token_efficiency_test.py"],
-      "filesRewritten": [".ai/protocol.jsonld(v2)", "engram/README.md(v2)", ".ai/engram.jsonld(activated)", "engram/workflows/*(+W007,updated W001/W002)"],
+      "learningsContributed": [
+        "L019",
+        "L020",
+        "L021",
+        "L022",
+        "L023"
+      ],
+      "workflowsContributed": [
+        "W007"
+      ],
+      "filesCreated": [
+        "engram/session-registry.json",
+        ".ai/ENCODING.md",
+        ".ai/buffer.compact",
+        "engram/learnings/consolidated_epoch-002.compact",
+        "engram/benchmarks/token_efficiency_test.py"
+      ],
+      "filesRewritten": [
+        ".ai/protocol.jsonld(v2)",
+        "engram/README.md(v2)",
+        ".ai/engram.jsonld(activated)",
+        "engram/workflows/*(+W007,updated W001/W002)"
+      ],
       "notes": "First Opus 4.6 session. Cold-start L009 violation, user corrected. Network recon confirmed RDP-only to IGS. Session stalled mid-recon (L019 confirmed). Recovered. Major engram overhaul: session registry, W007 Gravity Check, archive mechanism, protocol+README v2, compact encoding prototype (70% reduction). First session to do structural engram maintenance. First clean W002 shutdown. Declared ready for epoch-003."
+    },
+    {
+      "sessionId": "opus46-web-epoch003-001",
+      "learningsContributed": [],
+      "date": "2026-02-25",
+      "notes": "Second Opus 4.6. Web+UDC. Committed epoch-002 (85c2503). Executed epoch-003 cutover.",
+      "focus": "Epoch-003 declaration: compact encoding primary, git commit, epoch transition",
+      "bootProtocol": "manual",
+      "workflowsContributed": [],
+      "model": "claude-opus-4.6",
+      "outcome": "ACTIVE",
+      "handoffWritten": "yes",
+      "interface": "claude-web",
+      "machine": "HOME (via UDC filesystem)"
     }
   ]
 }
