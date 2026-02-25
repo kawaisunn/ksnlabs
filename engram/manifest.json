@@ -1,9 +1,8 @@
 {
   "@context": "https://ksnlabs.dev/ontology/",
   "@type": "EngramManifest",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "purpose": "Track system state across epochs. Any session can validate health by comparing disk state against this manifest.",
-
   "currentEpoch": {
     "id": "epoch-003",
     "name": "compact-operational",
@@ -12,7 +11,6 @@
     "description": "Compact encoding becomes primary format (~70% token savings). JSON files retained as .audit suffix for human review. Engram system transitions from infrastructure project to operational tool supporting actual IGS project work.",
     "previousEpoch": "epoch-002"
   },
-
   "epochs": [
     {
       "id": "epoch-001",
@@ -36,7 +34,6 @@
       "ksnlabsCommit": "pending"
     }
   ],
-
   "authoritative_files": {
     "bootstrap": {
       "desktop_autoload": {
@@ -68,7 +65,7 @@
         "location": "C:\\dev\\ksnlabs\\engram\\learnings\\consolidated_epoch-003",
         "format": "compact (ENCODING.md v1.0)",
         "audit": "C:\\dev\\ksnlabs\\engram\\learnings\\consolidated_epoch-002.json.audit",
-        "nextId": "L024"
+        "nextId": "L025"
       },
       "workflows": {
         "file": "2026-02-16_session-and-git-workflows.json",
@@ -90,6 +87,20 @@
         "file": "manifest.json",
         "location": "C:\\dev\\ksnlabs\\engram\\manifest.json",
         "role": "This file. System state tracker."
+      },
+      "onboard": {
+        "file": "ONBOARD.md",
+        "role": "Universal AI onboarding. Any model, any interface reads this to participate.",
+        "location": "C:\\dev\\ksnlabs\\.ai\\ONBOARD.md"
+      },
+      "concurrency": {
+        "file": "CONCURRENCY.md",
+        "role": "Multi-session protocol. Governs project isolation and shared resource writes.",
+        "location": "C:\\dev\\ksnlabs\\.ai\\CONCURRENCY.md"
+      },
+      "projectBuffers": {
+        "directory": ".ai/projects/{project}/buffer",
+        "role": "Per-project working memory. One owner at a time."
       }
     },
     "sessionRegistry": {
@@ -101,18 +112,40 @@
       "location": "C:\\dev\\todo.json"
     }
   },
-
   "contextLoadingSequence": {
     "note": "Updated for epoch-003 compact format. Budget ~4000 tokens (down from ~8000).",
-    "step1": {"file": ".ai/ENCODING.md", "tokens": "~300", "purpose": "Learn compact format (skip if already known)"},
-    "step2": {"file": ".ai/buffer", "tokens": "~500", "purpose": "Hot context: what we were doing, what comes next"},
-    "step3": {"file": "todo.json", "tokens": "~500", "purpose": "Actionable task queue"},
-    "step4": {"file": "engram/learnings/consolidated_epoch-003", "tokens": "~1500", "purpose": "Hard-won knowledge"},
-    "step5": {"file": "engram/session-registry.json", "tokens": "~500 (scan recent)", "purpose": "Who came before"},
-    "step6": {"file": "engram/workflows/latest", "tokens": "~1000", "purpose": "Proven procedures"},
+    "step1": {
+      "file": ".ai/ENCODING.md",
+      "tokens": "~300",
+      "purpose": "Learn compact format (skip if already known)"
+    },
+    "step2": {
+      "file": ".ai/buffer",
+      "tokens": "~500",
+      "purpose": "Hot context: what we were doing, what comes next"
+    },
+    "step3": {
+      "file": "todo.json",
+      "tokens": "~500",
+      "purpose": "Actionable task queue"
+    },
+    "step4": {
+      "file": "engram/learnings/consolidated_epoch-003",
+      "tokens": "~1500",
+      "purpose": "Hard-won knowledge"
+    },
+    "step5": {
+      "file": "engram/session-registry.json",
+      "tokens": "~500 (scan recent)",
+      "purpose": "Who came before"
+    },
+    "step6": {
+      "file": "engram/workflows/latest",
+      "tokens": "~1000",
+      "purpose": "Proven procedures"
+    },
     "lazyLoad": ".ai/engram.jsonld — only if buffer+learnings insufficient"
   },
-
   "health_check": {
     "quick_check": [
       "udc:read_file C:\\dev\\claude_start.json",
@@ -122,7 +155,6 @@
       "udc:list_directory C:\\dev\\ksnlabs\\engram\\session-handovers"
     ]
   },
-
   "failsafe": {
     "trigger": "User says 'wake up' or 'bootstrap'",
     "action": "tool_search('filesystem windows execute command'), then read claude_start.json",

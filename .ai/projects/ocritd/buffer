@@ -1,0 +1,7 @@
+# buffer:ocritd | seed | 2026-02-25T09:00Z | epoch-003
+@now git repo initialized. BUILD_ALL.ps1 exists. GUI has silent crash. no HOME build yet.
+@left first HOME build (overdue). GUI crash diagnosis. engine testing with real docs. keywards reconciliation.
+@next attempt HOME build. diagnose GUI crash (python runtime path). test with ITD D4 documents.
+@blk GUI silent crash undiagnosed. two keywards implementations unreconciled (L007). embedded python 3.13.11 required (L008).
+@owner seed-by-opus46-web-epoch003-001
+@dep aggdb:ocritd output feeds aggregate database

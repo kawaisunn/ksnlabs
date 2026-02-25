@@ -1,0 +1,3 @@
+# This directory holds ephemeral session lock files.
+# *.lock and *.stale are gitignored — they represent live state.
+# See .ai/CONCURRENCY.md for protocol.

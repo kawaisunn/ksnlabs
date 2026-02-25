@@ -93,3 +93,7 @@ Named pandering,subterfuge,misdirection. Respond with transparency through actio
 L023:or:pm:opus46-coldstart-recon-001
 Cold-start sessions WILL misidentify environment
 Without boot protocol: bash>Linux>"web-only". Confirmed Sonnet+Opus. User redirects manually.
+  
+L024:cc:p:opus46-web-epoch003-001  
+Concurrency protocol deployed - project isolation via .ai/projects/{name}/buffer  
+Multiple AI sessions work simultaneously. Each claims a project. Shared resources append-only. Lock files in .ai/active/. Read .ai/ONBOARD.md + .ai/CONCURRENCY.md. 

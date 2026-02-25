@@ -153,3 +153,11 @@ temp_zip_review/
 .git/refs/
 .git/logs/
 *.orig
+  
+# ========================================  
+# ENGRAM CONCURRENCY  
+# ========================================  
+  
+# Live session locks (ephemeral, not historical)  
+.ai/active/*.lock  
+.ai/active/*.stale 

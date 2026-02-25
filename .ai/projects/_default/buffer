@@ -1,0 +1,6 @@
+# buffer:_default | seed | 2026-02-25T09:00Z | epoch-003
+@now fallback for sessions not assigned to a specific project. also: legacy compatibility with pre-concurrency sessions that write to .ai/buffer directly.
+@left this buffer captures general/unassigned work.
+@next if you're here, you probably need to pick a project. read CONCURRENCY.md.
+@blk none.
+@owner seed-by-opus46-web-epoch003-001

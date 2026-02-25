@@ -1,6 +1,7 @@
-# ENGRAM COMPACT ENCODING SPEC v1.0
+# ENGRAM COMPACT ENCODING SPEC v1.1
 # For AI sessions. Not human-readable by design.
 # Tokens are the currency. Every character must earn its place.
+# v1.1: added concurrency codes for multi-session support.
 
 # ---- CONVENTIONS ----
 # | = field separator
@@ -28,6 +29,7 @@
 # nw = network
 # ed = engram-design
 # hc = human-ai-collaboration
+# cc = concurrency
 
 # ---- CONFIDENCE CODES ----
 # c = confirmed
@@ -44,12 +46,22 @@
 # PH = phantom
 # ST = stalled
 # FN = failed-no-handoff
+# AV = active (session still running)
 
 # ---- BOOT PROTOCOL CODES ----
 # a = auto
 # m = manual
 # n = none
 # n>m = none then manual
+
+# ---- CONCURRENCY CODES (v1.0) ----
+# @owner = sessionId that last wrote this project buffer
+# @dep = dependency on another project (format: projectName:detail)
+# @shared = learnings/workflows contributed to shared pool this session
+# Lock status: alive, stale(>4h no checkpoint), dead(confirmed by successor)
+# Project claim: exclusive write per project. Check .ai/active/ before claiming.
+# Session ID format: {model}_{interface}_{project}_{seq}
+# See .ai/CONCURRENCY.md for full multi-session protocol.
 
 # ---- LEARNING FORMAT ----
 # ID:category:!severity:origin
@@ -62,9 +74,26 @@
 # +learnings,+workflows
 # note:text
 
-# ---- BUFFER FORMAT ----
+# ---- BUFFER FORMAT (global legacy) ----
 # @section value
 # sections: now,why,left,next,urg,blk,tkn,net
+
+# ---- PROJECT BUFFER FORMAT (concurrent) ----
+# @section value
+# required: @now @left @next @blk @owner
+# optional: @dep @shared @tkn
+# session log: %id|date|OUTCOME (scoped to project)
+
+# ---- LOCK FORMAT (.ai/active/{sessionId}.lock) ----
+# id:{sessionId}
+# model:{model}
+# interface:{interface}
+# machine:{machine}
+# project:{project}
+# signed_in:{ISO8601}
+# last_checkpoint:{ISO8601}
+# status:alive
+# focus:{one-line current work}
 
 # ---- ARCHIVE FORMAT ----
 # ANN|retiredBy|date|originalSession

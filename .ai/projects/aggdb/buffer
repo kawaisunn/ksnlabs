@@ -1,0 +1,7 @@
+# buffer:aggdb | seed | 2026-02-25T09:00Z | epoch-003
+@now deployed on BIGSPIDER\KSN. 10 tables, 81 ITD fields, 6 lookups. see A001 in engram.jsonld.
+@left test SQL scripts. data import from ITD sources. IR-142/QAMS integration. deploy to IGS.
+@next test scripts at C:\dev\aggdb\sql\. verify data paths C:\dev\MSSQL15.KSN\MSSQL\DATA\.
+@blk need ITD source data access. IR-142 form structure unclear (see D4 search in past sessions).
+@owner seed-by-opus46-web-epoch003-001
+@dep ocritd:OCR pipeline feeds aggregate test data into aggdb tables

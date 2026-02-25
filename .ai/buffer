@@ -1,20 +1,26 @@
-# buffer v3.0.0 | opus46-web-epoch003-001 | 2026-02-25T08:30Z | epoch-003
-@now epoch-003 declared. compact encoding is primary. JSON audit-only.
-@why engram system operational. pivot from infrastructure to project work.
-@left epoch transition done. pending: RDP drive redir, OCRITD build, aggdb work
-@next resume deferred tasks from todo.json: OCRITD HOME build, aggdb testing, RDP config
-@urg MED — no deadline pressure this session, positioning for productive sessions ahead
-@blk Sophos(blocks all except RDP:3389 to IGS);Shell-MCP(broken on BIGSPIDER)
-@tkn fresh session, full budget available
-@net bigspider:129.101.139.85:ts100.120.131.75 | igs:172.28.196.231:ts100.118.38.103:only3389
-@boot claudeai-web session. UDC+GitHub tools available. No Windows-MCP this session.
+# buffer v3.1.0 | opus46_web_engram-dev_001 | 2026-02-25T09:20Z | epoch-003
+# NOTE: This global buffer is now a SUMMARY. Per-project state lives in .ai/projects/{project}/buffer.
+# Legacy sessions that read this file will get orientation. Concurrency-aware sessions read project buffers.
 
-# session log (newest first, retire >3 to engram.jsonld)
-%opus46-web-epoch003-001|2026-02-25|ACTIVE
-epoch-003 declaration+git commit+compact cutover. web claude session w/ UDC+GitHub.
+@now CONCURRENCY ENABLED. epoch-003 live. multiple AI sessions can work simultaneously.
+@why engram serves multiple AI models across multiple interfaces. need project isolation.
+@left see per-project buffers in .ai/projects/*/buffer for project-specific state.
+@next user coordinating haiku_vscode session. ongoing project work across aggdb, ocritd, infra.
+@urg none immediate.
+@blk Sophos(blocks all except RDP:3389 to IGS);Shell-MCP(broken on BIGSPIDER)
+@tkn this session: moderate. fresh sessions: full budget.
+@net bigspider:129.101.139.85:ts100.120.131.75 | igs:172.28.196.231:ts100.118.38.103:only3389
+@boot concurrency-aware sessions: read .ai/ONBOARD.md. legacy: read .ai/buffer (this file).
+
+# ACTIVE PROJECTS: check .ai/projects/*/buffer for current state
+# aggdb ocritd cait keywrds ktreesn engram-dev _infra _default
+
+# session log
+%opus46_web_engram-dev_001|2026-02-25|AV
+epoch-003 declared + concurrency v1.0 deployed.
 
 %opus46-coldstart-recon-001|2026-02-24|OK
-coldstart+IGS-recon+engram-v2-overhaul. compact encoding designed. epoch-003 prep complete.
+engram v2 overhaul + compact encoding design.
 
 %rp315-db-deploy-complete|2026-02-16/17|OK
-->archived A001. see .ai/engram.jsonld
+->archived A001

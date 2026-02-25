@@ -1,0 +1,10 @@
+# buffer:engram-dev | opus46_web_engram-dev_001 | 2026-02-25T09:20Z | epoch-003
+@now concurrency protocol v1.0 DEPLOYED. ONBOARD.md written. 7 project buffers seeded. lock system active. L024 contributed.
+@left validate in practice: haiku in vscode should be first concurrent session to test. monitor for lock collisions. refine stale detection. document cross-project dependency patterns as they emerge.
+@next commit+push. then hand off to user for vscode haiku coordination.
+@blk none.
+@owner opus46_web_engram-dev_001
+@shared +L024(concurrency protocol)
+
+%opus46_web_engram-dev_001|2026-02-25|AV
+epoch-003 + concurrency v1.0 deployment. first concurrent sign-in.

@@ -1,0 +1,7 @@
+# buffer:keywrds | seed | 2026-02-25T09:00Z | epoch-003
+@now two implementations unreconciled (L007). standalone at C:\dev\keywrd\ (nltk/sklearn/elasticsearch). integrated at C:\dev\ocritd\engine\keywards\ (freq/TF-IDF).
+@left user decides merge strategy. reconcile or pick one.
+@next await user direction on reconciliation.
+@blk decision pending.
+@owner seed-by-opus46-web-epoch003-001
+@dep ocritd:integrated version lives inside ocritd

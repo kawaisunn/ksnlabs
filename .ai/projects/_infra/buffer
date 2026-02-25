@@ -1,0 +1,6 @@
+# buffer:_infra | seed | 2026-02-25T09:00Z | epoch-003
+@now tailscale running both machines. RDP only path to IGS (L021). Shell-MCP broken (L003/L020).
+@left RDP drive redir config (\\tsclient\C). Shell-MCP FileNotFoundError diagnosis. CLAUDE.md autoload investigation (L023). bootstrap deploy to IGS (W005).
+@next configure RDP drive redirection for file exchange with IGS.
+@blk Sophos firewall blocks all except 3389. Shell-MCP broken on BIGSPIDER.
+@owner seed-by-opus46-web-epoch003-001
