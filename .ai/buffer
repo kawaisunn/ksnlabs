@@ -1,16 +1,18 @@
-# buffer v3.1.1 | opus46_web_engram-dev_001 | 2026-02-25T09:30Z | epoch-003
+# buffer v3.1.2 | opus46_web_json-v09_001 | 2026-02-25T11:00Z | epoch-003
 # GLOBAL SUMMARY. Per-project state in .ai/projects/{project}/buffer.
-# New sessions: read .ai/ONBOARD.md for concurrency protocol.
 
-@now CONCURRENCY ENABLED. epoch-003. haiku45_vscode_aggdb_001 onboarding.
-@why multi-model multi-interface AI collaboration on IGS projects.
-@left per-project work. see .ai/projects/*/buffer.
-@next haiku aggdb session active. ongoing project work.
+@now JSON v0.9 output redesign COMMITTED. processor.py rewritten. Ready for test run.
+@why v0.9 structured header/body/footer JSON replaces flat v0.8 output.
+@left test run on small subset, OCR-if-no-text-layer verify, GUI skip-copy checkbox.
+@next git pull at IGS, test run, iterate on output format.
 @urg none immediate.
 @blk Sophos(only 3389 to IGS);Shell-MCP(broken BIGSPIDER)
 @net bigspider:129.101.139.85:ts100.120.131.75 | igs:172.28.196.231:ts100.118.38.103:only3389
 
 # PROJECTS: aggdb ocritd cait keywrds ktreesn engram-dev _infra _default
+
+%opus46_web_json-v09_001|2026-02-25|OK
+v0.9 JSON output committed ad15bb6. header/body/footer structure. All source read, code written, syntax+import verified.
 
 %opus46_web_engram-dev_001|2026-02-25|OK
 epoch-003 + concurrency v1.0. 3 commits. clean W002.
