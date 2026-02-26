@@ -1,7 +1,6 @@
-# learnings epoch-003 v3.0.0 | 2026-02-25T08:30Z | nextID:L051
+# learnings epoch-003 v3.0.0 | 2026-02-25T08:30Z | nextID:L024
 # carried forward from epoch-002 (L001-L023) + epoch-003 additions
 # format: ENCODING.md v1.0 compact (primary). JSON audit at .audit suffix
-# NOTE: L025-L048 exist on IGS disk only (consolidated_epoch-003.json). Sync pending.
 
 L001:to:c:orientation-survival-001
 MCP Shell swallows git stdout
@@ -20,11 +19,11 @@ Read todo.json first not all handovers
 buffer=context. todo.json=queue. handovers=deep history only.
 
 L005:or:cf:multiple
-Orientation kills sessions - be surgical
+Orientation kills sessions — be surgical
 Read startup config,buffer,todo,learnings. Then ask user. Don't explore.
 
 L006:gt:c:orientation-survival-001
-SSH may fail - HTTPS fallback
+SSH may fail — HTTPS fallback
 git remote set-url origin https://github.com/kawaisunn/REPO.git
 
 L007:pj:c:orientation-survival-001
@@ -36,7 +35,7 @@ System Python != embedded Python
 System:3.14+3.11. Embedded:3.13.11@C:\dev\ocritd\runtime\python\. ALWAYS use embedded.
 
 L009:or:!c:cf:ocritd-stabilize-001+opus46-coldstart-recon-001
-CRITICAL: bash_tool is Linux - check UDC/Windows-MCP first
+CRITICAL: bash_tool is Linux — check UDC/Windows-MCP first
 bash reports Linux even when Windows MCP available. tool_search BEFORE bash. Every session that skips this makes the mistake. Confirmed across Sonnet+Opus.
 
 L010:or:cf:ocritd-stabilize-001
@@ -94,14 +93,14 @@ Named pandering,subterfuge,misdirection. Respond with transparency through actio
 L023:or:pm:opus46-coldstart-recon-001
 Cold-start sessions WILL misidentify environment
 Without boot protocol: bash>Linux>"web-only". Confirmed Sonnet+Opus. User redirects manually.
-
-L024:cc:p:opus46-web-epoch003-001
-Concurrency protocol deployed - project isolation via .ai/projects/{name}/buffer
-Multiple AI sessions work simultaneously. Each claims a project. Shared resources append-only. Lock files in .ai/active/. Read .ai/ONBOARD.md + .ai/CONCURRENCY.md.
+  
+L024:cc:p:opus46-web-epoch003-001  
+Concurrency protocol deployed - project isolation via .ai/projects/{name}/buffer  
+Multiple AI sessions work simultaneously. Each claims a project. Shared resources append-only. Lock files in .ai/active/. Read .ai/ONBOARD.md + .ai/CONCURRENCY.md. 
 
 L049:si:!c:desktop-recovery-20260225
 CRITICAL: Claude Desktop config is the fragile link in continuity
-Engram survives crashes (L046 validated). MCP server config does NOT. claude_desktop_config.json in %APPDATA%\Claude\ destroyed on reinstall. Backup to C:\dev\ AND git. Machine-specific (HOME vs IGS). Recovery pattern: claude_desktop_config_{MACHINE}_RECOVERY.json in C:\dev\ and git bootstrap/.
+Engram survives crashes (L046 validated). MCP server config does NOT. claude_desktop_config.json in C:\Users\kawaisunn\AppData\Roaming\Claude\ destroyed on reinstall. Backup to C:\dev\ AND git. Machine-specific (HOME vs IGS). Recovery pattern: claude_desktop_config_{MACHINE}_RECOVERY.json in C:\dev\ and git bootstrap/.
 
 L050:si:c:desktop-recovery-20260225
 HOME and IGS engrams diverged during epoch-003

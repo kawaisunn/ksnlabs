@@ -1,0 +1,45 @@
+{
+  "@context": "https://schema.org",
+  "@type": "DigitalDocument",
+  "name": "engram-buffer",
+  "description": "Working memory buffer",
+  "dateModified": "2026-02-25T22:00:00-07:00",
+  "version": "epoch-003",
+  "lastUpdated": "2026-02-25T22:00:00-07:00",
+  "updatedBy": "home-recovery-session",
+  "immediateContext": {
+    "whatWeWereWorkingOn": "Recovery from Claude Desktop reinstall on IGS. TestResult rework pending.",
+    "whyItMatters": "52-table DB deployed on IGS-Intrusion. TestResult has 0 data rows.",
+    "whereWeLeftOff": "HOME config backed up. IGS recovery config at C:\\dev\\claude_desktop_config_IGS_RECOVERY.json. TestProcedures xlsx not yet parsed.",
+    "whatComesNext": [
+      "1. PARSE TestProcedures xlsx for TestResult rework",
+      "2. IGS RECOVERY via RDP",
+      "3. Spec audit rows 39-84",
+      "4. Add L049 config backup learning",
+      "5. V2 build scripts consolidation"
+    ],
+    "urgency": "MODERATE",
+    "blockers": [
+      "IGS Desktop needs config",
+      "OCRITD not stable"
+    ],
+    "tokenStatus": "session ending for restart"
+  },
+  "currentSchema": {
+    "instance": "IGS-Intrusion\\\\SQLEXPRESS",
+    "database": "ITD_AggDB",
+    "tableCount": 52,
+    "fkCount": 63,
+    "dataCounts": {
+      "Sites": 6,
+      "Rec": 19,
+      "QAMS": 2,
+      "TestResult": 0
+    }
+  },
+  "conventions": {
+    "id": "INT IDENTITY(1,1) leftmost, never PK",
+    "strings": "NVARCHAR",
+    "confirmBeforeWrite": "ALWAYS"
+  }
+}
