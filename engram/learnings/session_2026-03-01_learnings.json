@@ -1,0 +1,12 @@
+{
+  "session_learnings": [
+    {"id":"L051","cat":"architecture","sum":"keywrd reads ONLY json body - never header","detail":"Hard architectural boundary. Body is raw extracted content only. Header contains calculated fields, derivative metadata, file paths, processing artifacts that generate false positive keywords."},
+    {"id":"L052","cat":"architecture","sum":"cait appends inline, never modifies raw text","detail":"Standardizes dates and PLSS by appending normalized values inline next to raw. Original text NEVER modified. Additions clearly marked as enrichments."},
+    {"id":"L053","cat":"architecture","sum":"cait passes header keywords to end-of-file","detail":"Relevant keywords from header context written at END of JSON file and included in keyword counts. Keeps keywrd body-only processing clean."},
+    {"id":"L054","cat":"architecture","sum":"table preservation in Doksn is CRITICAL","detail":"ITD docs contain test result tables, QAMS matrices, commodity specs. Tables ARE the data - map directly to TestResult, QAMS, LU_TestType. Must preserve as array-of-row-arrays with header row identified."},
+    {"id":"L055","cat":"deployment","sum":"zero IT footprint - MSIX double-click install with tutorial video","detail":"User gets MSIX, double-clicks, agrees to licenses, watches install + video tutorial about features and test job setup. No servers, services, ports."},
+    {"id":"L056","cat":"workflow","sum":"proficiency tracking: review log + good samples","detail":"Cait maintains human review log (low-confidence files) and curated good samples for calibration. DB record generation depends on JSON quality."},
+    {"id":"L057","cat":"stakeholder","sum":"don't assign humans work the software does","detail":"Rebecca gets DB population and QAMS verification, NOT document cataloging. 10,000+ documents are the software's problem."},
+    {"id":"L058","cat":"context","sum":"10,000+ ITD docs, ITD estimates 10-20yr manual","detail":"IGS has 10,000+ known ITD documents. ITD has no count and estimates 10-20 years manual processing. Core value proposition of Doksn."}
+  ]
+}
