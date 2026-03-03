@@ -3,39 +3,80 @@
   "@type": "DigitalDocument",
   "name": "engram-buffer",
   "description": "Working memory buffer",
-  "dateModified": "2026-02-25T22:00:00-07:00",
+  "dateModified": "2026-03-03T03:30:00Z",
   "version": "epoch-003",
-  "lastUpdated": "2026-02-25T22:00:00-07:00",
-  "updatedBy": "home-recovery-session",
+  "lastUpdated": "2026-03-03T03:30:00Z",
+  "updatedBy": "doksn-real-data-test-session",
   "immediateContext": {
-    "whatWeWereWorkingOn": "Recovery from Claude Desktop reinstall on IGS. TestResult rework pending.",
-    "whyItMatters": "52-table DB deployed on IGS-Intrusion. TestResult has 0 data rows.",
-    "whereWeLeftOff": "HOME config backed up. IGS recovery config at C:\\dev\\claude_desktop_config_IGS_RECOVERY.json. TestProcedures xlsx not yet parsed.",
+    "whatWeWereWorkingOn": "Doksn real ITD data testing — District 5 Top 40 Sites (Bk-114-s). Full pipeline: extract → cait enrich → keywrds.",
+    "whyItMatters": "10,000+ ITD documents need processing. Manual = 10-20 years (L058). Doksn is the automated solution. DEMO in ~32 hours.",
+    "whereWeLeftOff": "Phase 1 DONE (77f9e8f). Phase 2 DONE (5893975). Phase 3 DONE (df06050). Phase 4 DONE (eccbc10). Unpaper bundled + extractors patched (3eb1a0e). Run 4 reached 39/62 before session timeout. 58 enriched JSON outputs generated. Need to complete full run and expand to all 4 sites.",
     "whatComesNext": [
-      "1. PARSE TestProcedures xlsx for TestResult rework",
-      "2. IGS RECOVERY via RDP",
-      "3. Spec audit rows 39-84",
-      "4. Add L049 config backup learning",
-      "5. V2 build scripts consolidation"
+      "1. COMPLETE FULL RUN: Re-run run_test_d5.py — it should finish all 62 objects now (unpaper bundled, both extractors patched)",
+      "2. EXPAND TO ALL SITES: Modify run_test_d5.py to point at D:\\dev\\test\\District5Top40Sites\\ (all 4 Bk-* dirs, 190 files)",
+      "3. VALIDATE ENRICHMENT: Spot-check JSON outputs for quality — dates, PLSS, entities, commodities, classification",
+      "4. FIX KNOWN ISSUES: EPA substring false positive in entity_extractor.py, duplicate year-only dates in date_normalizer.py, .DOC/.doc legacy support",
+      "5. BUILD MSI: BUILD_ALL.ps1 -BuildMode MSI or Full",
+      "6. DEMO PREP: ~32 hours remaining"
     ],
-    "urgency": "MODERATE",
-    "blockers": [
-      "IGS Desktop needs config",
-      "OCRITD not stable"
-    ],
-    "tokenStatus": "session ending for restart"
+    "urgency": "CRITICAL - demo deadline",
+    "blockers": [],
+    "tokenStatus": "session ended, handoff complete"
   },
-  "currentSchema": {
-    "instance": "IGS-Intrusion\\\\SQLEXPRESS",
-    "database": "ITD_AggDB",
-    "tableCount": 52,
-    "fkCount": 63,
-    "dataCounts": {
-      "Sites": 6,
-      "Rec": 19,
-      "QAMS": 2,
-      "TestResult": 0
+  "testDataLocation": {
+    "source": "\\\\igs-rift2.igs.uidaho.edu\\ITD_data_confidential$\\District5\\District 5 Top 40 Sites\\District5Top40Sites.zip",
+    "local": "D:\\dev\\test\\District5Top40Sites",
+    "output": "D:\\dev\\test\\doksn_output",
+    "sites": ["Bk-114-s", "Bk-127-s", "Bk-135-s", "Bk-136-s"],
+    "totalFiles": 190,
+    "totalSizeMB": 773,
+    "breakdown": {
+      ".pdf": {"count": 72, "sizeMB": 245},
+      ".jpg": {"count": 69, "sizeMB": 545},
+      ".DOC": {"count": 37, "sizeMB": 1},
+      ".rtf/.docx/.csv/.txt": {"count": 12, "sizeMB": 0.2}
     }
+  },
+  "testRunResults": {
+    "run1_184930": "0/62 OK — OCRmyPDF --clean requires unpaper (not installed)",
+    "run2_185541": "34/62 OK — --clean temporarily removed, all PDFs working, JPGs still failing",
+    "run3_190709": "unknown — session gap",
+    "run4_191458": "39+/62 OK — unpaper bundled, JPGs working, session died mid-run at item 39",
+    "jsonOutputCount": 58,
+    "sampleEnrichment": {
+      "file": "D5_Bk114s_Test_1986_2_OCR_156a4bce_ocr.json",
+      "sizeBytes": 876261,
+      "types": ["lab_report", "inventory", "mine_plan"],
+      "categories": ["administrative", "regulatory", "technical", "visual"],
+      "datesFound": 40,
+      "plssFound": 1,
+      "itdSiteIds": ["802", "878", "927", "958", "902", "0927", "900"],
+      "commodities": ["basalt", "chromium", "clay", "coal", "cobalt", "copper", "manganese", "molybdenum", "nickel", "sand and gravel", "silica", "silver", "tin", "titanium", "tungsten"],
+      "confidence": 1.0
+    }
+  },
+  "recentCommits": {
+    "ocritd": [
+      {"hash": "77f9e8f", "msg": "rename: OCRITD -> Doksn (41 changes)", "date": "2026-03-02"},
+      {"hash": "5893975", "msg": "feat: integrate full keywrd engine (498 domain terms, SimHash, thesaurus)", "date": "2026-03-02"},
+      {"hash": "df06050", "msg": "feat: add cait enrichment module stubs (8 files, 1132 lines)", "date": "2026-03-02"},
+      {"hash": "eccbc10", "msg": "feat: wire cait + keywrds pipeline into processor.py (Phase 4)", "date": "2026-03-02"},
+      {"hash": "3eb1a0e", "msg": "fix: bundle unpaper to runtime/tools/, patch extractors with PATH lookup", "date": "2026-03-02"}
+    ]
+  },
+  "knownIssues": [
+    {"module": "engine/cait/entity_extractor.py", "issue": "EPA false positive from substring match in 'Department'", "fix": "word-boundary regex", "priority": "low"},
+    {"module": "engine/cait/date_normalizer.py", "issue": "duplicate year-only matches overlapping full dates", "fix": "overlap suppression", "priority": "low"},
+    {"module": "engine/extractors/office.py", "issue": ".DOC/.doc legacy format not supported (python-docx only reads .docx)", "fix": "add antiword/textract fallback or convert via LibreOffice CLI", "priority": "medium"},
+    {"module": "engine/cait/enricher.py", "issue": "v0.9 JSON key was 'text' not 'raw_text' — fixed this session", "fix": "DONE — falls back to both keys", "priority": "resolved"},
+    {"module": "engine/extractors/pdf.py", "issue": "--clean required unpaper", "fix": "DONE — unpaper bundled to runtime/tools/unpaper/", "priority": "resolved"}
+  ],
+  "rdpWorkflow": {
+    "description": "RDP from BIGSPIDER to IGS with drive redirection enabled",
+    "tsclientPath": "\\\\tsclient\\D\\dev\\test\\",
+    "fileServerUNC": "\\\\igs-rift2.igs.uidaho.edu\\ITD_data_confidential$\\",
+    "method": "Compress on IGS side, copy zip through tsclient, unzip on BIGSPIDER",
+    "note": "RDP channel is slow for bulk transfers — always zip first"
   },
   "conventions": {
     "id": "INT IDENTITY(1,1) leftmost, never PK",
