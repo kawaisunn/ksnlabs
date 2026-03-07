@@ -1,0 +1,84 @@
+{
+  "sessionId": "opus46-desktop-aggdb-frontend-deploy-001",
+  "timestamp": "2026-03-06T11:00:00Z",
+  "model": "opus-4.6",
+  "interface": "claude-desktop",
+  "machine": "IGS-Antiquarian",
+
+  "whatWeWorkedOn": "Deployed AggDB API to IGS-Intrusion, built frontend v4 features, troubleshot network access for Rebecca",
+
+  "whatWasAccomplished": [
+    "API deployed to IGS-Intrusion via fix_deploy_intrusion.ps1 (Python 3.12 embeddable, FastAPI, pyodbc)",
+    "Firewall rule created for TCP 8000 on Intrusion",
+    "Rebecca connected successfully from 172.28.196.231 via http://172.20.222.123:8000/",
+    "Frontend v4 new features: All Records view in Browse, Edit arrows on Rec rows, edit mode with blue banner, temp audit doc auto-link on New Site, username prompt with alias resolution (rka->rkanderson, cat->ctate, lk->lknudsen), blocked username validation, better error messages",
+    "Backend new endpoints: GET /api/recs (list all), GET /api/recs/{id} (detail with linked sites), PUT /api/recs/{id} (update), POST /api/reclinks (link rec to site)",
+    "SiteCreate model extended with LinkRecID for auto-linking temp audit doc",
+    "Temp audit doc is IGSfakeTILLitEXISTS (RecType Other, RecTypeID 99)",
+    "Rebecca created site Br-2c (Dover Hardrock) successfully",
+    "Discovered IGS_NO_AUDIT_TESTING orphan rec linked to nonexistent site Wa-1-s",
+    "deploy_update.ps1 created for quick pushes from Antiquarian to Intrusion"
+  ],
+
+  "whatDidNotWork": [
+    "Chrome extension (fcoeoabgfenejglbffodgkkbkcdhcgfn) blocked by Chrome on IGS network - ERR_BLOCKED_BY_CLIENT",
+    "Git not in system PATH on Antiquarian - breaks Git LFS, Chrome extension, and any subprocess needing git",
+    "Git LFS filter breaks git commit and git status when git.exe not in PATH (even when using full path for git commands, LFS subprocess still fails)",
+    "Git Bash approach attempted but cmd.exe PATH manipulation unreliable in MCP shell context",
+    "Git commit of AggDB files NOT completed - add succeeded but commit failed due to LFS PATH issue"
+  ],
+
+  "pendingGitWork": {
+    "status": "FILES STAGED BUT NOT COMMITTED",
+    "branch": "master (current), main (ahead 1 behind 13 of origin/main)",
+    "stagedFiles": [
+      "aggdb/api/main.py", "aggdb/api/models.py", "aggdb/api/db.py",
+      "aggdb/api/requirements.txt", "aggdb/api/aggdb_api_run.ps1",
+      "aggdb/api/fix_network_access.ps1", "aggdb/frontend/ITD_AggDB_v4.html",
+      "aggdb/deploy_to_intrusion.ps1", "aggdb/deploy_update.ps1",
+      "aggdb/fix_deploy_intrusion.ps1", "aggdb/configure_auth.ps1",
+      "aggdb/configure_auth2.ps1"
+    ],
+    "intendedCommitMessage": "AggDB API and frontend v4 - FastAPI backend, data entry UI, deploy scripts, user audit, temp doc workflow",
+    "branchIssue": "HEAD is master, remote tracks main. origin/main matches master at a08510a. main branch has Doc-to-Rec rename commit (3a09080) ahead 1, behind 13. Need to reconcile master/main before push.",
+    "suggestedFix": "On BIGSPIDER or after PATH fix: git commit staged files, reconcile master/main (merge main into master or rename), push to origin"
+  },
+
+  "environmentIssues": {
+    "gitNotInPATH": "Git installed at C:\\Program Files\\Git\\bin\\git.exe but NOT in system PATH on Antiquarian. This breaks Git LFS subprocess calls, Chrome extension, and any tool relying on git in PATH.",
+    "chromeExtensionBlocked": "Chrome extension fcoeoabgfenejglbffodgkkbkcdhcgfn blocked - likely related to PATH or Chrome policy on IGS network. Manifested today (2026-03-06) for first time.",
+    "fixRequired": "Add C:\\Program Files\\Git\\bin and C:\\Program Files\\Git\\cmd to system PATH. Requires admin. This likely fixes both git and Chrome extension issues."
+  },
+
+  "currentDBState": {
+    "sites": ["tt-00-s (test by ctate)", "Br-2c (Dover Hardrock by rkanderson)"],
+    "recs": ["IGSfakeTILLitEXISTS (temp audit doc, RecType Other)", "IGS_NO_AUDIT_TESTING (orphan, linked to nonexistent Wa-1-s)"],
+    "recLinks": "IGSfakeTILLitEXISTS linked to both tt-00-s and Br-2c. IGS_NO_AUDIT_TESTING linked to Wa-1-s (does not exist)."
+  },
+
+  "filesModified": {
+    "onAntiquarian": [
+      "C:\\dev\\ksnlabs\\aggdb\\api\\main.py",
+      "C:\\dev\\ksnlabs\\aggdb\\api\\models.py",
+      "C:\\dev\\ksnlabs\\aggdb\\frontend\\ITD_AggDB_v4.html",
+      "C:\\dev\\ksnlabs\\aggdb\\deploy_update.ps1",
+      "C:\\dev\\ksnlabs\\aggdb\\api\\fix_network_access.ps1",
+      "C:\\dev\\ksnlabs\\aggdb\\fix_deploy_intrusion.ps1"
+    ],
+    "onIntrusion": [
+      "C:\\dev\\aggdb\\api\\main.py",
+      "C:\\dev\\aggdb\\api\\models.py",
+      "C:\\dev\\aggdb\\frontend\\ITD_AggDB_v4.html"
+    ]
+  },
+
+  "nextSteps": [
+    "1. Fix Git PATH on Antiquarian (add to system PATH, requires admin)",
+    "2. Complete git commit and push from BIGSPIDER or Antiquarian after PATH fix",
+    "3. Reconcile master/main branch divergence",
+    "4. Investigate Chrome extension blocking - may resolve with PATH fix",
+    "5. Continue spec audit rows 39-84",
+    "6. Verify Rebecca can create sites and recs end-to-end",
+    "7. Circle back on audit trail - username system needs review"
+  ]
+}

@@ -105,3 +105,39 @@ Engram survives crashes (L046 validated). MCP server config does NOT. claude_des
 L050:si:c:desktop-recovery-20260225
 HOME and IGS engrams diverged during epoch-003
 HOME has compact encoding + concurrency (L001-L024). IGS has L025-L048 + 52-table schema + SQL work + buffer.jsonld with full schema detail. Neither fully synced. Git reflects HOME state only. IGS content must be pulled to git when access restored. Priority: consolidated_epoch-003.json (L025-L048) and buffer.jsonld (52-table schema).
+
+L063:db:!c:sonnet46-web-aggdb-frontend-entry-001
+Never infer or add data without an explicit source
+No counties, districts, material types, statuses unless passed in by user. Each addition without audit trail is a liability. Caused two full workbook rebuilds.
+
+L064:db:c:sonnet46-web-aggdb-frontend-entry-001
+ITD_AggDB SiteID suffix: -c = commercial, -s = state
+NOT material type. Material type is a separate attribute. Previous sessions inferred material from suffix — wrong.
+
+L065:wf:p:sonnet46-web-aggdb-frontend-entry-001
+Excel COUNTIF cross-sheet FK validation pattern
+Commit?=YES/NO/HOLD + RecID Valid?=COUNTIF(Rec!$A:$A) → MATCHED/NOT FOUND IN Rec. Reusable offline FK staging pattern for any table pair before DB import.
+
+L066:wf:c:sonnet46-web-aggdb-frontend-entry-001
+Standalone HTML + FastAPI with live/offline banner is viable IGS dev frontend
+Auto-detects API on load, falls back to mock silently, commit wires to POST /api/commit. No install, no framework, works from file://.
+
+L067:ops:!c:opus46-desktop-aggdb-frontend-deploy-001
+Git not in system PATH on Antiquarian breaks Git LFS, Chrome extension, MCP shell git operations
+Git installed at C:\Program Files\Git\bin\git.exe but not in PATH. Full-path git commands work for log/branch/add but LFS filter subprocess fails on commit/status because LFS invokes bare 'git'. Fix: add Git dirs to system PATH (admin required). Likely root cause of Chrome extension blocking same day.
+
+L068:ops:c:opus46-desktop-aggdb-frontend-deploy-001
+MCP Shell on Antiquarian: use bat files with set GIT= variable for git commands
+cmd.exe set PATH= does not reliably persist in MCP-spawned shells. Workaround: write .bat files using set GIT="full\path" and %GIT% variable for all git commands. Git Bash is another option but harder to invoke from MCP. Start-Process pwsh -File works for non-git PowerShell scripts.
+
+L069:db:c:opus46-desktop-aggdb-frontend-deploy-001
+RecLink table is the visibility gate for Recs in Browse
+Browse detail only shows Recs joined through RecLink.RelateID = SiteID. Orphan recs (no RecLink or linked to nonexistent SiteID) are invisible. Added All Records view (GET /api/recs) to catch orphans.
+
+L070:ops:c:opus46-desktop-aggdb-frontend-deploy-001
+Deploy to Intrusion pattern: copy via admin share, restart API
+Admin share \\IGS-Intrusion\C$\dev\aggdb\ works from Antiquarian. Copy main.py, models.py, frontend HTML. Intrusion db.py uses localhost\SQLEXPRESS. API restart needed for backend changes, Ctrl+F5 only for frontend. deploy_update.ps1 automates the copy.
+
+L071:fe:c:opus46-desktop-aggdb-frontend-deploy-001
+Browser JavaScript cannot access client OS username
+No browser API for Windows auth username. Health check returns server-side user only (always ctate). Solution: one-time localStorage prompt with alias resolution (rka->rkanderson, cat->ctate). Blocked username list prevents generic entries.
