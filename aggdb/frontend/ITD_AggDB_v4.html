@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ITD_AggDB — Aggregate Materials Database</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg:#070d14; --panel:#0a1520; --surface:#0f1923; --border:#1e2d3d; --border2:#152233;
+  --text:#e2e8f0; --muted:#94a3b8; --dim:#64748b; --faint:#475569; --ghost:#334155;
+  --gold:#F5B400; --green:#16a34a; --red:#dc2626; --amber:#d97706; --blue:#3b82f6; --teal:#0d9488;
+  --mono:'Courier New','Consolas',monospace;
+}
+body { background:var(--bg); color:var(--text); font-family:'Segoe UI',system-ui,sans-serif; font-size:13px; height:100vh; display:flex; flex-direction:column; overflow:hidden; }
+
+/* Header */
+header { background:var(--panel); border-bottom:1px solid var(--border); height:50px; display:flex; align-items:center; padding:0 20px; flex-shrink:0; }
+.logo-block { display:flex; align-items:center; gap:10px; margin-right:24px; }
+.logo-icon { width:30px; height:30px; background:var(--gold); display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:900; color:var(--panel); clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%); flex-shrink:0; }
+.logo-title { font-size:14px; font-weight:700; color:#f1f5f9; letter-spacing:.4px; }
+.logo-sub { font-size:9px; color:var(--faint); letter-spacing:2px; text-transform:uppercase; }
+nav { display:flex; margin-right:auto; }
+nav button { background:none; border:none; cursor:pointer; padding:0 14px; height:50px; font-size:12px; font-weight:500; color:var(--dim); border-bottom:2px solid transparent; letter-spacing:.4px; font-family:inherit; transition:color .15s; }
+nav button:hover { color:var(--muted); }
+nav button.active { color:var(--gold); border-bottom-color:var(--gold); font-weight:700; }
+.hdr-right { display:flex; align-items:center; gap:12px; }
+.hdr-meta { font-size:10px; color:var(--ghost); font-family:var(--mono); }
+.help-btn { background:none; border:1px solid var(--border); color:var(--dim); font-size:11px; padding:4px 10px; cursor:pointer; font-family:inherit; border-radius:3px; }
+.help-btn:hover { border-color:var(--gold); color:var(--gold); }
+
+/* Shared */
+.tab-page { display:none; flex:1; overflow:hidden; flex-direction:column; }
+.tab-page.visible { display:flex; }
+.section-lbl { font-size:10px; color:var(--ghost); text-transform:uppercase; letter-spacing:2px; margin-bottom:8px; }
+.badge { display:inline-block; font-size:10px; font-weight:700; letter-spacing:.8px; text-transform:uppercase; padding:2px 7px; white-space:nowrap; }
+input, select, textarea { background:var(--surface); border:1px solid var(--border); color:var(--text); font-family:inherit; font-size:12px; outline:none; padding:6px 10px; transition:border-color .15s; }
+input:focus, select:focus, textarea:focus { border-color:var(--gold); }
+select option { background:var(--surface); }
+label { font-size:11px; color:var(--dim); display:block; margin-bottom:4px; letter-spacing:.3px; }
+.req { color:var(--red); margin-left:2px; }
+.fg { margin-bottom:12px; }
+.fr { display:grid; gap:10px; }
+.fr2 { grid-template-columns:1fr 1fr; }
+.fr3 { grid-template-columns:1fr 1fr 1fr; }
+.w-full { width:100%; }
+.auto-val { border-color:var(--teal) !important; color:var(--teal) !important; }
+
+/* Banner */
+#apiBanner { background:var(--surface); border-bottom:1px solid var(--border); border-left:4px solid var(--ghost); padding:5px 20px; font-size:11px; color:var(--dim); font-family:var(--mono); flex-shrink:0; display:flex; align-items:center; gap:8px; }
+
+/* Stat bar */
+.stat-bar { display:flex; gap:1px; padding:12px 16px; background:var(--panel); border-bottom:1px solid var(--border); flex-shrink:0; }
+.stat-card { padding:10px 16px; min-width:110px; background:var(--surface); border:1px solid var(--border); border-left:3px solid var(--accent,var(--gold)); }
+.stat-val { font-family:var(--mono); font-size:22px; font-weight:700; color:var(--accent,var(--gold)); letter-spacing:-1px; }
+.stat-lbl { font-size:10px; color:var(--dim); text-transform:uppercase; letter-spacing:2px; margin-top:2px; }
+
+/* Filter bar */
+.filter-bar { display:flex; gap:8px; padding:8px 16px; background:var(--panel); border-bottom:1px solid var(--border); align-items:center; flex-shrink:0; }
+.filter-bar input { flex:1; }
+.filter-count { font-size:11px; color:var(--ghost); font-family:var(--mono); white-space:nowrap; }
+
+/* Main layout */
+.main { display:flex; flex:1; overflow:hidden; }
+
+/* Site list */
+.site-list-wrap { width:420px; display:flex; flex-direction:column; border-right:1px solid var(--border); flex-shrink:0; }
+.tbl-head { display:grid; grid-template-columns:90px 1fr 80px; gap:8px; padding:6px 14px; background:var(--panel); border-bottom:1px solid var(--border); flex-shrink:0; }
+.tbl-head span { font-size:10px; color:var(--faint); text-transform:uppercase; letter-spacing:1.5px; font-weight:600; }
+.site-rows { flex:1; overflow-y:auto; }
+.site-rows::-webkit-scrollbar { width:5px; }
+.site-rows::-webkit-scrollbar-track { background:var(--bg); }
+.site-rows::-webkit-scrollbar-thumb { background:var(--border); }
+.site-row { display:grid; grid-template-columns:90px 1fr 80px; gap:8px; padding:9px 14px; cursor:pointer; border-bottom:1px solid var(--border2); border-left:3px solid transparent; transition:background .1s; align-items:center; }
+.site-row:hover { background:#0d1c2a; }
+.site-row.active { background:#112030; border-left-color:var(--gold); }
+.cell-id { font-family:var(--mono); font-size:12px; font-weight:700; color:var(--gold); }
+.cell-name { color:var(--text); overflow:hidden; white-space:nowrap; text-overflow:ellipsis; }
+.cell-stat { display:flex; align-items:center; gap:5px; color:var(--muted); font-size:11px; }
+.dot { width:7px; height:7px; border-radius:50%; display:inline-block; flex-shrink:0; }
+.empty-msg { color:var(--ghost); padding:40px; text-align:center; line-height:1.6; }
+
+/* Detail panel */
+.detail-panel { flex:1; overflow-y:auto; background:var(--panel); }
+.detail-panel::-webkit-scrollbar { width:5px; }
+.detail-empty { height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; color:var(--ghost); gap:10px; }
+.detail-inner { padding:20px; }
+.detail-id { font-family:var(--mono); color:var(--gold); font-size:12px; font-weight:700; }
+.detail-name { font-size:17px; font-weight:600; color:var(--text); margin-top:4px; }
+.detail-sub { font-size:12px; color:var(--dim); margin-top:4px; }
+.detail-badges { display:flex; gap:6px; flex-wrap:wrap; margin:12px 0 18px; }
+.info-box { margin-top:12px; padding:12px; background:var(--surface); border:1px solid var(--border); }
+.info-box + .info-box { margin-top:8px; }
+
+/* Data table */
+.dtbl { width:100%; border-collapse:collapse; font-size:12px; }
+.dtbl th { color:var(--faint); font-size:10px; text-transform:uppercase; letter-spacing:1.2px; padding:5px 8px; text-align:left; border-bottom:1px solid var(--border); font-weight:600; }
+.dtbl td { padding:7px 8px; border-bottom:1px solid var(--border2); }
+.dtbl tr { cursor:default; }
+.dtbl tr.clickable { cursor:pointer; }
+.dtbl tr.clickable:hover { background:#0d1c2a; }
+
+/* Entry layout */
+.entry-layout { display:flex; flex:1; overflow:hidden; }
+.entry-form-wrap { width:540px; display:flex; flex-direction:column; border-right:1px solid var(--border); overflow-y:auto; flex-shrink:0; }
+.entry-form-wrap::-webkit-scrollbar { width:5px; }
+.entry-form-wrap::-webkit-scrollbar-track { background:var(--bg); }
+.entry-form-wrap::-webkit-scrollbar-thumb { background:var(--border); }
+.entry-section { padding:16px 18px; border-bottom:1px solid var(--border); }
+.entry-section-hdr { display:flex; align-items:center; gap:8px; margin-bottom:12px; }
+.step-num { width:22px; height:22px; border-radius:50%; background:var(--gold); color:var(--panel); font-size:11px; font-weight:900; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.step-num.dim { background:var(--ghost); }
+.step-num.done { background:var(--green); }
+.step-title { font-size:11px; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:1.5px; }
+
+/* Sub-forms */
+.sub-form { background:var(--surface); border:1px solid var(--border); border-left:3px solid var(--blue); padding:12px; margin-top:8px; }
+.sub-form-hdr { display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; }
+.sub-form-title { font-size:11px; font-weight:700; color:var(--blue); text-transform:uppercase; letter-spacing:1px; }
+.sub-toggle { background:none; border:1px solid var(--border); color:var(--dim); font-size:10px; padding:3px 8px; cursor:pointer; font-family:inherit; }
+.sub-toggle:hover { border-color:var(--blue); color:var(--blue); }
+.sub-toggle.active { border-color:var(--blue); color:var(--blue); background:#3b82f611; }
+.sub-content { display:none; }
+.sub-content.open { display:block; }
+
+/* Queue */
+.entry-queue { flex:1; display:flex; flex-direction:column; overflow:hidden; background:var(--panel); }
+.queue-hdr { padding:14px 16px; border-bottom:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; flex-shrink:0; }
+.queue-title { font-size:11px; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:1.5px; }
+.queue-count { font-family:var(--mono); font-size:11px; color:var(--dim); }
+.queue-body { flex:1; overflow-y:auto; padding:10px; }
+.queue-body::-webkit-scrollbar { width:5px; }
+.queue-body::-webkit-scrollbar-track { background:var(--bg); }
+.queue-body::-webkit-scrollbar-thumb { background:var(--border); }
+.queue-empty { color:var(--ghost); font-size:13px; text-align:center; padding:40px 20px; }
+.queue-card { background:var(--surface); border:1px solid var(--border); border-left:3px solid var(--accent,var(--gold)); margin-bottom:6px; }
+.queue-card-hdr { display:flex; justify-content:space-between; align-items:center; padding:8px 10px; }
+.queue-card-title { font-family:var(--mono); font-size:11px; font-weight:700; color:var(--accent,var(--gold)); }
+.queue-card-type { font-size:10px; color:var(--dim); text-transform:uppercase; letter-spacing:1px; }
+.queue-card-body { padding:0 10px 8px; }
+.queue-field { display:flex; gap:8px; font-size:11px; margin-top:3px; }
+.queue-key { color:var(--ghost); min-width:90px; }
+.queue-val { color:var(--muted); font-family:var(--mono); word-break:break-all; }
+.queue-del { background:none; border:none; color:var(--ghost); cursor:pointer; font-size:14px; padding:2px 6px; }
+.queue-del:hover { color:var(--red); }
+
+/* Validation */
+.val-msg { font-size:11px; padding:5px 10px; margin-top:5px; border-left:3px solid; }
+.val-ok { border-color:var(--green); color:var(--green); background:#16a34a11; }
+.val-warn { border-color:var(--amber); color:var(--amber); background:#d9770611; }
+.val-err { border-color:var(--red); color:var(--red); background:#dc262611; }
+.val-summary { padding:10px 12px; border-top:1px solid var(--border); flex-shrink:0; }
+.val-summary-title { font-size:10px; color:var(--ghost); text-transform:uppercase; letter-spacing:1.5px; margin-bottom:6px; }
+.dep-check { display:flex; gap:6px; align-items:center; font-size:11px; margin-bottom:4px; }
+
+/* Buttons */
+.btn { background:none; border:1px solid var(--border); color:var(--dim); font-size:11px; padding:5px 12px; cursor:pointer; font-family:inherit; }
+.btn:hover { border-color:var(--gold); color:var(--gold); }
+.btn-gold { border-color:var(--gold); color:var(--gold); }
+.btn-gold:hover { background:#F5B40011; }
+.btn-commit { background:var(--gold); color:var(--panel); border:none; font-weight:900; font-size:13px; padding:9px 20px; cursor:pointer; letter-spacing:.5px; font-family:inherit; flex:1; transition:opacity .15s; }
+.btn-commit:hover { opacity:.88; }
+.btn-commit:disabled { opacity:.35; cursor:not-allowed; }
+.btn-clear { background:none; border:1px solid var(--border); color:var(--dim); font-size:12px; padding:9px 14px; cursor:pointer; font-family:inherit; }
+.btn-clear:hover { border-color:var(--red); color:var(--red); }
+.commit-bar { padding:10px 12px; border-top:1px solid var(--border); flex-shrink:0; display:flex; gap:8px; align-items:center; background:var(--panel); }
+
+/* New site form */
+.new-site-form { padding:14px; background:var(--surface); border:1px solid var(--gold); margin:10px 14px; }
+.new-site-form h3 { font-size:11px; color:var(--gold); text-transform:uppercase; letter-spacing:1.5px; margin-bottom:10px; }
+
+/* Welcome modal */
+.modal-overlay { position:fixed; inset:0; background:rgba(0,0,0,.7); z-index:1000; display:flex; align-items:center; justify-content:center; }
+.modal-overlay.hidden { display:none; }
+.modal-box { background:var(--panel); border:1px solid var(--border); max-width:560px; width:90%; max-height:80vh; overflow-y:auto; padding:28px; }
+.modal-box h2 { color:var(--gold); font-size:16px; margin-bottom:14px; letter-spacing:.5px; }
+.modal-box p { color:var(--muted); font-size:13px; line-height:1.7; margin-bottom:10px; }
+.modal-box .key { font-family:var(--mono); color:var(--teal); font-size:12px; background:var(--surface); padding:1px 6px; }
+.modal-box ul { color:var(--dim); font-size:12px; line-height:1.8; margin:8px 0 14px 18px; }
+.modal-footer { display:flex; justify-content:space-between; align-items:center; margin-top:18px; padding-top:14px; border-top:1px solid var(--border); }
+.modal-footer label { font-size:11px; color:var(--ghost); display:flex; align-items:center; gap:6px; cursor:pointer; }
+
+/* Toast */
+#toast { position:fixed; bottom:24px; right:24px; background:var(--surface); border:1px solid var(--border); border-left:4px solid var(--green); color:var(--muted); font-size:12px; padding:12px 18px; z-index:999; opacity:0; transform:translateY(8px); transition:opacity .25s,transform .25s; pointer-events:none; max-width:360px; }
+#toast.show { opacity:1; transform:translateY(0); }
+#toast.error { border-left-color:var(--red); }
+#toast.warn { border-left-color:var(--amber); }
+
+/* Breadcrumb */
+.breadcrumb { display:flex; align-items:center; gap:4px; padding:8px 16px; background:var(--panel); border-bottom:1px solid var(--border); flex-shrink:0; font-size:11px; }
+.bc-item { color:var(--dim); cursor:pointer; }
+.bc-item:hover { color:var(--gold); }
+.bc-sep { color:var(--ghost); }
+.bc-current { color:var(--gold); font-weight:700; cursor:default; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo-block">
+    <div class="logo-icon">A</div>
+    <div><div class="logo-title">ITD_AggDB</div><div class="logo-sub">Aggregate Materials &mdash; Idaho</div></div>
+  </div>
+  <nav>
+    <button class="active" data-tab="browse">Browse</button>
+    <button data-tab="entry">Data Entry</button>
+    <button data-tab="newsite">+ New Site</button>
+  </nav>
+  <div class="hdr-right">
+    <div id="userBadge" style="font-size:11px;color:var(--gold);font-family:var(--mono);cursor:pointer;border:1px solid var(--border);padding:3px 8px" onclick="localStorage.removeItem('aggdb_username');location.reload()" title="Click to change user"></div>
+    <button class="help-btn" onclick="showWelcome()">? Help</button>
+    <div class="hdr-meta">IGS-Intrusion\SQLEXPRESS &bull; RP-315</div>
+  </div>
+</header>
+
+<div id="apiBanner">Connecting&hellip;</div>
+
+<!-- ═══════ WELCOME MODAL ═══════ -->
+<div class="modal-overlay" id="welcomeModal">
+  <div class="modal-box">
+    <h2>ITD Aggregate Materials Database</h2>
+    <p>This tool is used to enter and review records in the ITD aggregate source materials database (RP-315).</p>
+    <p><strong style="color:var(--text)">Browse</strong> &mdash; View all sites, their records, test results, and QAMS qualifications. Click any site in the list to see its details. Click a Rec to see linked tests and QAMS entries.</p>
+    <p><strong style="color:var(--text)">Data Entry</strong> &mdash; Create new Rec (document) entries linked to a site. Optionally attach QAMS qualifications or test results in the same batch. Records are staged in a queue, then committed together.</p>
+    <p><strong style="color:var(--text)">+ New Site</strong> &mdash; Register a new material source site before entering records against it.</p>
+    <p style="margin-top:14px;font-size:12px;color:var(--ghost)">The server must be running on Christopher's workstation for this interface to function. If you see "OFFLINE" in the status bar, contact Christopher.</p>
+    <div class="modal-footer">
+      <label><input type="checkbox" id="chkDismiss"> Don't show this again</label>
+      <button class="btn btn-gold" onclick="dismissWelcome()">Got it</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════ TAB: BROWSE ═══════ -->
+<div id="tab-browse" class="tab-page visible">
+  <div class="stat-bar" id="statBar"></div>
+  <div class="filter-bar">
+    <input type="text" id="searchInput" placeholder="Search sites&hellip;">
+    <select id="statusFilter"><option value="">All Statuses</option></select>
+    <span class="filter-count" id="filterCount"></span>
+  </div>
+  <div class="main">
+    <div class="site-list-wrap">
+      <div style="padding:8px 14px;border-bottom:1px solid var(--border);background:var(--surface);cursor:pointer;display:flex;align-items:center;gap:8px;flex-shrink:0" id="allRecsBtn" onclick="showAllRecs()">
+        <span style="font-size:12px;color:var(--blue)">&#9776;</span>
+        <span style="font-size:11px;color:var(--blue);font-weight:600">All Records</span>
+        <span style="font-size:10px;color:var(--ghost);margin-left:auto;font-family:var(--mono)" id="allRecsCount"></span>
+      </div>
+      <div class="tbl-head"><span>Site ID</span><span>Name</span><span>Status</span></div>
+      <div class="site-rows" id="siteRows"></div>
+    </div>
+    <div class="detail-panel" id="detailPanel">
+      <div class="detail-empty"><div style="font-size:28px;opacity:.3">&#9878;</div><div>Select a site to view its records</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════ TAB: DATA ENTRY ═══════ -->
+<div id="tab-entry" class="tab-page">
+  <div class="entry-layout">
+    <div class="entry-form-wrap">
+      <!-- EDIT MODE BANNER -->
+      <div id="editBanner" style="display:none;padding:10px 18px;background:#3b82f611;border-bottom:1px solid #3b82f644;border-left:4px solid var(--blue);font-size:12px;color:var(--blue);line-height:1.6;flex-shrink:0">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div><strong>EDITING:</strong> <span id="editRecLabel" style="font-family:var(--mono)"></span></div>
+          <div style="display:flex;gap:6px">
+            <button class="btn" style="border-color:var(--blue);color:var(--blue);font-size:11px" onclick="saveRecEdit()">Save Changes</button>
+            <button class="btn" style="font-size:11px" onclick="cancelEdit()">Cancel</button>
+          </div>
+        </div>
+      </div>
+      <!-- STEP 1 -->
+      <div class="entry-section">
+        <div class="entry-section-hdr"><div class="step-num" id="step1num">1</div><div class="step-title">Record (Rec)</div></div>
+        <div class="fr fr2" style="margin-bottom:8px">
+          <div class="fg"><label>RecID<span class="req">*</span></label><input id="fRecID" class="w-full" placeholder="e.g. D3_001_QAMS_2025_001"></div>
+          <div class="fg"><label>Record Type<span class="req">*</span></label><select id="fRecType" class="w-full"></select></div>
+        </div>
+        <div class="fr fr2" style="margin-bottom:8px">
+          <div class="fg"><label>Title</label><input id="fTitle" class="w-full" placeholder="Document title"></div>
+          <div class="fg"><label>RecNumber</label><input id="fRecNumber" class="w-full" placeholder="Optional ref number"></div>
+        </div>
+        <div class="fr fr3" style="margin-bottom:8px">
+          <div class="fg"><label>RecDate<span class="req">*</span></label><input type="date" id="fRecDate" class="w-full"></div>
+          <div class="fg"><label>Created By<span class="req">*</span></label><input id="fCreatedBy" class="w-full" placeholder="rkanderson"></div>
+          <div class="fg"><label>RecLink (path/URL)</label><input id="fRecLink" class="w-full" placeholder="J:\D3\..."></div>
+        </div>
+        <div class="fg"><label>Notes</label><textarea id="fRecNotes" class="w-full" rows="2"></textarea></div>
+      </div>
+      <!-- STEP 2 -->
+      <div class="entry-section">
+        <div class="entry-section-hdr"><div class="step-num" id="step2num">2</div><div class="step-title">Site Association</div></div>
+        <div class="fg">
+          <label>SiteID<span class="req">*</span> &mdash; links via RecLink table</label>
+          <select id="fSiteID" class="w-full"><option value="">-- Select Site --</option></select>
+          <div id="siteVal" class="val-msg val-ok" style="display:none"></div>
+        </div>
+      </div>
+      <!-- STEP 3 -->
+      <div class="entry-section">
+        <div class="entry-section-hdr"><div class="step-num dim" id="step3num">3</div><div class="step-title">Downstream <span style="font-size:10px;font-weight:400;color:var(--ghost);text-transform:none;letter-spacing:0">(optional)</span></div></div>
+        <div class="sub-form" style="border-left-color:var(--blue)">
+          <div class="sub-form-hdr"><div class="sub-form-title">QAMS Qualification</div><button class="sub-toggle" id="toggleQAMS" onclick="toggleSub('QAMS')">+ Add</button></div>
+          <div class="sub-content" id="subQAMS">
+            <div class="fr fr2" style="margin-bottom:8px">
+              <div class="fg"><label>Qual. Expiry<span class="req">*</span></label><input type="date" id="qExpDate" class="w-full"></div>
+              <div class="fg"><label>Last Renewal</label><input type="date" id="qRenewalDate" class="w-full"></div>
+            </div>
+            <div class="fr fr2" style="margin-bottom:8px">
+              <div class="fg"><label>Approved For</label><input id="qApprovedFor" class="w-full"></div>
+              <div class="fg"><label>Conditional Uses</label><input id="qConditional" class="w-full"></div>
+            </div>
+            <div class="fg"><label>Cert Letter RecID</label><input id="qCertLetterRecID" class="w-full" placeholder="RecID of cert letter"></div>
+          </div>
+        </div>
+        <div class="sub-form" style="margin-top:8px;border-left-color:var(--teal)">
+          <div class="sub-form-hdr"><div class="sub-form-title" style="color:var(--teal)">Test Result</div><button class="sub-toggle" id="toggleTest" onclick="toggleSub('Test')" style="border-color:var(--teal);color:var(--teal)">+ Add</button></div>
+          <div class="sub-content" id="subTest">
+            <div class="fr fr2" style="margin-bottom:8px">
+              <div class="fg"><label>Test Type<span class="req">*</span></label><select id="tTestType" class="w-full"></select></div>
+              <div class="fg"><label>TestValue<span class="req">*</span></label><input id="tTestValue" class="w-full" placeholder="e.g. 22%"></div>
+            </div>
+            <div class="fr fr3" style="margin-bottom:8px">
+              <div class="fg"><label>TestDate<span class="req">*</span></label><input type="date" id="tTestDate" class="w-full"></div>
+              <div class="fg"><label>LabName</label><input id="tLabName" class="w-full"></div>
+              <div class="fg"><label>SampleID</label><input id="tSampleID" class="w-full"></div>
+            </div>
+            <div class="fr fr2" style="margin-bottom:8px">
+              <div class="fg"><label>Commodity</label><select id="tCommodity" class="w-full"></select></div>
+              <div class="fg"><label>Material Type</label><select id="tMaterialType" class="w-full"></select></div>
+            </div>
+            <div class="fg"><label>Notes</label><textarea id="tNotes" class="w-full" rows="2"></textarea></div>
+          </div>
+        </div>
+        <div style="margin-top:12px"><button class="btn btn-gold" onclick="stageRecord()">&#10148; Stage All to Queue</button></div>
+      </div>
+    </div>
+    <!-- Queue -->
+    <div class="entry-queue">
+      <div class="queue-hdr"><div><div class="queue-title">Pending Queue</div><div style="font-size:10px;color:var(--ghost);margin-top:2px">Staged for commit</div></div><div class="queue-count" id="queueCount">0 records</div></div>
+      <div class="queue-body" id="queueBody"><div class="queue-empty">No records staged yet.</div></div>
+      <div class="val-summary" id="valSummary" style="display:none"><div class="val-summary-title">FK Checks</div><div id="depChecks"></div></div>
+      <div class="commit-bar"><button class="btn-clear" onclick="clearQueue()">Clear</button><button class="btn-commit" id="btnCommit" onclick="commitQueue()" disabled>COMMIT TO DATABASE</button></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════ TAB: NEW SITE ═══════ -->
+<div id="tab-newsite" class="tab-page">
+  <div style="padding:24px;max-width:700px">
+    <div style="color:var(--gold);font-size:11px;text-transform:uppercase;letter-spacing:3px;margin-bottom:6px">Register New Site</div>
+    <div style="color:var(--dim);font-size:13px;margin-bottom:10px">A site must exist before records can be entered against it.</div>
+    <div style="padding:10px 14px;background:#d9770611;border:1px solid #d9770633;border-left:3px solid var(--amber);margin-bottom:16px;font-size:12px;color:var(--amber);line-height:1.6">
+      <strong>DEV MODE:</strong> New sites are auto-linked to temp audit doc <span style="font-family:var(--mono);color:var(--gold)">IGSfakeTILLitEXISTS</span> for traceability during initial data entry. This link will be replaced with real Rec entries as documents are processed.
+    </div>
+    <div class="fr fr3" style="margin-bottom:10px">
+      <div class="fg"><label>SiteID<span class="req">*</span></label><input id="nsSiteID" class="w-full" placeholder="D3-001-c"></div>
+      <div class="fg"><label>SiteName<span class="req">*</span></label><input id="nsSiteName" class="w-full" placeholder="Boise River Gravel"></div>
+      <div class="fg"><label>Status</label><select id="nsStatus" class="w-full"></select></div>
+    </div>
+    <div class="fr fr3" style="margin-bottom:10px">
+      <div class="fg"><label>Lon (NAD83 IDTM)</label><input id="nsLon" class="w-full" type="number" step="any"></div>
+      <div class="fg"><label>Lat (NAD83 IDTM)</label><input id="nsLat" class="w-full" type="number" step="any"></div>
+      <div class="fg"><label>PLSS</label><input id="nsPLSS" class="w-full" placeholder="T3N R2E S14"></div>
+    </div>
+    <div class="fr fr2" style="margin-bottom:10px">
+      <div class="fg"><label>Notes</label><textarea id="nsNotes" class="w-full" rows="2"></textarea></div>
+      <div class="fg"><label>Created By<span class="req">*</span></label><input id="nsCreatedBy" class="w-full" placeholder="rkanderson"></div>
+    </div>
+    <button class="btn btn-gold" onclick="createSite()" style="font-size:13px;padding:8px 20px;font-weight:700">Create Site</button>
+    <div id="nsResult" style="margin-top:12px"></div>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+const API = location.origin;
+const NOW = new Date();
+let isLive = false, currentUser = '';
+let SITES=[], TEST_TYPES=[], REC_TYPES=[], STATUSES=[], COMMODITIES=[], MAT_TYPES=[];
+let pendingQueue=[], selectedID=null, subStates={QAMS:false,Test:false}, editingRec=null;
+let toastTimer;
+
+function toast(msg,type="ok"){const e=document.getElementById("toast");e.textContent=msg;e.className="show"+(type==="error"?" error":type==="warn"?" warn":"");clearTimeout(toastTimer);toastTimer=setTimeout(()=>e.className="",3200)}
+function statusColor(s){return{Active:"#16a34a","Staging Area":"#3b82f6",Depleted:"#dc2626",Retired_Relinquished:"#64748b",QAMS:"#d97706",Other:"#475569"}[s]||"#475569"}
+async function apiFetch(p){const r=await fetch(API+p);if(!r.ok)throw new Error((await r.json().catch(()=>({}))).detail||r.statusText);return r.json()}
+async function apiPost(p,b){const r=await fetch(API+p,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(b)});const d=await r.json();if(!r.ok)throw new Error(d.detail||JSON.stringify(d));return d}
+
+// ── Welcome ──────────────────────────────────────────────
+function showWelcome(){document.getElementById("welcomeModal").classList.remove("hidden")}
+function dismissWelcome(){
+  document.getElementById("welcomeModal").classList.add("hidden");
+  if(document.getElementById("chkDismiss").checked) localStorage.setItem("aggdb_welcome_dismissed","1");
+}
+if(localStorage.getItem("aggdb_welcome_dismissed")==="1") document.getElementById("welcomeModal").classList.add("hidden");
+
+// ── API ──────────────────────────────────────────────────
+const BLOCKED_USERS = ['igs','test','admin','user','unknown','temp','system','sa','x','xx'];
+const USER_ALIASES = {'rka':'rkanderson','cat':'ctate','lk':'lknudsen'};
+function resolveUser(u) { return USER_ALIASES[u.toLowerCase()] || u; }
+function validateUser(u) { return u && u.length >= 2 && !BLOCKED_USERS.includes(u.toLowerCase()); }
+
+async function checkAPI(){
+  const b=document.getElementById("apiBanner");
+  try{
+    const h=await apiFetch("/api/health");
+    // Extract username from db_user (e.g. 'IGS2\ctate' → 'ctate')
+    const rawUser = h.db_user || '';
+    currentUser = rawUser.includes('\\') ? rawUser.split('\\').pop() : rawUser;
+    b.innerHTML=`<span style="color:var(--green)">&#9679; LIVE</span> &nbsp;${h.database} on ${h.server} &bull; ${h.db_user} &bull; <span style="color:var(--ghost)">${h.db_time}</span>`;
+    b.style.borderLeftColor="var(--green)";
+    return true;
+  } catch {
+    b.innerHTML=`<span style="color:var(--amber)">&#9679; OFFLINE</span> &nbsp;Server not reachable. Contact Christopher.`;
+    b.style.borderLeftColor="var(--amber)";
+    return false;
+  }
+}
+
+function prefillUser() {
+  if (!currentUser) return;
+  ['fCreatedBy','nsCreatedBy'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el && !el.value) { el.value = currentUser; el.classList.add('auto-val'); }
+  });
+  // Update header badge
+  const badge = document.getElementById('userBadge');
+  if (badge) badge.textContent = currentUser;
+}
+
+function promptUsername() {
+  const saved = localStorage.getItem('aggdb_username');
+  if (saved && validateUser(saved)) { currentUser = resolveUser(saved); return; }
+  // Show inline prompt
+  const overlay = document.createElement('div');
+  overlay.className = 'modal-overlay';
+  overlay.id = 'userPrompt';
+  overlay.innerHTML = `<div class="modal-box" style="max-width:400px">
+    <h2>Who are you?</h2>
+    <p>Enter your network username for the audit trail. This is saved in your browser.</p>
+    <div class="fg" style="margin-top:14px"><label>Username<span class="req">*</span></label>
+      <input id="promptUser" class="w-full" placeholder="e.g. rkanderson, ctate, lknudsen" style="font-size:14px;padding:10px">
+      <div id="promptErr" class="val-msg val-err" style="display:none"></div>
+    </div>
+    <button class="btn btn-gold" style="width:100%;margin-top:10px;font-size:14px;padding:10px" onclick="saveUsername()">Continue</button>
+  </div>`;
+  document.body.appendChild(overlay);
+  setTimeout(() => document.getElementById('promptUser').focus(), 100);
+}
+
+function saveUsername() {
+  const u = document.getElementById('promptUser').value.trim();
+  const err = document.getElementById('promptErr');
+  if (!u) { err.textContent = 'Username is required.'; err.style.display = 'block'; return; }
+  if (!validateUser(u)) { err.textContent = `"${u}" is not allowed. Use your network ID (e.g. rkanderson).`; err.style.display = 'block'; return; }
+  currentUser = resolveUser(u);
+  localStorage.setItem('aggdb_username', currentUser);
+  document.getElementById('userPrompt').remove();
+  prefillUser();
+  toast(`Logged in as ${currentUser}`);
+}
+
+// ── Data ─────────────────────────────────────────────────
+async function loadLookups(){
+  if(!isLive)return;
+  try{TEST_TYPES=await apiFetch("/api/lut/testtypes")}catch{TEST_TYPES=[]}
+  try{REC_TYPES=await apiFetch("/api/lut/rectypes")}catch{REC_TYPES=[]}
+  try{STATUSES=await apiFetch("/api/lut/statuses")}catch{STATUSES=[]}
+  try{COMMODITIES=await apiFetch("/api/lut/commodities")}catch{COMMODITIES=[]}
+  try{MAT_TYPES=await apiFetch("/api/lut/materialtypes")}catch{MAT_TYPES=[]}
+}
+async function loadSites(){if(!isLive){SITES=[];return}try{SITES=await apiFetch("/api/sites")}catch{SITES=[]}}
+
+function populateDropdowns(){
+  const rt=document.getElementById("fRecType");rt.innerHTML='<option value="">-- Select --</option>';
+  REC_TYPES.forEach(r=>{const o=document.createElement("option");o.value=r.RecTypeID;o.textContent=r.RecTypeName;rt.appendChild(o)});
+  const tt=document.getElementById("tTestType");tt.innerHTML='<option value="">-- Select --</option>';
+  TEST_TYPES.forEach(t=>{const o=document.createElement("option");o.value=t.TestTypeID;o.textContent=`${t.TestCode} - ${t.TestName}`;tt.appendChild(o)});
+  const cm=document.getElementById("tCommodity");cm.innerHTML='<option value="">--</option>';
+  COMMODITIES.forEach(c=>{const o=document.createElement("option");o.value=c.CommodityID;o.textContent=c.CommodityName;cm.appendChild(o)});
+  const mt=document.getElementById("tMaterialType");mt.innerHTML='<option value="">--</option>';
+  MAT_TYPES.forEach(m=>{const o=document.createElement("option");o.value=m.MaterialTypeID;o.textContent=m.MaterialTypeName;mt.appendChild(o)});
+  const sf=document.getElementById("statusFilter");sf.innerHTML='<option value="">All Statuses</option>';
+  const ns=document.getElementById("nsStatus");ns.innerHTML='<option value="">--</option>';
+  STATUSES.forEach(s=>{sf.innerHTML+=`<option>${s.StatusName}</option>`;ns.innerHTML+=`<option value="${s.StatusID}">${s.StatusName}</option>`});
+  const ss=document.getElementById("fSiteID");ss.innerHTML='<option value="">-- Select Site --</option>';
+  SITES.forEach(s=>{const o=document.createElement("option");o.value=s.SiteID;o.textContent=`${s.SiteID} - ${s.SiteName||"(unnamed)"}`;ss.appendChild(o)});
+}
+
+// ── Stats ────────────────────────────────────────────────
+function buildStats(){
+  const t=SITES.length,a=SITES.filter(s=>s.CurrentStatus==="Active").length,q=SITES.filter(s=>s.CurrentStatus==="QAMS").length;
+  document.getElementById("statBar").innerHTML=[
+    {v:t,l:"Sites",c:"#F5B400"},{v:a,l:"Active",c:"#16a34a"},{v:q,l:"QAMS",c:"#d97706"},
+    {v:SITES.length-a,l:"Other",c:"#64748b"}
+  ].map(c=>`<div class="stat-card" style="--accent:${c.c}"><div class="stat-val">${c.v}</div><div class="stat-lbl">${c.l}</div></div>`).join("")
+}
+
+// ── Browse: Site List ────────────────────────────────────
+function getFiltered(){
+  const s=document.getElementById("searchInput").value.toLowerCase(),st=document.getElementById("statusFilter").value;
+  return SITES.filter(x=>{if(st&&x.CurrentStatus!==st)return false;if(s){const h=`${x.SiteID} ${x.SiteName||""} ${x.PLSSp||""}`.toLowerCase();if(!h.includes(s))return false}return true})
+}
+function renderRows(){
+  const f=getFiltered();document.getElementById("filterCount").textContent=`${f.length} of ${SITES.length}`;
+  if(!f.length){document.getElementById("siteRows").innerHTML=`<div class="empty-msg">${SITES.length?"No match.":"No sites yet. Use <strong>+ New Site</strong> to begin."}</div>`;return}
+  document.getElementById("siteRows").innerHTML=f.map(s=>{const sc=statusColor(s.CurrentStatus);return`<div class="site-row ${selectedID===s.SiteID?"active":""}" data-id="${s.SiteID}"><div class="cell-id">${s.SiteID}</div><div class="cell-name">${s.SiteName||"(unnamed)"}</div><div class="cell-stat"><span class="dot" style="background:${sc}"></span>${s.CurrentStatus||"&mdash;"}</div></div>`}).join("");
+  document.querySelectorAll(".site-row").forEach(el=>{el.addEventListener("click",()=>{selectedID=el.dataset.id;renderRows();renderDetail(el.dataset.id)})})
+}
+
+// ── Browse: Detail Panel ─────────────────────────────────
+async function renderDetail(siteID){
+  const p=document.getElementById("detailPanel");
+  p.innerHTML=`<div class="detail-empty"><div style="opacity:.3">Loading&hellip;</div></div>`;
+  if(!isLive)return;
+  try{
+    const d=await apiFetch(`/api/sites/${siteID}`);const s=d.site;const sc=statusColor(s.CurrentStatus);
+
+    // Recs table
+    const recHtml=d.recs.length?`<table class="dtbl"><thead><tr><th>RecID</th><th>Type</th><th>Title</th><th>Date</th><th>Created By</th><th></th></tr></thead><tbody>${d.recs.map(r=>`<tr class="clickable" onclick="loadRecForEdit(${JSON.stringify(r).replace(/"/g,'&quot;')},'${siteID}')"><td style="font-family:var(--mono);color:var(--gold);font-size:11px">${r.RecID}</td><td style="color:var(--muted)">${r.RecTypeName||""}</td><td style="color:var(--text)">${r.Title||""}</td><td style="color:var(--faint);font-size:11px">${r.RecDate?String(r.RecDate).slice(0,10):""}</td><td style="color:var(--ghost);font-size:11px">${r.CreatedBy||""}</td><td style="text-align:right"><span style="font-size:10px;color:var(--blue);text-transform:uppercase;letter-spacing:1px">Edit &rarr;</span></td></tr>`).join("")}</tbody></table>`:`<div style="color:var(--ghost);font-size:12px;padding:8px 0">No Rec entries. Switch to <strong>Data Entry</strong> to add records.</div>`;
+
+    // Tests table
+    const testHtml=d.test_results.length?`<table class="dtbl"><thead><tr><th>Test</th><th>Standard</th><th>Value</th><th>Date</th><th>Lab</th><th>Pass/Fail</th></tr></thead><tbody>${d.test_results.map(t=>{const pf=t.PassFail==="Pass"?"color:var(--green)":t.PassFail==="Fail"?"color:var(--red)":"color:var(--ghost)";return`<tr><td style="color:var(--muted)">${t.TestName||""}</td><td style="font-family:var(--mono);color:var(--dim);font-size:11px">${t.StandardRef||""}</td><td style="font-family:var(--mono);font-weight:700">${t.TestValue||""}</td><td style="color:var(--faint);font-size:11px">${t.TestDate?String(t.TestDate).slice(0,10):""}</td><td style="color:var(--ghost);font-size:11px">${t.LabName||""}</td><td style="${pf};font-size:11px;font-weight:700">${t.PassFail||"&mdash;"}</td></tr>`}).join("")}</tbody></table>`:`<div style="color:var(--ghost);font-size:12px;padding:8px 0">No test results.</div>`;
+
+    // QAMS
+    const qamsHtml=d.qams.length?d.qams.map(q=>`<div style="padding:8px 0;border-bottom:1px solid var(--border2)"><div style="display:flex;justify-content:space-between"><span style="color:var(--muted)">Expires: <strong>${q.QualExpDate?String(q.QualExpDate).slice(0,10):"?"}</strong></span><span style="font-size:11px;color:var(--ghost)">Renewal: ${q.LastRenewalDate?String(q.LastRenewalDate).slice(0,10):"&mdash;"}</span></div>${q.ApprovedFor?`<div style="font-size:11px;color:var(--dim);margin-top:3px">Approved: ${q.ApprovedFor}</div>`:""} ${q.ConditionalUses?`<div style="font-size:11px;color:var(--dim)">Conditions: ${q.ConditionalUses}</div>`:""}</div>`).join(""):`<div style="color:var(--ghost);font-size:12px;padding:8px 0">No QAMS records.</div>`;
+
+    // Access
+    const accHtml=d.access.length?d.access.map(a=>`<div style="font-size:11px;color:var(--dim);padding:4px 0">${a.AccessID}${a.FieldVerified?" &bull; &#10003; Field Verified":""} ${a.Comments?`&bull; ${a.Comments}`:""}</div>`).join(""):"";
+
+    p.innerHTML=`<div class="detail-inner">
+      <div class="detail-id">${s.SiteID}</div>
+      <div class="detail-name">${s.SiteName||"(unnamed)"}</div>
+      <div class="detail-sub">${s.PLSSp||""} ${s.lonNAD83IDTM?`&bull; ${s.lonNAD83IDTM}, ${s.latNAD83IDTM}`:""}</div>
+      <div class="detail-badges">
+        <span class="badge" style="background:${sc}22;color:${sc};border:1px solid ${sc}44">${s.CurrentStatus||"No Status"}</span>
+        ${s.StatusEffective?`<span class="badge" style="background:var(--surface);color:var(--ghost);border:1px solid var(--border)">Since ${s.StatusEffective}</span>`:""}
+        <span class="badge" style="background:var(--surface);color:var(--dim);border:1px solid var(--border)">${d.recs.length} Recs</span>
+        <span class="badge" style="background:var(--surface);color:var(--dim);border:1px solid var(--border)">${d.test_results.length} Tests</span>
+        <span class="badge" style="background:var(--surface);color:var(--dim);border:1px solid var(--border)">${d.qams.length} QAMS</span>
+      </div>
+      <div class="info-box"><div class="section-lbl" style="margin-top:0">Records (${d.recs.length})</div>${recHtml}</div>
+      <div class="info-box"><div class="section-lbl" style="margin-top:0">Test Results (${d.test_results.length})</div>${testHtml}</div>
+      <div class="info-box"><div class="section-lbl" style="margin-top:0">QAMS Qualifications (${d.qams.length})</div>${qamsHtml}</div>
+      ${accHtml?`<div class="info-box"><div class="section-lbl" style="margin-top:0">Access</div>${accHtml}</div>`:""}
+      ${s.Notes?`<div class="info-box"><div class="section-lbl" style="margin-top:0">Notes</div><div style="color:var(--dim);font-size:12px;line-height:1.6">${s.Notes}</div></div>`:""}
+    </div>`;
+  }catch(e){p.innerHTML=`<div class="detail-empty"><div style="color:var(--red)">${e.message}</div></div>`}
+}
+
+// ── New Site ─────────────────────────────────────────────
+async function createSite(){
+  const sid=document.getElementById("nsSiteID").value.trim();
+  const sn=document.getElementById("nsSiteName").value.trim();
+  const cbRaw=document.getElementById("nsCreatedBy").value.trim();
+  const cb=resolveUser(cbRaw);
+  const res=document.getElementById("nsResult");
+  if(!sid){toast("SiteID required","error");res.innerHTML=`<div class="val-msg val-err">SiteID is required</div>`;return}
+  if(!sn){toast("SiteName required","error");res.innerHTML=`<div class="val-msg val-err">SiteName is required</div>`;return}
+  if(!cb){toast("Created By required","error");res.innerHTML=`<div class="val-msg val-err">Created By is required</div>`;return}
+  if(!validateUser(cb)){toast("Use your actual username (e.g. rkanderson)","error");res.innerHTML=`<div class="val-msg val-err">"${cb}" is not a valid username. Use your network ID (e.g. rkanderson, ctate).</div>`;return}
+  if(!isLive){toast("Server offline","error");res.innerHTML=`<div class="val-msg val-err">Cannot create site — server is offline. Contact Christopher.</div>`;return}
+  try{
+    const TEMP_AUDIT_REC = "IGSfakeTILLitEXISTS";
+    const result = await apiPost("/api/sites",{SiteID:sid,SiteName:sn,lonNAD83IDTM:parseFloat(document.getElementById("nsLon").value)||null,latNAD83IDTM:parseFloat(document.getElementById("nsLat").value)||null,PLSSp:document.getElementById("nsPLSS").value.trim()||null,Notes:document.getElementById("nsNotes").value.trim()||null,CreatedBy:cb,StatusID:parseInt(document.getElementById("nsStatus").value)||null,LinkRecID:TEMP_AUDIT_REC});
+    const linkMsg = result.LinkedRecID ? ` Linked to audit doc <strong>${result.LinkedRecID}</strong>.` : "";
+    toast(`Site ${sid} created`);res.innerHTML=`<div class="val-msg val-ok">&#10003; ${sid} created successfully.${linkMsg} Switch to <strong>Browse</strong> to see it or <strong>Data Entry</strong> to add records.</div>`;
+    await loadSites();populateDropdowns();buildStats();renderRows();
+    ["nsSiteID","nsSiteName","nsLon","nsLat","nsPLSS","nsNotes","nsCreatedBy"].forEach(id=>document.getElementById(id).value="");document.getElementById("nsStatus").value="";
+  }catch(e){toast("Failed: "+e.message,"error");res.innerHTML=`<div class="val-msg val-err">${e.message}</div>`}
+}
+
+// ── Entry: SiteID change ─────────────────────────────────
+document.getElementById("fSiteID").addEventListener("change",function(){
+  const s=SITES.find(x=>x.SiteID===this.value);const v=document.getElementById("siteVal");
+  if(s){v.className="val-msg val-ok";v.textContent=`${s.SiteName||""} \u2014 ${s.CurrentStatus||"No status"}`;v.style.display="block";document.getElementById("step2num").classList.add("done");document.getElementById("step2num").textContent="\u2713"}
+  else{v.style.display="none";document.getElementById("step2num").classList.remove("done");document.getElementById("step2num").textContent="2"}
+  updateCommit();
+});
+function toggleSub(w){subStates[w]=!subStates[w];const c=document.getElementById("sub"+w),b=document.getElementById("toggle"+w);if(subStates[w]){c.classList.add("open");b.classList.add("active");b.textContent="- Remove"}else{c.classList.remove("open");b.classList.remove("active");b.textContent="+ Add"}}
+
+// ── Staging ──────────────────────────────────────────────
+function stageRecord(){
+  const recID=document.getElementById("fRecID").value.trim(),recTypeID=document.getElementById("fRecType").value,recDate=document.getElementById("fRecDate").value,createdBy=resolveUser(document.getElementById("fCreatedBy").value.trim()),siteID=document.getElementById("fSiteID").value;
+  if(!recID){toast("RecID required","error");return}if(!recTypeID){toast("Record Type required","error");return}if(!recDate){toast("RecDate required","error");return}if(!createdBy){toast("Created By required","error");return}if(!validateUser(createdBy)){toast(`"${createdBy}" is not valid. Use your network ID (e.g. rkanderson).`,"error");return}if(!siteID){toast("SiteID required","error");return}
+  if(pendingQueue.some(r=>r.table==="Rec"&&r.fields.RecID===recID)){toast(`'${recID}' already staged`,"error");return}
+  if(subStates.QAMS&&!document.getElementById("qExpDate").value){toast("QAMS: Expiry required","error");return}
+  if(subStates.Test){if(!document.getElementById("tTestType").value){toast("Test: Type required","error");return}if(!document.getElementById("tTestValue").value.trim()){toast("Test: Value required","error");return}if(!document.getElementById("tTestDate").value){toast("Test: Date required","error");return}}
+
+  const rtName=REC_TYPES.find(r=>r.RecTypeID==recTypeID);
+  pendingQueue.push({id:"rec_"+Date.now(),table:"Rec",color:"#F5B400",fields:{RecID:recID,SiteID:siteID,RecTypeID:parseInt(recTypeID),RecTypeName:rtName?rtName.RecTypeName:"",RecLink:document.getElementById("fRecLink").value.trim()||null,RecNumber:document.getElementById("fRecNumber").value.trim()||null,Title:document.getElementById("fTitle").value.trim()||null,RecDate:recDate,Notes:document.getElementById("fRecNotes").value.trim()||null,CreatedBy:createdBy}});
+  if(subStates.QAMS){pendingQueue.push({id:"qams_"+Date.now(),table:"QAMS",color:"#3b82f6",depends:[recID],fields:{RecID:recID,SiteID:siteID,QualExpDate:document.getElementById("qExpDate").value||null,LastRenewalDate:document.getElementById("qRenewalDate").value||null,ApprovedFor:document.getElementById("qApprovedFor").value.trim()||null,ConditionalUses:document.getElementById("qConditional").value.trim()||null,CertLetterRecID:document.getElementById("qCertLetterRecID").value.trim()||null,CreatedBy:createdBy}})}
+  if(subStates.Test){const ttID=parseInt(document.getElementById("tTestType").value);const ttObj=TEST_TYPES.find(t=>t.TestTypeID===ttID);pendingQueue.push({id:"test_"+Date.now(),table:"TestResult",color:"#0d9488",depends:[recID],fields:{SiteID:siteID,TestTypeID:ttID,TestName:ttObj?ttObj.TestName:"",RecID:recID,TestValue:document.getElementById("tTestValue").value.trim(),TestDate:document.getElementById("tTestDate").value,LabName:document.getElementById("tLabName").value.trim()||null,SampleID:document.getElementById("tSampleID").value.trim()||null,CommodityID:parseInt(document.getElementById("tCommodity").value)||null,MaterialTypeID:parseInt(document.getElementById("tMaterialType").value)||null,Notes:document.getElementById("tNotes").value.trim()||null,CreatedBy:createdBy}})}
+  renderQueue();toast(`Staged ${1+(subStates.QAMS?1:0)+(subStates.Test?1:0)} record(s)`);updateCommit()
+}
+
+// ── Queue ────────────────────────────────────────────────
+function renderQueue(){
+  const b=document.getElementById("queueBody");document.getElementById("queueCount").textContent=pendingQueue.length+" record"+(pendingQueue.length!==1?"s":"");
+  if(!pendingQueue.length){b.innerHTML=`<div class="queue-empty">No records staged yet.</div>`;document.getElementById("valSummary").style.display="none";return}
+  b.innerHTML=pendingQueue.map(r=>{const sh=Object.entries(r.fields).filter(([k,v])=>v&&!k.startsWith("_")&&k!=="RecTypeName"&&k!=="TestName");return`<div class="queue-card" style="--accent:${r.color}"><div class="queue-card-hdr"><div><div class="queue-card-title">${r.fields.RecID||r.fields.SiteID||r.id}</div><div class="queue-card-type">${r.table}</div></div><button class="queue-del" onclick="removeQ('${r.id}')">&times;</button></div><div class="queue-card-body">${sh.map(([k,v])=>`<div class="queue-field"><span class="queue-key">${k}</span><span class="queue-val">${v}</span></div>`).join("")}</div></div>`}).join("");
+  renderDepChecks()
+}
+function removeQ(id){pendingQueue=pendingQueue.filter(r=>r.id!==id);renderQueue();updateCommit();toast("Removed","warn")}
+function clearQueue(){pendingQueue=[];renderQueue();updateCommit()}
+
+function renderDepChecks(){
+  const cks=[];const qr=pendingQueue.filter(r=>r.table==="Rec").map(r=>r.fields.RecID);const qs=[...new Set(pendingQueue.map(r=>r.fields.SiteID).filter(Boolean))];
+  qs.forEach(sid=>{const ok=SITES.some(s=>s.SiteID===sid);cks.push({ok,label:`Sites: ${sid} ${ok?"exists":"NOT FOUND"}`})});
+  pendingQueue.filter(r=>r.table==="QAMS"||r.table==="TestResult").forEach(r=>{const d=r.fields.RecID;if(d){const ok=qr.includes(d);cks.push({ok,label:`${r.table} \u2192 Rec: ${d} ${ok?"queued":"MISSING"}`})}});
+  const el=document.getElementById("valSummary");if(!cks.length){el.style.display="none";return}el.style.display="block";
+  document.getElementById("depChecks").innerHTML=cks.map(c=>`<div class="dep-check"><span style="color:${c.ok?"var(--green)":"var(--red)"}">${c.ok?"&#10003;":"&#10007;"}</span><span style="font-size:11px;color:${c.ok?"var(--green)":"var(--red)"}">${c.label}</span></div>`).join("")
+}
+function updateCommit(){
+  const btn=document.getElementById("btnCommit");if(!pendingQueue.length){btn.disabled=true;return}
+  const qr=pendingQueue.filter(r=>r.table==="Rec").map(r=>r.fields.RecID);const qs=[...new Set(pendingQueue.map(r=>r.fields.SiteID).filter(Boolean))];
+  btn.disabled=!(qs.every(sid=>SITES.some(s=>s.SiteID===sid))&&pendingQueue.filter(r=>r.depends).every(r=>r.depends.every(d=>qr.includes(d))))
+}
+
+// ── Commit ───────────────────────────────────────────────
+async function commitQueue(){
+  if(!isLive){toast("Offline","error");return}
+  const btn=document.getElementById("btnCommit");btn.disabled=true;btn.textContent="Committing...";
+  try{
+    const res=await apiPost("/api/commit",{records:pendingQueue});
+    if(res.success)toast(`Committed ${res.committed} record(s)`);else toast(`${res.committed} committed, errors: ${res.errors.join("; ")}`,"warn");
+    pendingQueue=[];subStates={QAMS:false,Test:false};
+    ["subQAMS","subTest"].forEach(id=>document.getElementById(id).classList.remove("open"));
+    ["toggleQAMS","toggleTest"].forEach(id=>{const b=document.getElementById(id);b.classList.remove("active");b.textContent="+ Add"});
+    renderQueue();await loadSites();populateDropdowns();buildStats();renderRows()
+  }catch(e){toast("Failed: "+e.message,"error")}finally{btn.textContent="COMMIT TO DATABASE";updateCommit()}
+}
+
+// ── All Recs View ────────────────────────────────────────
+async function showAllRecs() {
+  selectedID = null;
+  document.querySelectorAll(".site-row").forEach(r => r.classList.remove("active"));
+  const p = document.getElementById("detailPanel");
+  if (!isLive) { p.innerHTML = `<div class="detail-empty"><div style="color:var(--red)">Offline</div></div>`; return; }
+  p.innerHTML = `<div class="detail-empty"><div style="opacity:.3">Loading all records&hellip;</div></div>`;
+  try {
+    const recs = await apiFetch("/api/recs");
+    document.getElementById("allRecsCount").textContent = recs.length + " recs";
+    if (!recs.length) { p.innerHTML = `<div class="detail-empty"><div>No Rec entries in database yet.</div></div>`; return; }
+    p.innerHTML = `<div class="detail-inner">
+      <div style="font-size:11px;color:var(--blue);text-transform:uppercase;letter-spacing:2px;margin-bottom:6px">All Records (${recs.length})</div>
+      <div style="font-size:12px;color:var(--dim);margin-bottom:14px">Every Rec in the database. Click <strong>Edit &rarr;</strong> to load into Data Entry. Orphan recs (no site link) are flagged.</div>
+      <table class="dtbl"><thead><tr><th>RecID</th><th>Type</th><th>Title</th><th>Date</th><th>Created By</th><th></th></tr></thead><tbody>
+      ${recs.map(r => {
+        const hasLink = SITES.some(s => {
+          // We don't have link info here, just show all
+          return false;
+        });
+        return `<tr class="clickable" onclick="loadRecForEditFromAll('${r.RecID}')">
+          <td style="font-family:var(--mono);color:var(--gold);font-size:11px">${r.RecID}</td>
+          <td style="color:var(--muted)">${r.RecTypeName || ""}</td>
+          <td style="color:var(--text)">${r.Title || ""}</td>
+          <td style="color:var(--faint);font-size:11px">${r.RecDate ? String(r.RecDate).slice(0, 10) : ""}</td>
+          <td style="color:var(--ghost);font-size:11px">${r.CreatedBy || ""}</td>
+          <td style="text-align:right"><span style="font-size:10px;color:var(--blue);text-transform:uppercase;letter-spacing:1px">Edit &rarr;</span></td>
+        </tr>`;
+      }).join("")}
+      </tbody></table>
+    </div>`;
+  } catch(e) { p.innerHTML = `<div class="detail-empty"><div style="color:var(--red)">${e.message}</div></div>`; }
+}
+
+async function loadRecForEditFromAll(recID) {
+  try {
+    const data = await apiFetch("/api/recs/" + encodeURIComponent(recID));
+    const rec = data.rec;
+    const siteID = data.linked_sites.length ? data.linked_sites[0].SiteID : null;
+    loadRecForEdit(rec, siteID);
+  } catch(e) { toast("Failed to load rec: " + e.message, "error"); }
+}
+
+// ── Edit Rec ─────────────────────────────────────────────
+function loadRecForEdit(rec, siteID) {
+  editingRec = rec;
+  document.querySelectorAll("nav button").forEach(b => b.classList.remove("active"));
+  document.querySelector('nav button[data-tab="entry"]').classList.add("active");
+  document.querySelectorAll(".tab-page").forEach(p => p.classList.remove("visible"));
+  document.getElementById("tab-entry").classList.add("visible");
+  document.getElementById("editBanner").style.display = "block";
+  document.getElementById("editRecLabel").textContent = rec.RecID + (rec.Title ? " \u2014 " + rec.Title : "");
+  document.getElementById("fRecID").value = rec.RecID;
+  document.getElementById("fRecID").classList.add("auto-val");
+  document.getElementById("fRecID").readOnly = true;
+  document.getElementById("fRecType").value = rec.RecTypeID || "";
+  document.getElementById("fTitle").value = rec.Title || "";
+  document.getElementById("fRecNumber").value = rec.RecNumber || "";
+  document.getElementById("fRecDate").value = rec.RecDate ? String(rec.RecDate).slice(0, 10) : "";
+  document.getElementById("fCreatedBy").value = rec.CreatedBy || "";
+  document.getElementById("fRecLink").value = rec.RecLink || "";
+  document.getElementById("fRecNotes").value = rec.Notes || "";
+  if (siteID) {
+    document.getElementById("fSiteID").value = siteID;
+    document.getElementById("fSiteID").dispatchEvent(new Event("change"));
+  }
+  toast(`Loaded ${rec.RecID} for editing`);
+}
+
+async function saveRecEdit() {
+  if (!editingRec) return;
+  if (!isLive) { toast("Offline", "error"); return; }
+  const body = {};
+  const rt = document.getElementById("fRecType").value;
+  const title = document.getElementById("fTitle").value.trim();
+  const recNum = document.getElementById("fRecNumber").value.trim();
+  const recDate = document.getElementById("fRecDate").value;
+  const recLink = document.getElementById("fRecLink").value.trim();
+  const notes = document.getElementById("fRecNotes").value.trim();
+  if (rt && parseInt(rt) !== editingRec.RecTypeID) body.RecTypeID = parseInt(rt);
+  if (title !== (editingRec.Title || "")) body.Title = title || null;
+  if (recNum !== (editingRec.RecNumber || "")) body.RecNumber = recNum || null;
+  if (recDate && recDate !== (editingRec.RecDate ? String(editingRec.RecDate).slice(0,10) : "")) body.RecDate = recDate;
+  if (recLink !== (editingRec.RecLink || "")) body.RecLink = recLink || null;
+  if (notes !== (editingRec.Notes || "")) body.Notes = notes || null;
+  if (Object.keys(body).length === 0) { toast("No changes to save", "warn"); return; }
+  try {
+    const r = await fetch(API + "/api/recs/" + encodeURIComponent(editingRec.RecID), {
+      method: "PUT", headers: {"Content-Type": "application/json"}, body: JSON.stringify(body)
+    });
+    const d = await r.json();
+    if (!r.ok) throw new Error(d.detail || JSON.stringify(d));
+    toast(`Updated ${editingRec.RecID}`);
+    cancelEdit();
+    await loadSites(); buildStats(); renderRows();
+    if (selectedID) renderDetail(selectedID);
+  } catch(e) { toast("Save failed: " + e.message, "error"); }
+}
+
+function cancelEdit() {
+  editingRec = null;
+  document.getElementById("editBanner").style.display = "none";
+  document.getElementById("fRecID").readOnly = false;
+  document.getElementById("fRecID").classList.remove("auto-val");
+  ["fRecID","fTitle","fRecNumber","fRecDate","fCreatedBy","fRecLink","fRecNotes"].forEach(id => document.getElementById(id).value = "");
+  document.getElementById("fRecType").value = "";
+  document.getElementById("fSiteID").value = "";
+  document.getElementById("siteVal").style.display = "none";
+  document.getElementById("step2num").classList.remove("done");
+  document.getElementById("step2num").textContent = "2";
+}
+
+// ── Nav ──────────────────────────────────────────────────
+document.querySelectorAll("nav button").forEach(btn=>{btn.addEventListener("click",()=>{document.querySelectorAll("nav button").forEach(b=>b.classList.remove("active"));btn.classList.add("active");document.querySelectorAll(".tab-page").forEach(p=>p.classList.remove("visible"));document.getElementById("tab-"+btn.dataset.tab).classList.add("visible");prefillUser()})});
+["searchInput","statusFilter"].forEach(id=>{document.getElementById(id).addEventListener("input",renderRows);document.getElementById(id).addEventListener("change",renderRows)});
+
+// ── Init ─────────────────────────────────────────────────
+async function init(){isLive=await checkAPI();promptUsername();await loadLookups();await loadSites();populateDropdowns();buildStats();renderRows();prefillUser();if(!isLive)toast("Server offline","warn")}
+init();
+</script>
+</body>
+</html>
