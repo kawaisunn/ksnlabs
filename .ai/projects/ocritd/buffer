@@ -1,7 +1,12 @@
-# buffer:ocritd | seed | 2026-02-25T09:00Z | epoch-003
-@now git repo initialized. BUILD_ALL.ps1 exists. GUI has silent crash. no HOME build yet.
-@left first HOME build (overdue). GUI crash diagnosis. engine testing with real docs. keywards reconciliation.
-@next attempt HOME build. diagnose GUI crash (python runtime path). test with ITD D4 documents.
-@blk GUI silent crash undiagnosed. two keywards implementations unreconciled (L007). embedded python 3.13.11 required (L008).
-@owner seed-by-opus46-web-epoch003-001
-@dep aggdb:ocritd output feeds aggregate database
+# buffer:ocritd | active | 2026-03-08T23:59Z | epoch-003
+@now Ktreesn v0.5.0 staged in runtime/modules/Ktreesn/. Build kit (7 scripts) tested. setup_build_env.ps1 verified against C:\dev\ocritd (13 pass, 0 fail). Mermaid diagrams at C:\dev\_DOCUMENTATION\. Full handoff at HANDOFF_20260308.md.
+@left PHASED PLAN (see C:\dev\_DOCUMENTATION\HANDOFF_20260308.md for full detail):
+  Phase 1 (next session): Ktreesn C# integration + pipeline test on BIGSPIDER
+  Phase 2: Mainform UI — directory tree, processing queue, scan/process buttons
+  Phase 3: Cait shadowing + JSON quality assessment
+  Phase 4: Dupe detection + classification UI for Rebecca
+  Phase 5: JSON-to-SQL bridge for ITD_AggDB records
+  Phase 6: Intrusion deployment (can parallel with Phase 2+)
+@next Phase 1 steps: verify test data at D:\dev\jdrive_mirror, decide workspace path, build C# model classes for KtreesnNode, wire pwsh calls into launcher, run pipeline, examine JSON output, package zip for Intrusion.
+@blk Sophos on Antiquarian quarantines MSI. ITS-OIT won't whitelist. Build on BIGSPIDER or Intrusion only. No system python ever — only 3.13.11 embeddable.
+@owner opus46-web-2026-03-08-buildkit

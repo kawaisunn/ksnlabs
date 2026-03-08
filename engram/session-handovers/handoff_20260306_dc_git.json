@@ -1,0 +1,51 @@
+Request
+
+{
+  "content": "{
+  \"session_id\": \"2026-03-06_dc-stabilize-git-sync\",
+  \"timestamp\": \"2026-03-06T08:30:00-07:00\",
+  \"machine\": \"BIGSPIDER\",
+  \"summary\": \"Stabilized DC by eliminating npx @latest calls. Mapped git state across BIGSPIDER and IGS. Discussed git strategy (polyrepo with integration repo). DC start_process hangs — file read/write/list all work.\",
+  \"dc_fix\": {
+    \"problem\": \"npx @wonderwhy-er/desktop-commander@latest hung on npm registry fetch every launch\",
+    \"fix\": \"Installed DC v0.2.38 globally, updated claude_desktop_config.json to use direct binary\",
+    \"also_installed\": \"server-filesystem, server-github globally. Removed google-workspace (pkg doesnt exist).\",
+    \"config\": \"%APPDATA%\\\\Claude\\\\claude_desktop_config.json\"
+  },
+  \"dc_remaining\": {
+    \"problem\": \"start_process hangs on all shells (cmd, powershell). File ops work fine.\",
+    \"priority\": \"HIGH — blocks git, python, all command execution via DC\",
+    \"try_next\": [
+      \"desktop-commander:get_config to check defaultShell\",
+      \"npm update -g @wonderwhy-er/desktop-commander\",
+      \"Check if DC needs defaultShell set explicitly in config\",
+      \"Nuclear: uninstall/reinstall DC 0.2.38\"
+    ]
+  },
+  \"git_state\": {
+    \"bigspider_C_ocritd\": \"main @ ef9fac2, clean, up to date with origin/main\",
+    \"bigspider_D_ocritd\": \"backup copy, untracked pre-rename files only, DO NOT MODIFY\",
+    \"igs_C_ocritd\": \"main @ ef9fac2 + 1 commit (launcher, plugins, build tooling, docs). Committed, NOT PUSHED.\",
+    \"cait_standalone\": \"C:\\\\dev\\\\cait exists, NOT a git repo\",
+    \"keywrd_standalone\": \"C:\\\\dev\\\\keywrd exists, NOT a git repo\"
+  },
+  \"git_strategy_decided\": {
+    \"model\": \"Polyrepo with integration repo\",
+    \"repos\": {
+      \"ocritd\": \"Doksn engine + cait + keywrds as engine subdirs\",
+      \"aggdb\": \"Database layer, shared dependency\",
+      \"igs-web\": \"IIS front-end on Intrusion (new repo, to be created)\",
+      \"igs-platform\": \"Integration repo with submodules pointing to each component\"
+    },
+    \"rationale\": \"cait and keywrds need standalone presence for reuse across agencies. Front-end has different deploy target (IIS/Intrusion). Integration repo tracks which versions work together.\"
+  },
+  \"next_actions\": [
+    \"1. Push IGS commit: cd C:\\\\dev\\\\ocritd && git push origin main\",
+    \"2. Pull on BIGSPIDER: cd C:\\\\dev\\\\ocritd && git pull origin main\",
+    \"3. Fix DC start_process (check get_config, defaultShell)\",
+    \"4. Test Doksn build on BIGSPIDER\",
+    \"5. Plan Doksn deployment to IGS-Intrusion (bypasses Sophos)\"
+  ]
+}",
+  "path": "C:\\dev\\ksnlabs\\engram\\session-handovers\\handoff_20260306_dc_git.json"
+}

@@ -1,6 +1,6 @@
-# buffer:ktreesn | seed | 2026-02-25T09:00Z | epoch-003
-@now project registered. no recent session work.
-@left needs assessment of current state.
-@next await user direction.
-@blk unknown — needs session to assess.
-@owner seed-by-opus46-web-epoch003-001
+# buffer:ktreesn | active | 2026-03-08T23:55Z | epoch-003
+@now v0.5.0 on GitHub (kawaisunn/ktreesn, private). Cloned to C:\dev\Ktreesn on BIGSPIDER. Staged into Doksn at C:\dev\ocritd\runtime\modules\Ktreesn\. 8 exported functions, 1265 lines. psm1+psd1 only. Source also on Antiquarian C:\dev\Ktreesn.
+@left Next: integrate into Doksn launcher mainform. Key function is Get-DoksnProcessingStatus which cross-refs input dirs against Doksn workspace (sourcemirror/sourceprocd/jsonprocd). Show-DirectoryTree for UI tree view. Compare-DirectoryMap for change detection between runs. Get/Set-DirectoryState for processing state persistence via _ktreesn_state.json sidecars.
+@next stage_ktreesn.ps1 in build kit handles pulling latest from repo into Doksn runtime/. Clone to Intrusion tomorrow: git clone https://github.com/kawaisunn/ktreesn.git C:\dev\Ktreesn
+@blk ProjectUri in psd1 still points to ksnlabs repo, needs update to ktreesn repo. NVIDIA Corporation stray folder in repo dir (not tracked, delete it).
+@owner opus46-web-2026-03-08-buildkit
