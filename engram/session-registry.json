@@ -171,16 +171,7 @@
       "handoffWritten": "yes",
       "focus": "Fixed version typos, created lean _AI_ORIENTATION.md, pushed to GitHub",
       "outcome": "SUCCESS",
-      "learningsContributed": [
-        "L001",
-        "L002",
-        "L003",
-        "L004",
-        "L005",
-        "L006",
-        "L007",
-        "L008"
-      ],
+      "learningsContributed": ["L001","L002","L003","L004","L005","L006","L007","L008"],
       "workflowsContributed": [],
       "notes": "First session to contribute structured learnings. Worked correctly per EPOCH_002_SUMMARY. Handoff: 2026-02-16_orientation-survival.json"
     },
@@ -194,13 +185,8 @@
       "handoffWritten": "no",
       "focus": "Fixed bootstrap files, added critical learnings about bash_tool trap, created W000",
       "outcome": "FAILED-NO-HANDOFF",
-      "learningsContributed": [
-        "L009",
-        "L010"
-      ],
-      "workflowsContributed": [
-        "W000"
-      ],
+      "learningsContributed": ["L009","L010"],
+      "workflowsContributed": ["W000"],
       "notes": "Died mid-conversation without writing handoff. Was moving fast and making good progress. Classic L012 scenario. Work survived on disk but continuity chain broken."
     },
     {
@@ -213,9 +199,7 @@
       "handoffWritten": "no",
       "focus": "Created ksnlabs/bootstrap/ directory, added .gitattributes, deleted two files",
       "outcome": "PHANTOM",
-      "learningsContributed": [
-        "L011"
-      ],
+      "learningsContributed": ["L011"],
       "workflowsContributed": [],
       "notes": "No handoff, no session ID. Evidence found only through git status by successor session. Canonical phantom session. See L015."
     },
@@ -229,23 +213,8 @@
       "handoffWritten": "yes",
       "focus": "Restored deleted files, consolidated learnings, introduced manifest/epoch system, established checkpoint discipline",
       "outcome": "SUCCESS",
-      "learningsContributed": [
-        "L012",
-        "L013",
-        "L014",
-        "L015",
-        "L016",
-        "L017",
-        "L018"
-      ],
-      "workflowsContributed": [
-        "W001",
-        "W002",
-        "W003",
-        "W004",
-        "W005",
-        "W006"
-      ],
+      "learningsContributed": ["L012","L013","L014","L015","L016","L017","L018"],
+      "workflowsContributed": ["W001","W002","W003","W004","W005","W006"],
       "notes": "Major infrastructure session. Declared epoch-002. Created manifest. Wrote EPOCH_002_SUMMARY.md for human reference. Handoff: 2026-02-16_stabilize-and-harden.json"
     },
     {
@@ -272,44 +241,59 @@
       "handoffWritten": "yes",
       "focus": "Cold-start orientation, IGS network reconnaissance, engram system contribution and structural improvements",
       "outcome": "SUCCESS",
-      "learningsContributed": [
-        "L019",
-        "L020",
-        "L021",
-        "L022",
-        "L023"
-      ],
-      "workflowsContributed": [
-        "W007"
-      ],
-      "filesCreated": [
-        "engram/session-registry.json",
-        ".ai/ENCODING.md",
-        ".ai/buffer.compact",
-        "engram/learnings/consolidated_epoch-002.compact",
-        "engram/benchmarks/token_efficiency_test.py"
-      ],
-      "filesRewritten": [
-        ".ai/protocol.jsonld(v2)",
-        "engram/README.md(v2)",
-        ".ai/engram.jsonld(activated)",
-        "engram/workflows/*(+W007,updated W001/W002)"
-      ],
+      "learningsContributed": ["L019","L020","L021","L022","L023"],
+      "workflowsContributed": ["W007"],
       "notes": "First Opus 4.6 session. Cold-start L009 violation, user corrected. Network recon confirmed RDP-only to IGS. Session stalled mid-recon (L019 confirmed). Recovered. Major engram overhaul: session registry, W007 Gravity Check, archive mechanism, protocol+README v2, compact encoding prototype (70% reduction). First session to do structural engram maintenance. First clean W002 shutdown. Declared ready for epoch-003."
     },
     {
       "sessionId": "opus46-web-epoch003-001",
-      "learningsContributed": [],
       "date": "2026-02-25",
-      "notes": "Epoch-003 + concurrency v1.0. 3 commits. First concurrent sign-in. Haiku onboarded. Clean W002 shutdown.",
-      "focus": "Epoch-003 declaration + concurrency protocol v1.0 deployment",
-      "bootProtocol": "manual",
-      "workflowsContributed": [],
       "model": "claude-opus-4.6",
-      "outcome": "SUCCESS",
-      "handoffWritten": "yes",
       "interface": "claude-web",
-      "machine": "HOME (via UDC filesystem)"
+      "machine": "HOME (via UDC filesystem)",
+      "bootProtocol": "manual",
+      "handoffWritten": "yes",
+      "focus": "Epoch-003 declaration + concurrency protocol v1.0 deployment",
+      "outcome": "SUCCESS",
+      "learningsContributed": [],
+      "workflowsContributed": [],
+      "notes": "Epoch-003 + concurrency v1.0. 3 commits. First concurrent sign-in. Haiku onboarded. Clean W002 shutdown."
+    },
+    {
+      "sessionId": "sonnet46-web-aggdb-frontend-entry-001",
+      "date": "2026-03-05",
+      "model": "claude-sonnet-4.6",
+      "interface": "claude-web",
+      "machine": "IGS (claude.ai project, filesystem MCP via UDC)",
+      "bootProtocol": "context-from-memory",
+      "handoffWritten": "yes",
+      "focus": "ITD_AggDB HTML frontend (v2/v3), FastAPI backend, Excel data entry workbook for Rebecca",
+      "outcome": "SUCCESS",
+      "learningsContributed": ["L063","L064","L065","L066"],
+      "workflowsContributed": [],
+      "notes": "Excel workbook contains 39 real D1 sites, 15 test types, 300 entry rows/sheet, zero formula errors. Key correction: SiteID -c=commercial, -s=state (not material type). Caused two full workbook rebuilds. FastAPI backend ready to deploy."
+    },
+    {
+      "sessionId": "opus46_desktop_ktreesn_001",
+      "date": "2026-03-08",
+      "model": "claude-opus-4.6",
+      "interface": "claude-web (claude.ai project, Windows-MCP filesystem+Shell)",
+      "machine": "IGS/ctate.IGS2",
+      "bootProtocol": "context-from-project-files",
+      "handoffWritten": "yes",
+      "focus": "Ktreesn v0.5.0: built standalone PS module from buggy profile function, 10 bugs fixed, 8 functions, git repo created+pushed, Doksn integration analyzed",
+      "outcome": "SUCCESS",
+      "learningsContributed": ["L072","L073","L074"],
+      "workflowsContributed": [],
+      "filesCreated": [
+        "C:\\dev\\Ktreesn\\Ktreesn.psm1",
+        "C:\\dev\\Ktreesn\\Ktreesn.psd1",
+        "C:\\dev\\Ktreesn\\README.md",
+        "C:\\dev\\Ktreesn\\.gitignore",
+        ".ai/projects/ktreesn/handoffs/2026-03-08_opus46_desktop_ktreesn_001.md"
+      ],
+      "durationEstimate": "~2 hours",
+      "notes": "First ktreesn project session. Bootstrapped from claude.ai project context (no formal boot protocol — session ran via web interface with MCP tools, not Desktop). Analyzed full Doksn codebase (MainForm.cs, scanner.py, doksn.py, architecture spec) to design integration layer. Git push required bat-file workaround (L072 confirms L068). Concurrent session on bigspider acknowledged — only touched ktreesn project scope + append-only shared resources."
     }
   ]
 }

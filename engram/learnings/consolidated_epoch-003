@@ -141,3 +141,15 @@ Admin share \\IGS-Intrusion\C$\dev\aggdb\ works from Antiquarian. Copy main.py, 
 L071:fe:c:opus46-desktop-aggdb-frontend-deploy-001
 Browser JavaScript cannot access client OS username
 No browser API for Windows auth username. Health check returns server-side user only (always ctate). Solution: one-time localStorage prompt with alias resolution (rka->rkanderson, cat->ctate). Blocked username list prevents generic entries.
+
+L072:to:c:opus46_desktop_ktreesn_001
+MCP Shell git PATH issue confirmed on IGS2 (ctate.IGS2) — same as Antiquarian L068
+cmd.exe bat file with full-path "C:\Program Files\Git\cmd\git.exe" is the reliable pattern. env:PATH assignment in PowerShell MCP shell does not persist. HOME must be set for GCM credential resolution. Pattern: write bat > redirect to log > read log.
+
+L073:to:c:opus46_desktop_ktreesn_001
+[IO.Path]::GetExtension only returns last segment — compound extensions silently fail
+.shp.xml returns .xml not .shp.xml. .aux.xml returns .xml not .aux.xml. Must split on dots and check last-two-segment compound. Affects any sidecar-detection logic for GIS files. Built Get-CompoundExtension helper in Ktreesn module.
+
+L074:to:c:opus46_desktop_ktreesn_001
+PowerShell undeclared parameters silently evaluate $null — no error
+$Geo referenced 8 times in Get-Ktreesn but never in param() block. Every if($Geo) silently failed. Geo mode was completely broken with zero indication. Always cross-check $Variable references against param() declarations. PowerShell strict mode doesn't catch this for switch parameters.
