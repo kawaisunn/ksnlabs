@@ -1,6 +1,6 @@
-# buffer:ktreesn | active | 2026-03-09T12:10Z | epoch-004
-@now v0.6.0 FULLY PUSHED to kawaisunn/ktreesn main (93ccd6f). All 3 files synced. 9 exported functions, 5 aliases. Full handoff written.
-@left git pull on BIGSPIDER + Intrusion. Run stage_ktreesn.ps1 -Verify. Update $PROFILE (Import-Module). Delete NVIDIA folder. ksnlabs local master:main push pending. Verify .md export backtick escaping on Windows.
-@next Test v0.6.0 with real GIS dirs. Verify -DirectoryOnly, -IncludeHash passthrough, per-dir MaxFilesConsole. Run full build pipeline. Test Import-DirectoryMap round-trip. Test KtreesnBridge.cs with 9 functions + timport.
-@blk Ksnlabs local master:main push pending (auth dialog). Profile in Claude project stale (L075). ocritd merge conflicts may exist.
-@owner opus46-web+desktop-2026-03-09-v060-debug
+# buffer:ktreesn | active | 2026-03-09T12:30Z | epoch-005
+@now v0.6.1 psd1+README pushed to GitHub (97bd4c8, 231be35). PSM1 built but NOT YET PUSHED (web API 50KB limit). 10 exported functions, 6 aliases.
+@left PSM1 push required (download from session or use Desktop). git pull on BIGSPIDER+Intrusion. ksnlabs master:main push pending. Update $PROFILE. Test dotted filenames, -PassThru, tver, symlink tag.
+@next Push psm1. Test v0.6.1 with real GIS dirs. Verify KtreesnBridge.cs handles 10 functions + tver. Run full build pipeline.
+@blk PSM1 push needs human (download+push or Desktop session). ksnlabs local master:main pending (auth dialog). Profile in Claude project stale (L075).
+@owner opus46-web-2026-03-09-v061-debug
