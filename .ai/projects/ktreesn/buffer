@@ -1,6 +1,6 @@
-# buffer:ktreesn | active | 2026-03-08T23:55Z | epoch-003
-@now v0.5.0 on GitHub (kawaisunn/ktreesn, private). Cloned to C:\dev\Ktreesn on BIGSPIDER. Staged into Doksn at C:\dev\ocritd\runtime\modules\Ktreesn\. 8 exported functions, 1265 lines. psm1+psd1 only. Source also on Antiquarian C:\dev\Ktreesn.
-@left Next: integrate into Doksn launcher mainform. Key function is Get-DoksnProcessingStatus which cross-refs input dirs against Doksn workspace (sourcemirror/sourceprocd/jsonprocd). Show-DirectoryTree for UI tree view. Compare-DirectoryMap for change detection between runs. Get/Set-DirectoryState for processing state persistence via _ktreesn_state.json sidecars.
-@next stage_ktreesn.ps1 in build kit handles pulling latest from repo into Doksn runtime/. Clone to Intrusion tomorrow: git clone https://github.com/kawaisunn/ktreesn.git C:\dev\Ktreesn
-@blk ProjectUri in psd1 still points to ksnlabs repo, needs update to ktreesn repo. NVIDIA Corporation stray folder in repo dir (not tracked, delete it).
-@owner opus46-web-2026-03-08-buildkit
+# buffer:ktreesn | active | 2026-03-09T20:00Z | epoch-003
+@now v0.5.0 on GitHub (kawaisunn/ktreesn, private). ProjectUri fixed. C# integration committed to ocritd main (3da5bf6). KtreesnBridge.cs + KtreesnModels.cs + MainForm changes. Two new buttons: Check Status + Dir Summary. stage_ktreesn.ps1 written and pushed to ksnlabs/doksn-build-kit/scripts/.
+@left Next: git pull on BIGSPIDER for both ocritd and ksnlabs. Run stage_ktreesn.ps1 -Verify. dotnet build + test the WinForms launcher with real data. Fix $PROFILE (remove old Get-Ktreesn, add Import-Module). Clone to Intrusion. Delete NVIDIA stray folder.
+@next Test Check Status button with real input dir + workspace. Fix any JSON deserialization issues that surface. Run full build pipeline (stage_all_deps → verify_build_env → stage_ktreesn → BUILD_ALL). Push pending ocritd merge conflicts.
+@blk ocritd local may have merge conflicts from prior sessions. DC write_file/read_file unreliable on BIGSPIDER (use GitHub API or cmd). Profile in Claude project is stale.
+@owner opus46-web-2026-03-09-integration
