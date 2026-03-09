@@ -161,3 +161,23 @@ temp_zip_review/
 # Live session locks (ephemeral, not historical)  
 .ai/active/*.lock  
 .ai/active/*.stale 
+
+# ========================================
+# AI SESSION TEMP FILES
+# ========================================
+# Diagnostic scripts, API dumps, git helpers
+# Created by Claude sessions — NOT project artifacts
+# Buffer, handoff, and engram files ARE tracked (not excluded here)
+
+.ai/*.bat
+.ai/*.ps1
+.ai/*.sh
+.ai/*.txt
+.ai/api_*.json
+.ai/git_*.txt
+.ai/git_*.bat
+.ai/git_*.ps1
+.ai/fetch_*.ps1
+.ai/query_*.bat
+.ai/check_*.bat
+.ai/check_*.ps1
