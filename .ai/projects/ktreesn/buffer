@@ -1,22 +1,6 @@
-# buffer:ktreesn | merged | 2026-03-08T23:59Z | epoch-003
-# merged from: opus46-web-2026-03-08-buildkit (bigspider) + opus46_desktop_ktreesn_001 (IGS2)
-@now v0.5.0 on GitHub (kawaisunn/ktreesn, private). Cloned to C:\dev\Ktreesn on BIGSPIDER+Antiquarian. Staged into Doksn at C:\dev\ocritd\runtime\modules\Ktreesn\ via stage_ktreesn.ps1. 8 exported functions, ~1265 lines. 10 bugs fixed from original profile. Also exists at C:\dev\ksnlabs\modules\Ktreesn\ (copy).
-@left 1)integrate into Doksn launcher mainform (C# layer) 2)wire Get-DoksnProcessingStatus into MainForm for job setup intelligence 3)push test data from J:\ to bigspider 4)GUI directory picker (lower priority) 5)profile migration on both machines (Import-Module replaces inline function) 6)clone to Intrusion
-@next C# integration layer: Get-DoksnProcessingStatus cross-refs input vs workspace. Show-DirectoryTree for UI tree view. Compare-DirectoryMap for change detection. Key pattern: pwsh call > JSON output > C# deserialization via RunProcess().
-@blk ProjectUri in psd1 still points to ksnlabs repo—needs update to ktreesn. NVIDIA Corporation stray folder in bigspider repo dir (delete).
-@owner merged-by-opus46_desktop_ktreesn_001
-
-# architecture decisions
-# JSON is contract between PS module and C# launcher
-# Get-DoksnProcessingStatus cross-refs input vs workspace/{sourcemirror,sourceprocd,jsonprocd}
-# State tracking via _ktreesn_state.json sidecars, KtreesnState enum: Unknown|Pending|Scanning|Processing|Complete|Error|Skipped
-# Node structure: Name,FullPath,Type(Directory|File|GeoGroup|Geodatabase|Symlink),Children,Size,FileCount,DirCount,LastModified,Extension,Hash,IsSymlink,LinkTarget
-# GeoGroup adds: GeoType(Shapefile|Raster),SidecarCount,Sidecars
-# Compound sidecar detection: Get-CompoundExtension handles .shp.xml,.dbf.xml,.aux.xml
-# stage_ktreesn.ps1 in build kit handles pulling latest from repo into Doksn runtime/
-
-%opus46_desktop_ktreesn_001|2026-03-08|OK
-v0.5.0 module built+pushed from IGS2. 10 bugs fixed. 8 functions. Standalone git repo.
-
-%opus46-web-2026-03-08-buildkit|2026-03-08|OK
-Cloned to bigspider. Staged into Doksn runtime. stage_ktreesn.ps1 created.
+# buffer:ktreesn | active | 2026-03-09T13:30Z | epoch-005
+@now v0.6.1 FULLY PUSHED (83bb9a0). ALL REPOS SYNCED AND CLEAN. 10 exported functions, 6 aliases. Git identity configured on BIGSPIDER. No outstanding git debt anywhere.
+@left Test v0.6.1 with real GIS dirs (dotted filenames, -PassThru, tver, symlink tag). Verify KtreesnBridge.cs handles 10 functions. Run full build pipeline (stage_ktreesn -Verify → BUILD_ALL).
+@next Test with real data. Build pipeline. Verify C# integration.
+@blk none.
+@owner opus46-web-2026-03-09-v061-final

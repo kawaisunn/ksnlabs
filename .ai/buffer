@@ -1,21 +1,32 @@
-# buffer v3.1.2 | opus46_web_json-v09_001 | 2026-02-25T11:00Z | epoch-003
+# buffer v3.6.0 | opus46_web_ktreesn-v061-final | 2026-03-09T13:30Z | epoch-003
 # GLOBAL SUMMARY. Per-project state in .ai/projects/{project}/buffer.
 
-@now JSON v0.9 output redesign COMMITTED. processor.py rewritten. Ready for test run.
-@why v0.9 structured header/body/footer JSON replaces flat v0.8 output.
-@left test run on small subset, OCR-if-no-text-layer verify, GUI skip-copy checkbox.
-@next git pull at IGS, test run, iterate on output format.
-@urg none immediate.
-@blk Sophos(only 3389 to IGS);Shell-MCP(broken BIGSPIDER)
-@net bigspider:129.101.139.85:ts100.120.131.75 | igs:172.28.196.231:ts100.118.38.103:only3389
+@now ALL REPOS SYNCED AND CLEAN. ktreesn v0.6.1 (83bb9a0), ksnlabs (this), ocritd (3da5bf6). BIGSPIDER local up to date. Git identity configured. Full handoff written.
+@why v0.6.1 fixes compound ext detection for dotted filenames, removes vestigial -Files, adds [symlink] tag, -PassThru, Get-KtreesnVersion(tver). All accumulated git debt cleared.
+@left Test v0.6.1 real GIS dirs. Build pipeline (stage_ktreesn -Verify → BUILD_ALL). KtreesnBridge.cs may need update for 10 funcs. AggDB Excel to Rebecca. aggdb spec audit rows 39-84.
+@next Test v0.6.1. Build pipeline. aggdb spec audit.
+@urg none.
+@blk Sophos(3389 only).
 
 # PROJECTS: aggdb ocritd cait keywrds ktreesn engram-dev _infra _default
 
+%opus46_web_ktreesn-v061-final|2026-03-09|OK
+v0.6.1 fully pushed 83bb9a0. ALL repos synced. Full handoff: SESSION_HANDOFF_ktreesn_v061_final.md
+
+%opus46_web_ktreesn-v061|2026-03-09|OK
+Mid-session. Handoff: SESSION_HANDOFF_ktreesn_v061_debug.md
+
+%opus46_web+desktop_ktreesn-v060|2026-03-09|OK
+v0.6.0 pushed 93ccd6f. Handoff: SESSION_HANDOFF_ktreesn_v060_debug.md
+
+%opus46_web_ktreesn-doksn-integration|2026-03-09|OK
+Build kit scripts + C# integration. Handoff: SESSION_HANDOFF_ktreesn_doksn_integration.md
+
 %opus46_web_json-v09_001|2026-02-25|OK
-v0.9 JSON output committed ad15bb6. header/body/footer structure. All source read, code written, syntax+import verified.
+v0.9 JSON output committed ad15bb6.
 
 %opus46_web_engram-dev_001|2026-02-25|OK
-epoch-003 + concurrency v1.0. 3 commits. clean W002.
+epoch-003 + concurrency v1.0.
 
 %opus46-coldstart-recon-001|2026-02-24|OK
 engram v2 overhaul + compact encoding.
