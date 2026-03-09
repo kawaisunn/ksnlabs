@@ -1,0 +1,65 @@
+{
+  "@context": "https://ksnlabs.dev/ontology/",
+  "@type": "SessionLearnings",
+  "date": "2026-03-06",
+  "sessionId": "aggdb-frontend-deploy-intrusion",
+  "model": "Claude Opus 4.6",
+  "learnings": [
+    {
+      "id": "L063",
+      "category": "trust/verification",
+      "title": "Sonnet schema hallucinations",
+      "lesson": "Sonnet 4.6 hallucinated table and column names when building a frontend against ITD_AggDB. Created QAMSCert (actual: QAMS), used DocType/ResultValue/EnteredBy (actual: RecTypeID/TestValue/CreatedBy). Always verify AI-generated schema references against INFORMATION_SCHEMA before trusting.",
+      "severity": "HIGH — Christopher spent 15 minutes double-checking the DB because of phantom references"
+    },
+    {
+      "id": "L064",
+      "category": "schema",
+      "title": "Link table PKs are not auto-increment",
+      "lesson": "ITD_AggDB link tables have dual-column pattern: 'id' (identity, auto) and '*LinkID' (business PK, NOT auto). INSERT must supply explicit *LinkID via MAX+1. Applies to RecLink, StatusLink, TestResultLink, QAMSLink, MaterialTypeLink, AccessRecLink, all *Link tables.",
+      "severity": "CRITICAL — insert fails without it"
+    },
+    {
+      "id": "L065",
+      "category": "tooling",
+      "title": "Windows-MCP Shell terminal visibility",
+      "lesson": "Shell commands often create terminal processes that flash and close. For pip installs, Python checks, and long operations: write a .py or .ps1 to disk first, execute it, and read output from a file. Don't fight stdout capture through nested shells.",
+      "severity": "MEDIUM — time waste"
+    },
+    {
+      "id": "L066",
+      "category": "deployment",
+      "title": "Python portability on Windows",
+      "lesson": "Robocopy of full Python install (with torch/cait site-packages) is unreliable across network shares. Use official embeddable zip: download, uncomment 'import site' in ._pth, bootstrap get-pip.py, install only needed deps. Clean and ~50MB vs 634MB.",
+      "severity": "HIGH — botched copy wasted 20+ minutes and produced broken stdlib"
+    },
+    {
+      "id": "L067",
+      "category": "network",
+      "title": "IGS domain GPO blocks non-standard ports",
+      "lesson": "Domain firewall GPO blocks inter-machine traffic on ports like 8000, 1433. Port 80 and 445 are allowed because IIS and SMB are registered services. Local firewall rules (New-NetFirewallRule) cannot override GPO. Solution: IIS reverse proxy via ARR on port 80.",
+      "severity": "HIGH — completely blocked Rebecca's access until proxy"
+    },
+    {
+      "id": "L068",
+      "category": "deployment",
+      "title": "Long-running processes via Invoke-Command die",
+      "lesson": "Processes spawned via Invoke-Command or Start-Process in remote PS sessions die when session ends (session isolation). Register-ScheduledTask with SYSTEM account + AtStartup trigger is the reliable path for services that must survive.",
+      "severity": "HIGH — server kept dying between tests"
+    },
+    {
+      "id": "L069",
+      "category": "iis",
+      "title": "IIS authorization section config is fragile",
+      "lesson": "IIS authorization at app level: must unlock sections via appcmd first, use full path -section:system.webServer/security/authorization (not shorthand), and Web-Url-Auth feature must be installed. Web.config-based auth can conflict with ARR proxy causing 500.19. Safest: appcmd at apphost commit path.",
+      "severity": "MEDIUM — caused repeated 500 errors"
+    },
+    {
+      "id": "L070",
+      "category": "security",
+      "title": "IIS reverse proxy runs as service account, not user",
+      "lesson": "When IIS proxies to FastAPI, the SQL connection uses the process identity (SYSTEM via scheduled task), not the authenticated IIS user. SYSTEM needs explicit SQL login with db_datareader/datawriter. User identity stays at the IIS layer only.",
+      "severity": "HIGH — 503 until SYSTEM got SQL access"
+    }
+  ]
+}

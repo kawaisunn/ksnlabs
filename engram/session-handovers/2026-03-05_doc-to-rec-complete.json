@@ -1,0 +1,116 @@
+{
+  "@context": "https://ksnlabs.dev/ontology/",
+  "@type": "SessionHandover",
+  "sessionId": "rp315-doc-to-rec-rename-and-ocritd-merge",
+  "date": "2026-03-05",
+  "machine": "IGS (ctate.IGS2 workstation)",
+  "interface": "claude.ai web with Filesystem MCP + Windows-MCP Shell",
+  "epoch": "epoch-003",
+  "model": "Claude Opus 4.6",
+  "sessionQuality": "MAJOR MILESTONE — Doc→Rec rename 100% complete on live DB + all GitHub scripts. Ocritd merge conflicts resolved.",
+
+  "summary": "Two-part session. Part 1: Completed the long-pending Doc→Rec rename across ITD_AggDB on IGS-Intrusion\\SQLEXPRESS — tables, columns, constraints, indexes, LUT values, and all 47 extended property descriptions. Zero 'Doc' references remain anywhere in the database. Updated v2 SQL scripts on disk, backed up old Doc files, pushed to GitHub (kawaisunn/ksnlabs). Part 2: Resolved git merge conflicts in kawaisunn/ocritd after stash/pull/pop — 3 files (BUILD.ps1, engine/version.py, src/doksn.Launcher/MainForm.cs). Accepted upstream doksn renames, fixed GUIProject path from OCRITD.Launcher to doksn.Launcher. Doksn test launch attempted but Shell output capture issue prevented seeing results.",
+
+  "completedWork": {
+    "docToRecRename": {
+      "status": "COMPLETE — zero Doc references remain",
+      "tablesRenamed": ["AccessDoc→AccessRec", "AccessDocLink→AccessRecLink", "SourceDoc→SourceRec"],
+      "columnsRenamed": [
+        "AccessRec.AccessDocID→AccessRecID",
+        "AccessRecLink.AccessDocLinkID→AccessRecLinkID",
+        "AccessRecLink.AccessDocID→AccessRecID",
+        "SourceRec.DocType→RecType",
+        "Sites.DocLinkID→RecLinkID",
+        "AccessLink.DocLinkID→RecLinkID",
+        "SiteEntrySource.SourceDocID→SourceRecID"
+      ],
+      "constraintsRenamed": "12+ (PKs, FKs, defaults — including stale PK_Docs, PK_DocLink, PK_LU_DocType)",
+      "indexRebuilt": "IX_SiteEntrySource_SourceDocID→IX_SiteEntrySource_SourceRecID (drop/recreate required due to column dependency)",
+      "lutValueUpdated": "AccessDocument→AccessRecord in LU_RecType",
+      "extendedProperties": "47 MS_Description values updated (required 2-pass approach: PowerShell script generating pure SQL, not inline CAST)",
+      "verification": "Final sweep: 0 tables, 0 columns, 0 constraints, 0 indexes, 0 EPs, 0 LUT values with Doc. 63 tables intact."
+    },
+    "gitHubScripts": {
+      "newFiles": [
+        "v2/20_LU_RecType.sql",
+        "v2/21_Rec.sql",
+        "v2/22_RecLink.sql"
+      ],
+      "editedInPlace": "v2/34_Certification.sql (CertLetterDocID→CertLetterRecID, FK_Cert_Doc→FK_Cert_Rec)",
+      "deletedOldFiles": [
+        "v2/20_LU_DocType.sql",
+        "v2/21_Docs.sql",
+        "v2/22_DocLink.sql",
+        "SQL_TABLES/21_Docs.sql",
+        "SQL_TABLES/22_DocLink.sql"
+      ],
+      "backupLocation": "C:\\dev\\SQL_TABLES\\_backup_DocToRec_20260304\\",
+      "scriptsArchived": [
+        "TIDY_ITD_AggDB_20260304_DocToRec.sql",
+        "TIDY_EP_DocToRec.sql",
+        "fix_ep_doc_to_rec.ps1",
+        "fix_ep_doc_to_rec_pass2.ps1"
+      ]
+    },
+    "ocritdMergeConflicts": {
+      "status": "RESOLVED — 3 files fixed, ready for commit+push",
+      "filesResolved": [
+        {"file": "BUILD.ps1", "resolution": "Accepted upstream doksn rename, took remote structure with $Config pattern, fixed GUIProject path to doksn.Launcher"},
+        {"file": "engine/version.py", "resolution": "Accepted upstream PROJECT_URL (kawaisunn/doksn), dropped stale ksnlabs/ocritd"},
+        {"file": "src/doksn.Launcher/MainForm.cs", "resolution": "Accepted upstream ResolveAppBase() + clean doksn paths, dropped old OCRITD multi-candidate search with duplicate brace"}
+      ],
+      "commitPending": "git add + commit + push still needed — user was given the commands"
+    }
+  },
+
+  "pendingItems": {
+    "immediate": [
+      "Ocritd: git add/commit/push the resolved merge conflicts",
+      "Ksnlabs: git push (Doc→Rec changes committed but push may be pending)",
+      "Doksn: test launch — python -m engine --help from C:\\dev\\ocritd (Shell output capture issue this session)"
+    ],
+    "specAudit": "Rows 39-84 remaining. Audit spreadsheet: C:\\dev\\SQL_TABLES\\RP315_FieldSpec_Audit.xlsx",
+    "materialType": "LU_MaterialType + MaterialTypeLink tables queued, not yet executed",
+    "testType": "Regroup LU_TestType by AASHTO standards (requires reading TestProcedures Excel)",
+    "commodities": "Remove 'General Stone', add 'Rejects' and 'Chips'",
+    "qamsVerification": "QAMS qualification data needs verification against J:\\ source documents",
+    "doksnDemo": "Full pipeline run needed on all 4 D5 sites (190 files), MSI build pending"
+  },
+
+  "technicalLearnings": [
+    {
+      "id": "L059",
+      "lesson": "sp_updateextendedproperty requires sql_variant type for @value. CAST(N'...' AS SQL_VARIANT) works inline but fails when passed through PowerShell variables. Solution: generate pure SQL file with N'...' literals via PowerShell, then execute via Invoke-Sqlcmd -InputFile.",
+      "context": "Doc→Rec extended property updates"
+    },
+    {
+      "id": "L060",
+      "lesson": "sp_rename on a column fails if an index references that column. Must DROP INDEX first, rename column, then CREATE INDEX with new name. The rename script should handle index dependencies before column renames.",
+      "context": "SiteEntrySource.SourceDocID rename blocked by IX_SiteEntrySource_SourceRecID"
+    },
+    {
+      "id": "L061",
+      "lesson": "Git stash pop with conflicts keeps the stash entry (unlike clean apply which drops it). After resolving conflicts, must git add the resolved files before commit. Commands must run in order: add → commit → push.",
+      "context": "Ocritd merge conflict resolution"
+    },
+    {
+      "id": "L062",
+      "lesson": "Windows-MCP Shell swallows stdout from python subprocess calls and Start-Process with -RedirectStandardOutput. For Python script output, write to file then read, or use Invoke-Sqlcmd for DB work.",
+      "context": "Doksn test launch output capture"
+    }
+  ],
+
+  "environmentState": {
+    "database": {
+      "server": "IGS-Intrusion\\SQLEXPRESS",
+      "database": "ITD_AggDB",
+      "tables": 63,
+      "dataRows": "Only LU_ tables populated (LU_AccessType:5, LU_AccuracyLevel:7, LU_Commodity:17, LU_EntityRole:10, LU_EntityType:12, LU_LineType:5, LU_MaterialType:7, LU_NameType:6, LU_OwnerType:9, LU_PointType:5, LU_PolygonType:6, LU_RecType:15, LU_Status:6, LU_TestType:30). All operational tables empty.",
+      "docReferences": "ZERO"
+    },
+    "repos": {
+      "ksnlabs": "C:\\dev\\ksnlabs — Doc→Rec scripts updated, old files deleted",
+      "ocritd": "C:\\dev\\ocritd — merge conflicts resolved locally, commit+push pending"
+    }
+  }
+}

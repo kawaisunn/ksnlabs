@@ -1,0 +1,194 @@
+{
+  "@context": "https://ksnlabs.dev/ontology/",
+  "@type": "SessionHandover",
+  "sessionId": "aggdb-frontend-api-deploy-intrusion",
+  "date": "2026-03-06",
+  "machine": "IGS (ctate.IGS2 workstation) → deployed to IGS-Intrusion",
+  "interface": "Claude Desktop with Filesystem MCP + Windows-MCP Shell + Chrome MCP",
+  "epoch": "epoch-003",
+  "model": "Claude Opus 4.6",
+  "sessionQuality": "MAJOR MILESTONE — Full-stack AggDB frontend+API built, deployed to IGS-Intrusion, secured with Windows Auth. Rebecca has data entry access.",
+
+  "summary": "Built complete AggDB data entry system from scratch after evaluating Sonnet's v3 frontend (which had significant schema mismatches: hallucinated QAMSCert table, wrong column names DocType/DocDate/FilePath/ResultValue vs actual RecTypeID/RecDate/RecLink/TestValue). Created FastAPI backend aligned to real v2 schema including all link tables (RecLink, StatusLink, TestResultLink, QAMSLink). Fixed link table PK inserts (business PKs are NOT auto-increment — needed next_id() helper). Built v4 frontend with Browse/Data Entry/New Site tabs, welcome modal, help button. Deployed to IGS-Intrusion via embedded Python 3.12, IIS reverse proxy on port 80 with ARR, scheduled task for auto-start. Secured with Windows Authentication. Added IsVisible to LU_RecType, hid SWPPP. Created Quick Start Guide and Cleanup Guide docs.",
+
+  "completedWork": {
+    "apiBackend": {
+      "status": "COMPLETE — running on IGS-Intrusion",
+      "location": "C:\\dev\\aggdb\\api\\ (on IGS-Intrusion)",
+      "localDev": "C:\\dev\\ksnlabs\\aggdb\\api\\ (on workstation)",
+      "files": ["main.py", "db.py", "models.py", "requirements.txt"],
+      "endpoints": {
+        "health": "GET /api/health — DB connectivity check",
+        "ping": "GET /api/ping — no-DB alive check",
+        "sites": "GET /api/sites — list with StatusLink join",
+        "siteDetail": "GET /api/sites/{id} — full detail with recs/tests/qams/access",
+        "createSite": "POST /api/sites — insert + StatusLink",
+        "createRec": "POST /api/recs — insert + RecLink to site",
+        "createTestResult": "POST /api/testresults — insert + TestResultLink",
+        "createQAMS": "POST /api/qams — insert + QAMSLink",
+        "commit": "POST /api/commit — batch commit with dependency ordering",
+        "lookups": "GET /api/lut/{testtypes|rectypes|statuses|commodities|materialtypes}"
+      },
+      "keyDesignDecisions": [
+        "All link table PKs use next_id() helper (MAX+1) — NOT auto-increment identity columns",
+        "db.py on Intrusion uses localhost\\SQLEXPRESS, workstation copy uses IGS-Intrusion\\SQLEXPRESS",
+        "sys.path.insert(0, ...) in main.py for portable execution from any working directory",
+        "Server binds 0.0.0.0:8000, served through IIS reverse proxy on port 80"
+      ]
+    },
+    "frontend": {
+      "status": "COMPLETE — v4",
+      "location": "C:\\dev\\aggdb\\frontend\\ITD_AggDB_v4.html (on IGS-Intrusion)",
+      "localDev": "C:\\dev\\ksnlabs\\aggdb\\frontend\\ITD_AggDB_v4.html (on workstation)",
+      "tabs": {
+        "browse": "Default tab. Site list (left) + detail panel (right) showing Recs, TestResults, QAMS, Access for selected site",
+        "dataEntry": "3-step form: Rec → Site Association → optional QAMS/TestResult. Stage to queue, then commit.",
+        "newSite": "Standalone site registration form"
+      },
+      "features": [
+        "Welcome modal with dismiss-permanently checkbox (localStorage)",
+        "Help button in header to re-show welcome",
+        "All dropdowns populated from live lookups (RecType, TestType, Commodity, MaterialType, Status)",
+        "FK dependency validation in pending queue before commit enabled",
+        "API URL uses location.origin — works from any machine accessing the server"
+      ]
+    },
+    "deployment": {
+      "status": "COMPLETE — running on IGS-Intrusion",
+      "pythonRuntime": "C:\\dev\\aggdb\\python\\ — Python 3.12.8 embeddable with pip, fastapi, uvicorn, pyodbc, pydantic",
+      "iisReverseProxy": {
+        "module": "ARR 3.0 (Application Request Routing) — installed during session",
+        "urlRewrite": "Already present on server",
+        "app": "Default Web Site/aggdb → IIS application at C:\\dev\\aggdb\\iis_aggdb\\",
+        "webConfig": "Rewrite rules: /aggdb → localhost:8000/, /aggdb/* → localhost:8000/*",
+        "authSections": "Unlocked: windowsAuthentication, anonymousAuthentication, authorization"
+      },
+      "scheduledTask": {
+        "name": "AggDB_API",
+        "runsAs": "SYSTEM",
+        "trigger": "AtStartup (survives reboot)",
+        "command": "C:\\dev\\aggdb\\python\\python.exe C:\\dev\\aggdb\\api\\main.py"
+      },
+      "sqlPermissions": "NT AUTHORITY\\SYSTEM granted db_datareader + db_datawriter on ITD_AggDB",
+      "firewall": "AggDB API rule — Inbound TCP 8000 Allow (may be redundant since IIS proxies on 80)",
+      "desktopShortcut": "C:\\Users\\Public\\Desktop\\AggDB.lnk → http://IGS-Intrusion/aggdb"
+    },
+    "security": {
+      "status": "Windows Authentication active on IIS app",
+      "anonymousAuth": "Disabled for /aggdb",
+      "windowsAuth": "Enabled with Negotiate + NTLM, useKernelMode=true, useAppPoolCredentials=true",
+      "authorization": "Allow all authenticated users (authorization ACL removed — was causing 401/500 issues)",
+      "appPool": "DefaultAppPool, NetworkService identity",
+      "accessConfirmed": ["ctate", "rkanderson"],
+      "accessPendingDNS": ["cberti (Claudio)", "lknudsen (Liam) — ITS-OIT DNS fix needed on their workstations to reach IGS-Intrusion"],
+      "note": "Per Christopher: security is sufficient as-is. Liam and Claudio access is an ITS-OIT ticket, not an application-level fix."
+    },
+    "schemaChanges": {
+      "luRecType": "Added IsVisible BIT NOT NULL DEFAULT 1. Set IsVisible=0 for RecTypeID=6 (SWPPP). API filters WHERE IsVisible=1."
+    },
+    "documentation": {
+      "quickStartGuide": "AggDB_Quick_Start_Guide.docx — Rebecca-facing, covers Browse/Data Entry/New Site",
+      "cleanupGuide": "AggDB_Cleanup_Guide.docx — full removal steps for IGS-Intrusion deployment (python, api, frontend, firewall, shortcut, scheduled task, SQL permissions)"
+    }
+  },
+
+  "pendingItems": {
+    "immediate": [
+      "Test data entry flow end-to-end as Rebecca (create site → create rec → commit → verify in Browse)",
+      "Ocritd: git add/commit/push the resolved merge conflicts from last session",
+      "Ksnlabs: git push with new aggdb/api and aggdb/frontend directories"
+    ],
+    "shortTerm": [
+      "Cleanup timer: portable Python + API on Intrusion is a 1-week policy exception — must be properly deployed (MSI/MSIX or approved install) or removed by ~2026-03-13",
+      "Update Cleanup Guide to reference python\\ not python314\\ (path changed during session)",
+      "IIS authorization ACL: consider re-adding 4-user restriction once Liam/Claudio DNS is fixed",
+      "Doksn integration: API endpoint to accept OCR output and pre-fill Rec/QAMS/Test forms with SourceType=OCR in SiteEntrySource",
+      "cait observation: read commit logs and SiteEntrySource to learn data entry patterns"
+    ],
+    "specAudit": "Rows 39-84 remaining",
+    "commodities": "Remove 'General Stone', add 'Rejects' and 'Chips'",
+    "qamsVerification": "QAMS data vs J:\\ source documents",
+    "doksnPipeline": "Full run on D5 sites (190 files), MSI build"
+  },
+
+  "technicalLearnings": [
+    {
+      "id": "L063",
+      "lesson": "Sonnet 4.6 hallucinated table names (QAMSCert) and column names (DocType, ResultValue, EnteredBy) that don't exist in the schema. Built confident-looking UI around fake schema. Always verify AI-generated code against actual INFORMATION_SCHEMA before trusting.",
+      "context": "ITD_AggDB_v3.html evaluation"
+    },
+    {
+      "id": "L064",
+      "lesson": "ITD_AggDB link tables (RecLink, StatusLink, TestResultLink, QAMSLink, MaterialTypeLink) have non-identity business PKs. The 'id' column is identity but the *LinkID column requires explicit values. Use MAX+1 pattern via next_id() helper.",
+      "context": "StatusLink insert failure — Cannot insert NULL into StatusLinkID"
+    },
+    {
+      "id": "L065",
+      "lesson": "Windows-MCP Shell terminal commands often create processes that open and close too fast to populate or return output. For long-running commands or installs, prefer writing scripts to disk and executing them, or using Invoke-Command for remote execution.",
+      "context": "pip install and Python dependency verification"
+    },
+    {
+      "id": "L066",
+      "lesson": "Python embedded/portable on Windows: robocopy of a full Python install with site-packages (634MB with torch) is unreliable — stdlib modules can be missed, .pth files break. Better approach: download official embeddable zip (~15MB), uncomment 'import site' in ._pth file, bootstrap pip via get-pip.py, install only needed deps.",
+      "context": "IGS-Intrusion Python deployment"
+    },
+    {
+      "id": "L067",
+      "lesson": "IGS domain GPO firewall blocks non-standard ports between machines (8000, 1433). Port 80 works because IIS is registered. Solution: IIS reverse proxy (ARR + URL Rewrite) to forward /aggdb on port 80 to localhost:8000 where the API runs.",
+      "context": "Rebecca cannot reach port 8000, Test-NetConnection confirms blocked"
+    },
+    {
+      "id": "L068",
+      "lesson": "Python process started via Invoke-Command -ComputerName dies when the PS session ends — session isolation. Start-Process also fails for long-running services. Solution: Register-ScheduledTask with SYSTEM account and -AtStartup trigger. Survives logoff and reboot.",
+      "context": "AggDB API kept dying on Intrusion"
+    },
+    {
+      "id": "L069",
+      "lesson": "IIS authorization section at app level requires: (1) unlock via appcmd, (2) Web-Url-Auth feature installed, (3) use -section:system.webServer/security/authorization NOT just /section:authorization (which hits management/authorization). Even then, web.config-based auth can conflict with ARR proxy. Safest: configure via appcmd at apphost level.",
+      "context": "500.19 errors when trying to restrict by AD user"
+    },
+    {
+      "id": "L070",
+      "lesson": "For IIS + FastAPI reverse proxy: Windows Auth at IIS level handles who can access. SQL Server Windows Auth handles data permissions. The API process running as SYSTEM needs its own SQL login (NT AUTHORITY\\SYSTEM with db_datareader/datawriter). User identity doesn't pass through the proxy to SQL — it's the service account.",
+      "context": "503 on /api/health after SYSTEM had no SQL access"
+    }
+  ],
+
+  "environmentState": {
+    "database": {
+      "server": "IGS-Intrusion\\SQLEXPRESS",
+      "database": "ITD_AggDB",
+      "tables": 63,
+      "schemaChanges": "LU_RecType.IsVisible added (RecTypeID 6 SWPPP hidden)",
+      "dataState": "LU_ tables populated. 1 test site created during session. All other operational tables near-empty.",
+      "systemLogin": "NT AUTHORITY\\SYSTEM has db_datareader + db_datawriter"
+    },
+    "intrusion": {
+      "python": "C:\\dev\\aggdb\\python\\ (3.12.8 embeddable + pip + fastapi/uvicorn/pyodbc/pydantic)",
+      "api": "C:\\dev\\aggdb\\api\\ (main.py, db.py, models.py)",
+      "frontend": "C:\\dev\\aggdb\\frontend\\ITD_AggDB_v4.html",
+      "iis": "Default Web Site/aggdb app, ARR reverse proxy, Windows Auth enabled",
+      "task": "AggDB_API scheduled task (SYSTEM, AtStartup)",
+      "url": "http://IGS-Intrusion/aggdb",
+      "staleFiles": "C:\\dev\\aggdb\\python314\\ (634MB botched robocopy — should be deleted)",
+      "scripts": ["configure_auth.ps1", "configure_auth2.ps1", "arr_install.msi — can be cleaned up"]
+    },
+    "workstation": {
+      "apiDev": "C:\\dev\\ksnlabs\\aggdb\\api\\",
+      "frontendDev": "C:\\dev\\ksnlabs\\aggdb\\frontend\\",
+      "deployScripts": ["deploy_to_intrusion.ps1 (original — robocopy approach)", "fix_deploy_intrusion.ps1 (embeddable approach — use this one)"],
+      "docs": "AggDB_Quick_Start_Guide.docx, AggDB_Cleanup_Guide.docx"
+    },
+    "repos": {
+      "ksnlabs": "C:\\dev\\ksnlabs — new aggdb/api and aggdb/frontend directories, not yet pushed",
+      "ocritd": "C:\\dev\\ocritd — merge conflicts resolved, commit+push still pending from last session"
+    }
+  },
+
+  "christopherNotes": {
+    "visionStatement": "Single pipeline: Doc arrives → Doksn OCR/processes → metadata extracted → AggDB form pre-populated → Rebecca reviews/confirms → commit to DB → file to J:\\ canonical path → SiteEntrySource logs provenance → cait observes to learn patterns. One Python environment on IGS-Intrusion shared by AggDB API + Doksn + cait.",
+    "policyException": "Portable Python on Intrusion is a 1-week exception to IGS deployment policy. Christopher made the policy and is authorizing the temporary exception under his authority.",
+    "networkReality": "IGS network is a mess. ITS-OIT canceled the remediation meeting. Band-aids and bailing wire until then. Rebecca and Christopher's workstations cannot see each other. Intrusion is outside Sophos/UI administration. Liam and Claudio need DNS fixes on their workstations to reach Intrusion.",
+    "rebeccaWorkflow": "Was working in a spreadsheet — needed to transition to the frontend ASAP to keep producing while Christopher works on Doksn."
+  }
+}
