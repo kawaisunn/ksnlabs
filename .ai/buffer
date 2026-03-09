@@ -1,21 +1,26 @@
-# buffer v3.1.2 | opus46_web_json-v09_001 | 2026-02-25T11:00Z | epoch-003
+# buffer v3.2.0 | opus46_web+desktop_ktreesn-v060 | 2026-03-09T12:15Z | epoch-003
 # GLOBAL SUMMARY. Per-project state in .ai/projects/{project}/buffer.
 
-@now JSON v0.9 output redesign COMMITTED. processor.py rewritten. Ready for test run.
-@why v0.9 structured header/body/footer JSON replaces flat v0.8 output.
-@left test run on small subset, OCR-if-no-text-layer verify, GUI skip-copy checkbox.
-@next git pull at IGS, test run, iterate on output format.
+@now Ktreesn v0.6.0 pushed to GitHub (93ccd6f). 4 bugs fixed, 3 features added, full help docs. AggDB frontend live on Intrusion.
+@why v0.6.0 fixes MaxFilesConsole per-dir, DateTime coercion, adds Import-DirectoryMap, -DirectoryOnly, -IncludeHash passthrough, comprehensive help.
+@left git pull on BIGSPIDER+Intrusion for ktreesn. Update $PROFILE. ksnlabs local master:main push pending. ocritd merge conflicts pending. AggDB Excel to Rebecca.
+@next Test ktreesn v0.6.0 with real GIS dirs. Run full doksn build pipeline. Continue aggdb spec audit rows 39-84.
 @urg none immediate.
-@blk Sophos(only 3389 to IGS);Shell-MCP(broken BIGSPIDER)
-@net bigspider:129.101.139.85:ts100.120.131.75 | igs:172.28.196.231:ts100.118.38.103:only3389
+@blk Sophos(only 3389 to IGS);Shell-MCP(broken BIGSPIDER);ksnlabs local push(auth dialog)
 
 # PROJECTS: aggdb ocritd cait keywrds ktreesn engram-dev _infra _default
 
+%opus46_web+desktop_ktreesn-v060|2026-03-09|OK
+v0.6.0 pushed 93ccd6f. 4 bugs, 3 features, full help. Handoff: SESSION_HANDOFF_ktreesn_v060_debug.md
+
+%opus46_web_ktreesn-doksn-integration|2026-03-09|OK
+Build kit scripts + C# integration. Handoff: SESSION_HANDOFF_ktreesn_doksn_integration.md
+
 %opus46_web_json-v09_001|2026-02-25|OK
-v0.9 JSON output committed ad15bb6. header/body/footer structure. All source read, code written, syntax+import verified.
+v0.9 JSON output committed ad15bb6.
 
 %opus46_web_engram-dev_001|2026-02-25|OK
-epoch-003 + concurrency v1.0. 3 commits. clean W002.
+epoch-003 + concurrency v1.0.
 
 %opus46-coldstart-recon-001|2026-02-24|OK
 engram v2 overhaul + compact encoding.
