@@ -1,6 +1,6 @@
-# buffer:ktreesn | active | 2026-03-09T12:00Z | epoch-004
-@now v0.6.0 FULLY PUSHED to kawaisunn/ktreesn main (93ccd6f). All 3 files: psm1 + psd1 + README. 9 exported functions + 5 aliases. 4 bugs fixed, 3 features added, full help docs.
-@left git pull on BIGSPIDER + Intrusion. Run stage_ktreesn.ps1 -Verify. Update $PROFILE (remove old Get-Ktreesn, add Import-Module). Delete NVIDIA stray folder. ksnlabs local master:main push still pending from prior session.
-@next Test v0.6.0 with real GIS dirs. Verify -DirectoryOnly, -IncludeHash passthrough, per-dir MaxFilesConsole. Run full build pipeline. Test Import-DirectoryMap round-trip (export → import → diff). Test KtreesnBridge.cs with new function count (9 exported + timport alias).
-@blk Ksnlabs local master:main push still pending. Profile in Claude project still stale (old Get-Ktreesn function). ocritd merge conflicts may still exist.
-@owner opus46-desktop-2026-03-09-v060-push
+# buffer:ktreesn | active | 2026-03-09T12:10Z | epoch-004
+@now v0.6.0 FULLY PUSHED to kawaisunn/ktreesn main (93ccd6f). All 3 files synced. 9 exported functions, 5 aliases. Full handoff written.
+@left git pull on BIGSPIDER + Intrusion. Run stage_ktreesn.ps1 -Verify. Update $PROFILE (Import-Module). Delete NVIDIA folder. ksnlabs local master:main push pending. Verify .md export backtick escaping on Windows.
+@next Test v0.6.0 with real GIS dirs. Verify -DirectoryOnly, -IncludeHash passthrough, per-dir MaxFilesConsole. Run full build pipeline. Test Import-DirectoryMap round-trip. Test KtreesnBridge.cs with 9 functions + timport.
+@blk Ksnlabs local master:main push pending (auth dialog). Profile in Claude project stale (L075). ocritd merge conflicts may exist.
+@owner opus46-web+desktop-2026-03-09-v060-debug
