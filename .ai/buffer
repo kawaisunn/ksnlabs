@@ -1,20 +1,23 @@
-# buffer v3.5.0 | opus46_web_ktreesn-v061 | 2026-03-09T13:15Z | epoch-003
+# buffer v3.6.0 | opus46_web_ktreesn-v061-final | 2026-03-09T13:30Z | epoch-003
 # GLOBAL SUMMARY. Per-project state in .ai/projects/{project}/buffer.
 
-@now ALL REPOS SYNCED. ktreesn v0.6.1 (83bb9a0), ksnlabs (0b58c33), ocritd (3da5bf6). BIGSPIDER local up to date on all three. Git identity configured (kawaisunn/kawaisunn@gmail.com).
-@why v0.6.1 fixes compound ext detection for dotted filenames, removes vestigial -Files, adds [symlink] tag for files, adds -PassThru and Get-KtreesnVersion.
-@left AggDB Excel to Rebecca. aggdb spec audit rows 39-84. Test v0.6.1 with real GIS dirs. Build pipeline.
-@next Test v0.6.1 real dirs. Run full doksn build pipeline. Continue aggdb spec audit.
+@now ALL REPOS SYNCED AND CLEAN. ktreesn v0.6.1 (83bb9a0), ksnlabs (this), ocritd (3da5bf6). BIGSPIDER local up to date. Git identity configured. Full handoff written.
+@why v0.6.1 fixes compound ext detection for dotted filenames, removes vestigial -Files, adds [symlink] tag, -PassThru, Get-KtreesnVersion(tver). All accumulated git debt cleared.
+@left Test v0.6.1 real GIS dirs. Build pipeline (stage_ktreesn -Verify → BUILD_ALL). KtreesnBridge.cs may need update for 10 funcs. AggDB Excel to Rebecca. aggdb spec audit rows 39-84.
+@next Test v0.6.1. Build pipeline. aggdb spec audit.
 @urg none.
-@blk Sophos(3389 only)
+@blk Sophos(3389 only).
 
 # PROJECTS: aggdb ocritd cait keywrds ktreesn engram-dev _infra _default
 
+%opus46_web_ktreesn-v061-final|2026-03-09|OK
+v0.6.1 fully pushed 83bb9a0. ALL repos synced. Full handoff: SESSION_HANDOFF_ktreesn_v061_final.md
+
 %opus46_web_ktreesn-v061|2026-03-09|OK
-v0.6.1 fully pushed 83bb9a0. All repos synced. Handoff: SESSION_HANDOFF_ktreesn_v061_debug.md
+Mid-session. Handoff: SESSION_HANDOFF_ktreesn_v061_debug.md
 
 %opus46_web+desktop_ktreesn-v060|2026-03-09|OK
-v0.6.0 pushed 93ccd6f. 4 bugs, 3 features, full help. Handoff: SESSION_HANDOFF_ktreesn_v060_debug.md
+v0.6.0 pushed 93ccd6f. Handoff: SESSION_HANDOFF_ktreesn_v060_debug.md
 
 %opus46_web_ktreesn-doksn-integration|2026-03-09|OK
 Build kit scripts + C# integration. Handoff: SESSION_HANDOFF_ktreesn_doksn_integration.md

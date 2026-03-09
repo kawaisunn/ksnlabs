@@ -1,6 +1,6 @@
-# buffer:ktreesn | active | 2026-03-09T13:15Z | epoch-005
-@now v0.6.1 FULLY PUSHED (83bb9a0). ALL REPOS SYNCED — ktreesn, ksnlabs, ocritd all up to date on GitHub and BIGSPIDER local. 10 exported functions, 6 aliases. Git identity configured.
-@left Test v0.6.1 with real GIS dirs (dotted filenames, -PassThru, tver, symlink tag). Verify KtreesnBridge.cs handles 10 functions. Run full build pipeline.
-@next Test with real data. Run stage_ktreesn.ps1 -Verify. dotnet build + test launcher.
+# buffer:ktreesn | active | 2026-03-09T13:30Z | epoch-005
+@now v0.6.1 FULLY PUSHED (83bb9a0). ALL REPOS SYNCED AND CLEAN. 10 exported functions, 6 aliases. Git identity configured on BIGSPIDER. No outstanding git debt anywhere.
+@left Test v0.6.1 with real GIS dirs (dotted filenames, -PassThru, tver, symlink tag). Verify KtreesnBridge.cs handles 10 functions. Run full build pipeline (stage_ktreesn -Verify → BUILD_ALL).
+@next Test with real data. Build pipeline. Verify C# integration.
 @blk none.
-@owner opus46-web-2026-03-09-v061-debug
+@owner opus46-web-2026-03-09-v061-final
