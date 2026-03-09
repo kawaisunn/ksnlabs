@@ -1,17 +1,17 @@
-# buffer v3.4.0 | opus46_web_ktreesn-v061 | 2026-03-09T13:00Z | epoch-003
+# buffer v3.5.0 | opus46_web_ktreesn-v061 | 2026-03-09T13:15Z | epoch-003
 # GLOBAL SUMMARY. Per-project state in .ai/projects/{project}/buffer.
 
-@now Ktreesn v0.6.1 FULLY PUSHED to GitHub (83bb9a0). All 3 files synced. 10 exported functions, 6 aliases. BIGSPIDER local synced.
+@now ALL REPOS SYNCED. ktreesn v0.6.1 (83bb9a0), ksnlabs (0b58c33), ocritd (3da5bf6). BIGSPIDER local up to date on all three. Git identity configured (kawaisunn/kawaisunn@gmail.com).
 @why v0.6.1 fixes compound ext detection for dotted filenames, removes vestigial -Files, adds [symlink] tag for files, adds -PassThru and Get-KtreesnVersion.
-@left ksnlabs master:main push. $PROFILE update (Import-Module). ocritd merge conflicts. Intrusion git pull. AggDB Excel to Rebecca.
-@next Test v0.6.1 real dirs. Build pipeline. aggdb spec audit rows 39-84. git config set on BIGSPIDER (done: kawaisunn/kawaisunn@gmail.com).
-@urg none immediate.
-@blk ksnlabs push(auth dialog);Sophos(3389 only);Profile stale(L075);ocritd conflicts
+@left AggDB Excel to Rebecca. aggdb spec audit rows 39-84. Test v0.6.1 with real GIS dirs. Build pipeline.
+@next Test v0.6.1 real dirs. Run full doksn build pipeline. Continue aggdb spec audit.
+@urg none.
+@blk Sophos(3389 only)
 
 # PROJECTS: aggdb ocritd cait keywrds ktreesn engram-dev _infra _default
 
 %opus46_web_ktreesn-v061|2026-03-09|OK
-v0.6.1 fully pushed 83bb9a0. 5 bugs, 3 features. Handoff: SESSION_HANDOFF_ktreesn_v061_debug.md
+v0.6.1 fully pushed 83bb9a0. All repos synced. Handoff: SESSION_HANDOFF_ktreesn_v061_debug.md
 
 %opus46_web+desktop_ktreesn-v060|2026-03-09|OK
 v0.6.0 pushed 93ccd6f. 4 bugs, 3 features, full help. Handoff: SESSION_HANDOFF_ktreesn_v060_debug.md

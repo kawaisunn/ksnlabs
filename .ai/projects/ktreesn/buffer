@@ -1,6 +1,6 @@
-# buffer:ktreesn | active | 2026-03-09T13:00Z | epoch-005
-@now v0.6.1 FULLY PUSHED to kawaisunn/ktreesn main (83bb9a0). All 3 files synced. 10 exported functions, 6 aliases. BIGSPIDER local synced. Git identity configured (kawaisunn/kawaisunn@gmail.com).
-@left ksnlabs master:main push. Update $PROFILE (Import-Module). Intrusion git pull. Test dotted filenames, -PassThru, tver, symlink tag. Verify KtreesnBridge.cs handles 10 functions.
-@next Test v0.6.1 with real GIS dirs. Run full build pipeline. Run stage_ktreesn.ps1 -Verify.
-@blk ksnlabs local master:main pending (auth dialog). Profile in Claude project stale (L075). ocritd merge conflicts may exist.
+# buffer:ktreesn | active | 2026-03-09T13:15Z | epoch-005
+@now v0.6.1 FULLY PUSHED (83bb9a0). ALL REPOS SYNCED — ktreesn, ksnlabs, ocritd all up to date on GitHub and BIGSPIDER local. 10 exported functions, 6 aliases. Git identity configured.
+@left Test v0.6.1 with real GIS dirs (dotted filenames, -PassThru, tver, symlink tag). Verify KtreesnBridge.cs handles 10 functions. Run full build pipeline.
+@next Test with real data. Run stage_ktreesn.ps1 -Verify. dotnet build + test launcher.
+@blk none.
 @owner opus46-web-2026-03-09-v061-debug
