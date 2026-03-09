@@ -1,6 +1,6 @@
-# buffer:ktreesn | active | 2026-03-09T20:00Z | epoch-003
-@now v0.5.0 on GitHub (kawaisunn/ktreesn, private). ProjectUri fixed. C# integration committed to ocritd main (3da5bf6). KtreesnBridge.cs + KtreesnModels.cs + MainForm changes. Two new buttons: Check Status + Dir Summary. stage_ktreesn.ps1 written and pushed to ksnlabs/doksn-build-kit/scripts/.
-@left Next: git pull on BIGSPIDER for both ocritd and ksnlabs. Run stage_ktreesn.ps1 -Verify. dotnet build + test the WinForms launcher with real data. Fix $PROFILE (remove old Get-Ktreesn, add Import-Module). Clone to Intrusion. Delete NVIDIA stray folder.
-@next Test Check Status button with real input dir + workspace. Fix any JSON deserialization issues that surface. Run full build pipeline (stage_all_deps → verify_build_env → stage_ktreesn → BUILD_ALL). Push pending ocritd merge conflicts.
-@blk ocritd local may have merge conflicts from prior sessions. DC write_file/read_file unreliable on BIGSPIDER (use GitHub API or cmd). Profile in Claude project is stale.
-@owner opus46-web-2026-03-09-integration
+# buffer:ktreesn | active | 2026-03-09T11:40Z | epoch-004
+@now v0.6.0 code complete. Manifest + README pushed to kawaisunn/ktreesn (commits bbc074b, 2e69734). Psm1 too large for web API push — file downloaded for local push. 4 bugs fixed, 3 features added, full help docs on all functions.
+@left Push Ktreesn.psm1 to kawaisunn/ktreesn main from Claude Desktop or local git. Then git pull on BIGSPIDER + Intrusion. Run stage_ktreesn.ps1 -Verify. Update $PROFILE (remove old Get-Ktreesn, add Import-Module). Delete NVIDIA stray folder. Also: ksnlabs local push still pending (master:main).
+@next Test v0.6.0 with real GIS dirs. Verify -DirectoryOnly, -IncludeHash passthrough, per-dir MaxFilesConsole. Run full build pipeline. Test Import-DirectoryMap round-trip (export → import → diff). Test KtreesnBridge.cs with new function count (9 exported + timport alias).
+@blk Psm1 push requires local git or Claude Desktop with DC. Ksnlabs local master:main push still pending from prior session. Profile in Claude project still stale. ocritd merge conflicts may still exist.
+@owner opus46-web-2026-03-09-v060
