@@ -1,6 +1,6 @@
-# buffer:ktreesn | active | 2026-03-09T11:40Z | epoch-004
-@now v0.6.0 code complete. Manifest + README pushed to kawaisunn/ktreesn (commits bbc074b, 2e69734). Psm1 too large for web API push — file downloaded for local push. 4 bugs fixed, 3 features added, full help docs on all functions.
-@left Push Ktreesn.psm1 to kawaisunn/ktreesn main from Claude Desktop or local git. Then git pull on BIGSPIDER + Intrusion. Run stage_ktreesn.ps1 -Verify. Update $PROFILE (remove old Get-Ktreesn, add Import-Module). Delete NVIDIA stray folder. Also: ksnlabs local push still pending (master:main).
+# buffer:ktreesn | active | 2026-03-09T12:00Z | epoch-004
+@now v0.6.0 FULLY PUSHED to kawaisunn/ktreesn main (93ccd6f). All 3 files: psm1 + psd1 + README. 9 exported functions + 5 aliases. 4 bugs fixed, 3 features added, full help docs.
+@left git pull on BIGSPIDER + Intrusion. Run stage_ktreesn.ps1 -Verify. Update $PROFILE (remove old Get-Ktreesn, add Import-Module). Delete NVIDIA stray folder. ksnlabs local master:main push still pending from prior session.
 @next Test v0.6.0 with real GIS dirs. Verify -DirectoryOnly, -IncludeHash passthrough, per-dir MaxFilesConsole. Run full build pipeline. Test Import-DirectoryMap round-trip (export → import → diff). Test KtreesnBridge.cs with new function count (9 exported + timport alias).
-@blk Psm1 push requires local git or Claude Desktop with DC. Ksnlabs local master:main push still pending from prior session. Profile in Claude project still stale. ocritd merge conflicts may still exist.
-@owner opus46-web-2026-03-09-v060
+@blk Ksnlabs local master:main push still pending. Profile in Claude project still stale (old Get-Ktreesn function). ocritd merge conflicts may still exist.
+@owner opus46-desktop-2026-03-09-v060-push
