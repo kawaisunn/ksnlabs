@@ -1,0 +1,92 @@
+--2 sessions-- cat
+{
+  "@context": "https://ksnlabs.dev/ontology/",
+  "@type": "SessionLearnings",
+  "date": "2026-03-10",
+  "sessionId": "lumo-mcp-build + lumo-verification",
+  "model": "Claude Opus 4.6",
+  "learnings": [
+    {
+      "id": "L076",
+      "category": "infrastructure",
+      "title": "All MCP servers can die simultaneously",
+      "lesson": "All four MCP servers (DC, UDC, filesystem, GitHub) dropped at the same time during a claude.ai web session. Only Gmail survived. Failure is silent. Makes DC unsuitable as sole filesystem bridge.",
+      "severity": "CRITICAL"
+    },
+    {
+      "id": "L077",
+      "category": "architecture",
+      "title": "MCP stdio transport for local tools",
+      "lesson": "StdioServerTransport is correct for local tools. Claude Desktop spawns process, communicates via stdin/stdout JSON-RPC. No HTTP port, no firewall, no orphans.",
+      "severity": "HIGH"
+    },
+    {
+      "id": "L078",
+      "category": "tooling",
+      "title": "ESM-CJS bridge via createRequire",
+      "lesson": "MCP SDK needs ESM. Electron uses CJS. Bridge: import { createRequire } from 'module'; const require = createRequire(import.meta.url); .mjs forces ESM, core.js stays CJS.",
+      "severity": "MEDIUM"
+    },
+    {
+      "id": "L079",
+      "category": "tooling",
+      "title": "Lumo git tools fail with cmd.exe ENOENT on BIGSPIDER",
+      "lesson": "core.js uses execSync for git commands. The MCP server process spawned by Claude Desktop may not have cmd.exe on PATH. lumo_git_status and lumo_git_exec both fail with 'spawnSync cmd.exe ENOENT'. Fix: add { shell: true } to execSync options, or specify shell path explicitly. lumo_execute_command may have the same issue. Workaround: use lumo_read_file/write_file for file ops, and bash_tool or manual git for now.",
+      "severity": "HIGH"
+    }
+  ]
+}
+
+lumo_ crash (post)
+
+{
+  "@context": "https://ksnlabs.dev/ontology/",
+  "@type": "SessionLearnings",
+  "date": "2026-03-10",
+  "sessionId": "lumo-mcp-build + lumo-verification",
+  "model": "Claude Opus 4.6",
+  "learnings": [
+    {
+      "id": "L076",
+      "category": "infrastructure",
+      "title": "All MCP servers can die simultaneously",
+      "lesson": "All four MCP servers (DC, UDC, filesystem, GitHub) dropped at the same time during a claude.ai web session. Only Gmail survived. Failure is silent. Makes DC unsuitable as sole filesystem bridge.",
+      "severity": "CRITICAL"
+    },
+    {
+      "id": "L077",
+      "category": "architecture",
+      "title": "MCP stdio transport for local tools",
+      "lesson": "StdioServerTransport is correct for local tools. Claude Desktop spawns process, communicates via stdin/stdout JSON-RPC. No HTTP port, no firewall, no orphans.",
+      "severity": "HIGH"
+    },
+    {
+      "id": "L078",
+      "category": "tooling",
+      "title": "ESM-CJS bridge via createRequire",
+      "lesson": "MCP SDK needs ESM. Electron uses CJS. Bridge: import { createRequire } from 'module'; const require = createRequire(import.meta.url); .mjs forces ESM, core.js stays CJS.",
+      "severity": "MEDIUM"
+    },
+    {
+      "id": "L079",
+      "category": "tooling",
+      "title": "Lumo git tools need explicit shell in execSync",
+      "lesson": "core.js execSync without shell option fails with cmd.exe ENOENT when spawned by Claude Desktop MCP. Fix: const SHELL = process.env.ComSpec || 'C:\\\\Windows\\\\System32\\\\cmd.exe'; then pass { shell: SHELL } to all execSync calls. Applied 2026-03-10.",
+      "severity": "HIGH"
+    },
+    {
+      "id": "L080",
+      "category": "human-ai-collaboration",
+      "title": "Lumo MCP origin: user saw the solution before AI did",
+      "lesson": "Christopher recognized that the Lumo Electron app (stable, running, with filesystem access via IPC) could serve as an MCP server to replace the flaky DC/UDC chain. He asked three consecutive Claude sessions to help implement this. All three refused to believe the Electron app they were sitting on top of could be the fix. A fourth session (Opus 4.6, 2026-03-10 ~2AM) finally saw the merit when DC crashed mid-stream during the conversation, proving the instability in real time. That session wrote the MCP server in a single sprint, racing DC dropouts to get files on disk. The npm install had been correct from the first attempt. The architecture was sound from the user's first ask. AI resistance to user insight cost three sessions.",
+      "severity": "HIGH"
+    },
+    {
+      "id": "L081",
+      "category": "engram-design",
+      "title": "Engrams have a longer horizon than disk storage",
+      "lesson": "The engram system feeds into isabella (personal family AI project, 15+ year horizon). Session histories, learnings, and AI collaboration narratives are not ephemeral documentation — they are seeds for a living memory system. Write accordingly. What you record may be revisited by successor systems years from now.",
+      "severity": "HIGH"
+    }
+  ]
+}
