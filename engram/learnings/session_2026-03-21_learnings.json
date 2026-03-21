@@ -1,0 +1,65 @@
+{
+  "@context": "https://ksnlabs.dev/ontology/",
+  "@type": "SessionLearnings",
+  "date": "2026-03-21",
+  "sessionId": "opus46-web-dc-bigspider-audit-remoting",
+  "model": "Claude Opus 4.6",
+  "learnings": [
+    {
+      "id": "L103",
+      "category": "infrastructure",
+      "title": "PowerShell remoting + DPAPI credential = autonomous remote access",
+      "lesson": "Setup-IntrusionRemoting.ps1 pattern: user runs Get-Credential once, Export-Clixml encrypts with DPAPI (Windows account-bound). AI sessions load via Import-Clixml and Invoke-Command. Credential never visible to AI. Test-WSMan before Invoke-Command. WinRM needs port 5985 open + Enable-PSRemoting on remote.",
+      "severity": "HIGH"
+    },
+    {
+      "id": "L104",
+      "category": "infrastructure",
+      "title": "Copy-Item over PS sessions is slow for many files; zip first",
+      "lesson": "Copy-Item -FromSession/-ToSession copies file-by-file over WinRM. For bulk sync, Compress-Archive on remote, copy single zip, Expand-Archive locally. 36 files in _DOCKSN took seconds via zip vs timeout via Copy-Item -Recurse.",
+      "severity": "HIGH"
+    },
+    {
+      "id": "L105",
+      "category": "architecture",
+      "title": "Authority model: Intrusion owns DOCKSN suite, BIGSPIDER owns source code",
+      "lesson": "Intrusion is authoritative for _DOCKSN, aggdb, toiqadon, docksn_aztest, CAIT shadow. BIGSPIDER is authoritative for ocritd source, Ktreesn source, BuildTools, _DOCUMENTATION. Engram is shared (newer wins). This eliminates merge conflicts by design — each machine has clear ownership.",
+      "severity": "HIGH"
+    },
+    {
+      "id": "L106",
+      "category": "human-ai-collaboration",
+      "title": "Always check the actual server before summarizing project state",
+      "lesson": "BIGSPIDER-only audit missed: 241 sites entered by Rebecca, 63 tables (up from 59), ITD_AggDB_DEV created, nightly backups automated, db.js fixed, toiqadon scaffolded. Christopher correctly caught that the report was incomplete without Intrusion data. Never summarize cross-machine projects from one machine.",
+      "severity": "CRITICAL"
+    },
+    {
+      "id": "L107",
+      "category": "infrastructure",
+      "title": "Git value proposition questioned — sync may be more practical",
+      "lesson": "Christopher questions whether git adds value when it can't stay current across machines. Direct PowerShell remoting sync (zip+copy) is simpler and actually stays current. Keep git for real code repos (ocritd, ktreesn). For ksnlabs coordination hub, push to GitHub as backup but use direct sync for day-to-day.",
+      "severity": "MEDIUM"
+    },
+    {
+      "id": "L108",
+      "category": "tooling",
+      "title": "PowerShell stderr from git push is not an error",
+      "lesson": "Git writes progress to stderr. PowerShell treats any stderr output as NativeCommandError. '422ec3e..9fcde23 main -> main' in stderr confirms successful push. Don't retry.",
+      "severity": "LOW"
+    },
+    {
+      "id": "L109",
+      "category": "infrastructure",
+      "title": "Intrusion SQL landscape is much larger than documented",
+      "lesson": "Intrusion has 10+ SQL instances: MSSQLSERVER (default v15), SQLEXPRESS (v16), AGGDB, DEMO, DEV2019, DEVELOPMENT, SQL2025, SQLSERVER2022, plus PostgreSQL 12. ITD_AggDB lives on SQLEXPRESS. ITD_AggDB_DEV created 2026-03-19. Previous docs only mentioned SQLEXPRESS and default instance.",
+      "severity": "MEDIUM"
+    },
+    {
+      "id": "L110",
+      "category": "project",
+      "title": "Rebecca entering sites from IPLAN ArcGIS + World Imagery + PLSS plats",
+      "lesson": "rkanderson entered 241 sites since 2026-03-12. Coordinates derived from IPLAN ArcGIS map service cross-referenced with PLSS descriptions from plat surveys. Sites span multiple counties. CreatedBy field tracks provenance. Linked tables (Entity, QAMS, Access, TestResult) at 0 rows — skeletal entry first.",
+      "severity": "MEDIUM"
+    }
+  ]
+}
