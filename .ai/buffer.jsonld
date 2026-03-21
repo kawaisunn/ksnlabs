@@ -1,35 +1,43 @@
 {
   "@context": "https://ksnlabs.dev/memory/buffer/v1",
   "@type": "BufferMemory",
-  "version": "1.0.16",
-  "lastUpdated": "2026-03-15T17:30:00Z",
-  "updatedBy": "opus46-claude-web-bigspider-integration",
+  "version": "1.0.17",
+  "lastUpdated": "2026-03-21T22:00:00Z",
+  "updatedBy": "opus46-claude-web-bigspider-audit",
   "epoch": "epoch-003",
   "immediateContext": {
-    "whatWeWereWorkingOn": "DOCKSN integration: wired real SQL Server connection through ToiQa, fixed instance name, wrote db.js module with msnodesqlv8/BCP support, patched server and frontend, confirmed AD domain igs2.idahogeology.org.",
-    "whereWeLeftOff": "Deploy-ToiQaServer.ps1 on Intrusion NOT YET RUN. All code on disk waiting for server restart.",
+    "whatWeWereWorkingOn": "Full project audit across BIGSPIDER, GitHub, and Intrusion (live via WinRM). Established PowerShell remoting. Synced workspaces bidirectionally. Delivered grant status report. Reconciled git.",
+    "whereWeLeftOff": "All machines surveyed. Startup script ready. Sync done. Handoff written.",
     "whatComesNext": [
-      "0. RUN Deploy-ToiQaServer.ps1 on Intrusion (FIRST ACTION)",
-      "1. Spin up ITD_AggDB dev copy",
-      "2. Full backup schedule for ITD_AggDB",
-      "3. ktreesn dupe benchmarks R4 (worker_threads)",
+      "0. RUN C:\\dev\\scripts\\Start-Session.ps1 — present to user before any actions",
+      "1. Fix Sync-Workspaces.ps1 parse error",
+      "2. Clarify linked table workflow (Entity/QAMS/Access at 0 rows — expected?)",
+      "3. Determine scope of C:\\dev\\Docksn_Full_Run.zip on Intrusion",
       "4. keywrds thesaurus -> tag rules",
       "5. Metadata writeback",
       "6. ktreesn dir monitoring",
-      "7. ktreesn exploded doc reconstruction",
-      "8. Doksn R1 for Rebecca (Monday)",
-      "9. CAIT shadow assist",
-      "10. NGGDPP catalog (May 2026)"
+      "7. CAIT attention (when Christopher ready)",
+      "8. NGGDPP catalog (May 2026)"
     ],
-    "urgency": "HIGH"
+    "urgency": "NORMAL"
+  },
+  "infrastructure": {
+    "intrusionRemoting": "WORKING. Credential: C:\\dev\\.credentials\\intrusion_cred.xml. Invoke-Command to 172.20.222.123 confirmed.",
+    "antiquarian": "OFFLINE (Tailscale resolves, packets drop)",
+    "vpnLatency": "50ms",
+    "authorityModel": "Intrusion=DOCKSN suite. BIGSPIDER=source code+docs. Shared=engram."
   },
   "databaseState": {
-    "server": "localhost",
-    "actualInstances": "MSSQLSERVER (v15), SQLSERVER2022 (v16)",
-    "status": "Code written, needs npm install msnodesqlv8 + restart"
+    "server": "172.20.222.123\\SQLEXPRESS",
+    "databases": ["ITD_AggDB (63 tables, 241 sites, 84 recs)", "ITD_AggDB_DEV (63 tables)"],
+    "backups": "Nightly 2AM Task Scheduler. Confirmed 2026-03-21.",
+    "instances": "MSSQLSERVER (v15 default), SQLEXPRESS (v16), AGGDB, DEMO, DEV2019, DEVELOPMENT, SQL2025, SQLSERVER2022"
   },
-  "domainInfo": {
-    "adDomain": "igs2.idahogeology.org",
-    "dnsFQDN": "IGS-Intrusion.igs.uidaho.edu"
-  }
+  "gitState": {
+    "ksnlabs": "clean, synced with GitHub at 9fcde23",
+    "ocritd": "clean, synced at 407e926",
+    "ktreesn": "clean, synced at 267d1b6",
+    "intrusion_DOCKSN": "local git only, 2 commits, no remote"
+  },
+  "docskn_full_run": "C:\\dev\\Docksn_Full_Run.zip on INTRUSION (2026-03-19, scope TBD)"
 }
