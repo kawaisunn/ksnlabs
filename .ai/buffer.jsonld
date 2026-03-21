@@ -1,1 +1,35 @@
-{"@context":"https://ksnlabs.dev/memory/buffer/v1","@type":"BufferMemory","version":"1.0.13","lastUpdated":"2026-03-10T23:30:00Z","updatedBy":"opus46-web-lumo-verification-001","epoch":"epoch-003","immediateContext":{"whatWeWereWorkingOn":"Lumo MCP server OPERATIONAL. 12 tools verified. Self-referential proof of life completed. ONBOARD.md rewritten for Lumo-aware sessions.","whyItMatters":"DC replaced. Stable MCP bridge with engram-aware tools.","whereWeLeftOff":"Lumo verified. ONBOARD.md updated. Buffer updated. Handoff written.","whatComesNext":["1. Fix git in Lumo (cmd.exe ENOENT in core.js execSync)","2. Refactor main.js to require core.js","3. Add CAIT tools","4. Verify CAIT runtime (CUDA, PyTorch, Phi-3.5)","5. Fix Git PATH on Antiquarian","6. Send Rebecca Excel workbook","7. Push ocritd merge conflicts","8. Commit ksnlabs updates"],"urgency":"LOW — Lumo operational, improvements queued"},"lumoMCPServer":{"status":"OPERATIONAL — verified 2026-03-10","knownIssue":"git_status/git_exec fail with cmd.exe ENOENT","transport":"stdio"},"databaseState":{"server":"IGS-Intrusion\\SQLEXPRESS","database":"ITD_AggDB","tables":63},"repoState":{"ksnlabs":"DIRTY — ONBOARD.md + buffer + handoff","ocritd":"COMMIT+PUSH PENDING","lumo":"operational, not in git"}}
+{
+  "@context": "https://ksnlabs.dev/memory/buffer/v1",
+  "@type": "BufferMemory",
+  "version": "1.0.16",
+  "lastUpdated": "2026-03-15T17:30:00Z",
+  "updatedBy": "opus46-claude-web-bigspider-integration",
+  "epoch": "epoch-003",
+  "immediateContext": {
+    "whatWeWereWorkingOn": "DOCKSN integration: wired real SQL Server connection through ToiQa, fixed instance name, wrote db.js module with msnodesqlv8/BCP support, patched server and frontend, confirmed AD domain igs2.idahogeology.org.",
+    "whereWeLeftOff": "Deploy-ToiQaServer.ps1 on Intrusion NOT YET RUN. All code on disk waiting for server restart.",
+    "whatComesNext": [
+      "0. RUN Deploy-ToiQaServer.ps1 on Intrusion (FIRST ACTION)",
+      "1. Spin up ITD_AggDB dev copy",
+      "2. Full backup schedule for ITD_AggDB",
+      "3. ktreesn dupe benchmarks R4 (worker_threads)",
+      "4. keywrds thesaurus -> tag rules",
+      "5. Metadata writeback",
+      "6. ktreesn dir monitoring",
+      "7. ktreesn exploded doc reconstruction",
+      "8. Doksn R1 for Rebecca (Monday)",
+      "9. CAIT shadow assist",
+      "10. NGGDPP catalog (May 2026)"
+    ],
+    "urgency": "HIGH"
+  },
+  "databaseState": {
+    "server": "localhost",
+    "actualInstances": "MSSQLSERVER (v15), SQLSERVER2022 (v16)",
+    "status": "Code written, needs npm install msnodesqlv8 + restart"
+  },
+  "domainInfo": {
+    "adDomain": "igs2.idahogeology.org",
+    "dnsFQDN": "IGS-Intrusion.igs.uidaho.edu"
+  }
+}
