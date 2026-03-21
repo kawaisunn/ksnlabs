@@ -153,3 +153,32 @@ L073:to:c:opus46_desktop_ktreesn_001
 L074:to:c:opus46_desktop_ktreesn_001
 PowerShell undeclared parameters silently evaluate $null — no error
 $Geo referenced 8 times in Get-Ktreesn but never in param() block. Every if($Geo) silently failed. Geo mode was completely broken with zero indication. Always cross-check $Variable references against param() declarations. PowerShell strict mode doesn't catch this for switch parameters.
+
+L075:ops:c:opus46_desktop_aggdb_frontend_009
+Intrusion deploy: source edits don't reach Intrusion until explicitly copied
+Editing C:\dev\ksnlabs\aggdb\frontend\ on Antiquarian only changes the source. The API on Intrusion serves from C:\dev\aggdb\frontend\ (deployed copy). Must copy updated file via admin share \\IGS-Intrusion\C$\dev\aggdb\frontend\ after every edit. deploy_to_intrusion.ps1 and deploy_update.ps1 handle this; ad hoc edits require manual copy.
+
+L076:fe:c:opus46_desktop_aggdb_frontend_009
+Chrome profile selection for Claude extension: --profile-directory flag
+Claude subscription on ctate.igs.uidaho@gmail.com lives in Chrome "Profile 3". Default profile (kawaisunn@gmail.com) doesn't have it. Launch with: Start-Process chrome.exe -ArgumentList '--profile-directory="Profile 3"','http://url'. Chrome MCP extension blocked on Profile 3 (not installed there); use Windows-MCP:Shell or Scrape instead.
+
+L077:fe:c:opus46_desktop_aggdb_frontend_009
+Light/dark mode toggle: make it visible and labeled for non-technical users
+Original 28px icon-only toggle (sun character ☼) was invisible to Rebecca. Replaced with labeled button showing "☼ Light" / "☽ Dark" with background, border, padding. CSS: .theme-toggle with gap, font-weight 600, 11px font. JS: separate #themeIcon and #themeLabel spans, update both on toggle and on init. localStorage key: aggdb_theme.
+
+
+L086-CORRECTED:nw:!c:opus46-web-antiquarian-vpn-architecture
+CORRECTION: VPN is BIDIRECTIONAL, not a diode
+Previous L086 wrong. Bigspider on AnyConnect gets university IP 129.101.139.84 — it IS a campus node. Proven: Antiquarian pings Bigspider VPN IP at 54ms. TCP ports filtered = Windows Firewall Public profile on VPN adapter, NOT network block. Fix: Set-NetConnectionProfile -InterfaceAlias "Ethernet 2" -NetworkCategory Private, or targeted New-NetFirewallRule. No HTTPS proxy/SBC/DDNS/domain/cert needed. Scraps entire reverse-proxy architecture from prior session.
+
+L089:nw:c:opus46-web-antiquarian-vpn-architecture
+Windows Firewall Public profile blocks all inbound TCP on VPN adapter
+AnyConnect VPN adapter defaults to Public network category. This silently drops all inbound TCP even though routing works (ICMP passes). One command fix: Set-NetConnectionProfile or targeted New-NetFirewallRule scoped to university subnets (172.20.0.0/16, 129.101.0.0/16).
+
+L090:ar:c:opus46-web-antiquarian-vpn-architecture
+Three-machine architecture: Bigspider=train+infer, Intrusion=data+API, Antiquarian=eval+fallback
+Not just CAIT — this is the full dev architecture. Bigspider (A5000 24GB): SFT training, full-precision inference, Lumo. Intrusion (2x CPU): AggDB API, shadow consolidation, corpus preprocessing, production data. Antiquarian (RTX 4000 8GB): QLoRA/quantized eval, fallback inference, daily driver, shadow observer. Graceful degradation: VPN up=full GPU from IGS, VPN down=local quantized model, total isolation=shadow logs accumulate.
+
+L091:pm:e:opus46-web-antiquarian-vpn-architecture
+VPN bidirectional access resolves 15 years of remote access friction
+Christopher's development workflow has been hampered by inability to reach home workstation from IGS. VPN was always the answer — university built it for exactly this. Cisco AnyConnect assigns a university IP, making the home machine a campus node. This is not a workaround or exploit — it is using university infrastructure as designed. Impacts all projects, not just CAIT.

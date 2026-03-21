@@ -1,0 +1,18 @@
+
+L083:to:!c:opus46_web_docksn_002
+CRITICAL: PayAttention has two index.js — root (correct, has fs/write) vs LastGasp subfolder (old, missing fs/write). Previous handoff pointed at wrong file. Always verify endpoint exists AFTER copy+restart, not just check file content.
+
+L084:db:c:opus46_web_docksn_002
+Cross-district SiteID naming is chaotic — 6 districts, 6 conventions. D1=Br0002c (no dash, zero-padded). D2=Id-104-s (dashes). D3=AD-136c IMC (names appended, UPPER). D4/D5/D6 various. Standard: Cc-Ns (title case county, dash, number, suffix). Minimal transform. Don't re-pad numbers.
+
+L085:db:c:opus46_web_docksn_002
+Missing c/s suffix on SiteID means unknown classification — NOT inferrable from folder name. Requires source document review (plats, leases). CAIT should flag, not guess. D3 has 3: Ad-170, El-110, Ow-73.
+
+L086:si:c:opus46_web_docksn_002
+fs/write bootstrap paradox: AI needs write access to deploy write access. Solved by one manual copy+restart. Once fs/write is live, AI is fully self-sufficient via ToiQa API for all file ops on Intrusion. Never hand the user homework again if write is available.
+
+L087:ops:c:opus46_web_docksn_002
+ToiQa server can read AND write to Rift UNC paths directly — no drive mapping needed server-side. \\igs-rift2.igs.uidaho.edu\ITD_data_confidential$ is fully accessible from the Node process on Intrusion.
+
+L088:hc:e:opus46_web_docksn_002
+NO AI MENTIONS at IGS. Christopher is actively managing perception. All user-facing tools, messages to Rebecca, folder names, metadata — zero AI references. CAIT indicator in admin ToiQa is fine (internal tool). Data entry ToiQa needs careful treatment.

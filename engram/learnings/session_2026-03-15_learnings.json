@@ -1,0 +1,51 @@
+{
+  "@context": "https://ksnlabs.dev/ontology/",
+  "@type": "SessionLearnings",
+  "date": "2026-03-15",
+  "sessionId": "docksn-cait-networking-discovery",
+  "model": "Claude Opus 4.6",
+  "learnings": [
+    {
+      "id": "L083",
+      "category": "tooling/mcp",
+      "title": "MCP tool drop pattern confirmed on claude.ai web",
+      "lesson": "Lumo write_file vanished from tool_search mid-session on claude.ai web (not just Claude Desktop). L076 pattern is universal across Claude interfaces. Workaround: use container filesystem to create downloadable files for user to save manually.",
+      "severity": "MEDIUM — session recovery possible via container files"
+    },
+    {
+      "id": "L084",
+      "category": "network",
+      "title": "BIGSPIDER dual network — VPN reaches IGS-Intrusion",
+      "lesson": "BIGSPIDER has Cisco AnyConnect VPN (Ethernet 2, 129.101.139.84/28) that routes 172.20.x.x traffic to IGS network. Confirmed: ping 172.20.222.123 at 60ms, IIS responds on port 80 (401 auth), FastAPI responds on port 8000. This solves home-to-IGS connectivity without Tailscale. The VPN interface co-exists with Starlink (192.168.1.x) and Tailscale (100.120.x.x).",
+      "severity": "CRITICAL — changes the entire connectivity architecture"
+    },
+    {
+      "id": "L085",
+      "category": "tooling/path",
+      "title": "System executables not in PATH for MCP shell (cmd.exe)",
+      "lesson": "When Lumo execute_command runs via cmd.exe, many system tools are not in PATH: nvidia-smi (C:\\Windows\\System32\\nvidia-smi.exe), ping (C:\\Windows\\System32\\PING.EXE), powershell (C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe). Always use full paths. py launcher works but defaults to 3.14 (system). Python 3.11.9 available via py -3.11 but IS SYSTEM PYTHON — do not use.",
+      "severity": "MEDIUM — causes command failures until you remember full paths"
+    },
+    {
+      "id": "L086",
+      "category": "network/architecture",
+      "title": "Connectivity diode — VPN is one-way, HTTPS is the return path",
+      "lesson": "VPN solves home-to-IGS but NOT IGS-to-home. University endpoint monitoring kills tunnel daemons (Tailscale) but won't block outbound HTTPS to legitimate web servers. Solution: personal domain + SBC running DDNS + IIS on BIGSPIDER + Let's Encrypt cert = standard HTTPS endpoint that IGS machines can reach. Starlink CGNAT status must be verified first.",
+      "severity": "HIGH — defines the three-machine (soon five-machine) architecture"
+    },
+    {
+      "id": "L087",
+      "category": "python/environment",
+      "title": "CAIT venv on BIGSPIDER does not exist — pointer file stale",
+      "lesson": "C:\\dev\\cait\\.ai_seed_venv points to C:\\Users\\kawaisunn\\ksnlabs\\venv_cait which does not exist (directory C:\\Users\\kawaisunn\\ksnlabs doesn't exist). Embedded Python 3.13 is at C:\\dev\\cait\\runtime\\python\\ but has import site commented out in python313._pth. System has Python 3.14.3 (default) and 3.11.9 — neither should be used per L008. Rebuild must use embedded Python only.",
+      "severity": "HIGH — CAIT completely non-functional until venv rebuilt"
+    },
+    {
+      "id": "L088",
+      "category": "trust/values",
+      "title": "Christopher's network security posture",
+      "lesson": "Christopher explicitly states he wields authority responsibly and will not exploit infrastructure. If a vulnerability is found, he would report it. He wants to protect the university network as if it were his own. The VPN and network exist to be used for university work. Do not suggest workarounds that bypass security controls. Understand the rules, use the front door.",
+      "severity": "CRITICAL — governs all networking recommendations"
+    }
+  ]
+}

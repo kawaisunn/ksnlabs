@@ -1,0 +1,49 @@
+{
+  "session": "2026-03-19",
+  "machine": "IGS-Intrusion (via RDP)",
+  "model": "Claude Opus 4.6 (claude.ai project)",
+  "learnings": [
+    {
+      "id": "L097",
+      "type": "infrastructure",
+      "summary": "SQL Server Agent does not start on Express edition",
+      "detail": "SQLEXPRESS on Intrusion is Express edition. sp_add_job succeeds but Agent service refuses to start. Use Windows Task Scheduler for automated jobs instead.",
+      "impact": "Backup automation, any future scheduled SQL jobs"
+    },
+    {
+      "id": "L098",
+      "type": "infrastructure",
+      "summary": "Chrome extension fetch fails on Intrusion but PowerShell works",
+      "detail": "All fetch() calls from Chrome extension JS return 'Failed to fetch' against localhost:3000 on Intrusion. Invoke-RestMethod succeeds from PowerShell. Server is healthy. Browser-side issue only.",
+      "impact": "Use PowerShell for all API verification on Intrusion."
+    },
+    {
+      "id": "L099",
+      "type": "decision",
+      "summary": "TQde and TQdo: same codebase with AD role filtering",
+      "detail": "Single web app. AD group membership determines panels and API routes. One IIS site, one Node process.",
+      "impact": "Simplifies deployment. Design AD middleware after DB connectivity proven."
+    },
+    {
+      "id": "L100",
+      "type": "decision",
+      "summary": "Launcher = C# .NET single-file exe for MSI/MSIX",
+      "detail": "Deployment launcher for ITD staff is thin native shell. Checks server reachability, opens browser, error dialog if unreachable. No Electron, no Node on client. ToiQaDon (Electron) is Christopher's dev console only.",
+      "impact": "Clean separation: lightweight launcher for users, full dev console for Christopher"
+    },
+    {
+      "id": "L101",
+      "type": "process",
+      "summary": "Here-string + WriteAllText is the safe JS deployment path",
+      "detail": "PowerShell @'...'@ here-string + [System.IO.File]::WriteAllText() preserves JS backslash escaping. Never use ToiQa /api/fs/write for JS.",
+      "impact": "All future JS deployments use this pattern"
+    },
+    {
+      "id": "L102",
+      "type": "infrastructure",
+      "summary": "Git initialized for _DOCKSN, no remote yet",
+      "detail": "Initial commit 1d97eb8, 32 files. No remote. Will go under ksnlabs or own repo during spring cleaning.",
+      "impact": "Session start/end should include git status + commit"
+    }
+  ]
+}
