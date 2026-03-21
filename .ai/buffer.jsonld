@@ -1,43 +1,57 @@
 {
   "@context": "https://ksnlabs.dev/memory/buffer/v1",
   "@type": "BufferMemory",
-  "version": "1.0.17",
-  "lastUpdated": "2026-03-21T22:00:00Z",
-  "updatedBy": "opus46-claude-web-bigspider-audit",
+  "version": "1.0.19",
+  "lastUpdated": "2026-03-21T20:00:00Z",
+  "updatedBy": "opus46-claude-web-bigspider-session-end",
   "epoch": "epoch-003",
   "immediateContext": {
-    "whatWeWereWorkingOn": "Full project audit across BIGSPIDER, GitHub, and Intrusion (live via WinRM). Established PowerShell remoting. Synced workspaces bidirectionally. Delivered grant status report. Reconciled git.",
-    "whereWeLeftOff": "All machines surveyed. Startup script ready. Sync done. Handoff written.",
+    "whatWeWereWorkingOn": "Session resume: corrected VPN/Tailscale confusion (L111), established TQdon identity and policy (L113), upgraded Lumo core.js v2.0 (pwsh preference). Got sidetracked into TQdon electron-builder setup — deferred.",
+    "whereWeLeftOff": "Handoff written. Lumo v2.0 on disk but not active (needs Claude Desktop restart). TQdon build incomplete (aside). DOCKSN work not started this session.",
     "whatComesNext": [
-      "0. RUN C:\\dev\\scripts\\Start-Session.ps1 — present to user before any actions",
-      "1. Fix Sync-Workspaces.ps1 parse error",
-      "2. Clarify linked table workflow (Entity/QAMS/Access at 0 rows — expected?)",
-      "3. Determine scope of C:\\dev\\Docksn_Full_Run.zip on Intrusion",
-      "4. keywrds thesaurus -> tag rules",
-      "5. Metadata writeback",
-      "6. ktreesn dir monitoring",
-      "7. CAIT attention (when Christopher ready)",
-      "8. NGGDPP catalog (May 2026)"
+      "0. Restart Claude Desktop to activate Lumo v2.0 (pwsh default shell)",
+      "1. Admin elevation: Set-Item WSMan TrustedHosts to add Antiquarian (172.28.196.231)",
+      "2. Fix Start-Session.ps1 — TCP check for Antiquarian, remove Tailscale refs",
+      "3. **DOCKSN FRAMEWORK AND DEV PROGRESS — PRIMARY FOCUS**",
+      "4. Determine scope of Docksn_Full_Run.zip on Intrusion",
+      "5. keywrds thesaurus -> tag rules",
+      "6. Metadata writeback",
+      "7. ktreesn dir monitoring",
+      "8. TQdon electron-builder build (DEFERRED ASIDE)",
+      "9. CAIT attention (when Christopher ready)",
+      "10. NGGDPP catalog (May 2026)"
     ],
-    "urgency": "NORMAL"
+    "urgency": "NORMAL — DOCKSN is the priority, not tooling"
   },
   "infrastructure": {
-    "intrusionRemoting": "WORKING. Credential: C:\\dev\\.credentials\\intrusion_cred.xml. Invoke-Command to 172.20.222.123 confirmed.",
-    "antiquarian": "OFFLINE (Tailscale resolves, packets drop)",
-    "vpnLatency": "50ms",
-    "authorityModel": "Intrusion=DOCKSN suite. BIGSPIDER=source code+docs. Shared=engram."
+    "connectivityModel": "Cisco AnyConnect VPN ONLY. Tailscale deprecated.",
+    "bigspiderToIntrusion": "172.20.222.123 via VPN. ICMP + WinRM working. 54-67ms. Credential: C:\\dev\\.credentials\\intrusion_cred.xml",
+    "bigspiderToAntiquarian": "172.28.196.231 via VPN. ICMP BLOCKED. TCP works (RDP 3389 confirmed ESTABLISHED). WinRM needs TrustedHosts update (admin required). Same AD credential works.",
+    "intrusionToAntiquarian": "LAN, <1ms, all protocols",
+    "antiquarianToBigspider": "129.101.139.84 via VPN. ICMP 54ms. TCP may be filtered by Windows Firewall Public profile (L089).",
+    "credentialNote": "AD credentials identical for Intrusion and Antiquarian. Inherited from UI AD via IGS-Rift (DNS primary) and IGS-Tarn (backup). BIGSPIDER not domain-joined but MACs registered with UI.",
+    "tailscaleStatus": "DEPRECATED. Do not use.",
+    "authorityModel": "Intrusion=DOCKSN suite+aggdb+CAIT shadow. BIGSPIDER=source code+docs+TQdon canonical. Shared=engram (newer wins)."
+  },
+  "toiqadon": {
+    "identity": "C:\\dev\\lumo on BIGSPIDER IS TQdon (7-tab Electron workspace). Directory never renamed from 'lumo'. C:\\dev\\toiqadon on Intrusion is a separate smaller scaffold.",
+    "policy": "Private to Christopher. AI-independent. BIGSPIDER-authoritative. Updates cascade outward. No other users without explicit instruction.",
+    "buildStatus": "electron-builder installed but first build failed (dependency resolution). DEFERRED."
+  },
+  "lumoUpgrade": {
+    "status": "core.js v2.0 + mcp-server.mjs v2.0.0 ON DISK but not active. Needs Claude Desktop restart.",
+    "changes": "pwsh default shell, enriched PATH, shell override param, shell_info diagnostic tool (14 tools total)",
+    "verified": "pwsh 7.5.4 detected and executing commands correctly via node direct test"
   },
   "databaseState": {
     "server": "172.20.222.123\\SQLEXPRESS",
     "databases": ["ITD_AggDB (63 tables, 241 sites, 84 recs)", "ITD_AggDB_DEV (63 tables)"],
-    "backups": "Nightly 2AM Task Scheduler. Confirmed 2026-03-21.",
-    "instances": "MSSQLSERVER (v15 default), SQLEXPRESS (v16), AGGDB, DEMO, DEV2019, DEVELOPMENT, SQL2025, SQLSERVER2022"
+    "backups": "Nightly 2AM Task Scheduler. Confirmed 2026-03-21."
   },
   "gitState": {
-    "ksnlabs": "clean, synced with GitHub at 9fcde23",
-    "ocritd": "clean, synced at 407e926",
-    "ktreesn": "clean, synced at 267d1b6",
-    "intrusion_DOCKSN": "local git only, 2 commits, no remote"
+    "ksnlabs": "DIRTY — new learnings, buffer, handoff not committed",
+    "ocritd": "clean at 407e926",
+    "ktreesn": "clean at 267d1b6"
   },
   "docskn_full_run": "C:\\dev\\Docksn_Full_Run.zip on INTRUSION (2026-03-19, scope TBD)"
 }

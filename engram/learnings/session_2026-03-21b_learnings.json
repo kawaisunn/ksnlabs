@@ -1,0 +1,31 @@
+{
+  "@context": "https://ksnlabs.dev/ontology/",
+  "@type": "SessionLearnings",
+  "date": "2026-03-21",
+  "sessionId": "opus46-claude-web-bigspider-connectivity-and-policy",
+  "model": "Claude Opus 4.6",
+  "machine": "BIGSPIDER (claude.ai web project + Lumo MCP)",
+  "learnings": [
+    {
+      "id": "L111",
+      "category": "network",
+      "title": "VPN is the ONLY connectivity layer — Tailscale deprecated",
+      "lesson": "All three machines (BIGSPIDER, Intrusion, Antiquarian) connect via Cisco AnyConnect VPN. Tailscale is installed on BIGSPIDER but is NOT the connectivity path and should be removed from all scripts and future considerations unless Christopher directs otherwise. Key routes: BIGSPIDER->Intrusion (172.20.222.123) via ICMP+WinRM at 54-67ms. BIGSPIDER->Antiquarian (172.28.196.231) via TCP only — ICMP is blocked by Antiquarian's firewall but RDP (port 3389) works fine (confirmed via Get-NetTCPConnection showing ESTABLISHED session). Previous handoff's 'Antiquarian: OFFLINE' was wrong — it was reachable all along via TCP, just not via ping. All connectivity checks must use Test-NetConnection -Port 3389 for Antiquarian, not Test-Connection (ICMP).",
+      "severity": "CRITICAL — corrects persistent misunderstanding across multiple sessions"
+    },
+    {
+      "id": "L112",
+      "category": "architecture",
+      "title": "Unified knowledge, machine-aware execution",
+      "lesson": "Claude experience across machines should share engram knowledge (learnings, project status, connectivity facts, user preferences) but be context-aware about local capabilities (tools, file authority, hardware, security). NOT a literal clone — each machine has different roles: Intrusion hosts SQL + DOCKSN suite, BIGSPIDER owns source code + has A5000 GPU, Antiquarian is IGS daily driver. Same geologist, different desks, different instruments. Engrams, git, and key state must sync across all three machines.",
+      "severity": "HIGH — foundational design principle for multi-machine AI collaboration"
+    },
+    {
+      "id": "L113",
+      "category": "policy/toiqadon",
+      "title": "ToiQaDon: private, portable, BIGSPIDER-authoritative, AI-independent",
+      "lesson": "ToiQaDon (TQdon) is Christopher's personal development console. Policies: (1) Available locally on all three machines in its current best state. (2) Source of truth for TQdon source code is BIGSPIDER, even if development happens on another machine — updates cascade back to BIGSPIDER first, then outward. (3) Completely independent of Claude, CAIT, Lumo, or any other AI — TQdon must function without any AI running. (4) Only for Christopher — NOT available to other users directly. (5) Extension to other machines or users ONLY with Christopher's explicit instruction. Currently scaffolded on Intrusion only (5 files + tools dir, 2026-03-19). Needs to be pulled to BIGSPIDER to establish it as the canonical home.",
+      "severity": "HIGH — governance policy for a core tool"
+    }
+  ]
+}
