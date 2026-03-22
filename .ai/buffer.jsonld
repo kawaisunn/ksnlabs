@@ -1,63 +1,50 @@
 {
   "@context": "https://ksnlabs.dev/memory/buffer/v1",
   "@type": "BufferMemory",
-  "version": "1.0.25",
-  "lastUpdated": "2026-03-21T20:30:00Z",
+  "version": "1.0.26",
+  "lastUpdated": "2026-03-21T21:00:00Z",
   "updatedBy": "opus46-desktop-bigspider-session-20260321c",
   "epoch": "epoch-003",
   "immediateContext": {
-    "whatWeWereWorkingOn": "Comprehensive state audit. Discovered: Python 3.13.11 runtime has Doksn deps only — NO torch/ML/CAIT/research packages. Rename script exists since Mar 2 but never run. Partial manual rename left both src dirs. No cross-machine sync mechanism. torch not on BIGSPIDER anywhere.",
-    "whereWeLeftOff": "DEFINITIVE STATE AUDIT written to engram. This is the PRIMARY handoff for next session. Research report also written (proven methods, licensing, deployment). Buffer at v1.0.25.",
+    "whatWeWereWorkingOn": "State audit, research, learnings, git cleanup. All done.",
+    "whereWeLeftOff": "Git clean. Learnings L114-L118 written and pushed. DEFINITIVE_STATE_AUDIT.md is the primary handoff for next session. Research report on disk at _DOCKSN.",
     "READ_THIS_FIRST": "C:\\dev\\ksnlabs\\engram\\session-handovers\\2026-03-21c_DEFINITIVE_STATE_AUDIT.md",
     "whatComesNext": [
-      "A. Complete ocritd -> doksn rename (script exists, sequence documented in audit)",
-      "B. Install ML deps into deployable Python (torch+cu124, transformers, datasketch, dateparser, etc.)",
-      "C. Sort out git (commit ksnlabs, push doksn to renamed repo)",
-      "D. Cross-machine deployment via VPN+WinRM",
-      "E. First CAIT inference test (date context classification)"
+      "A. Complete ocritd -> doksn rename (script exists, 13-step sequence in audit doc)",
+      "B. Install ML deps into deployable Python 3.13.11 (torch+cu124, transformers, datasketch, dateparser, etc.)",
+      "C. Cross-machine deployment via VPN+WinRM",
+      "D. First CAIT inference test (date context classification)",
+      "E. First pipeline run on 15 real ITD site folders"
     ],
-    "urgency": "HIGH — Python and rename are blocking everything. Each session that doesn't complete these re-discovers the same gaps."
+    "urgency": "HIGH — Python and rename are blocking everything."
   },
   "pythonRuntime": {
     "location": "C:\\dev\\ocritd\\runtime\\python\\",
     "futureLocation": "C:\\dev\\doksn\\runtime\\python\\",
     "version": "3.13.11",
-    "type": "embeddable amd64",
+    "type": "embeddable amd64, self-contained, NOT on PATH",
     "pip": "26.0",
-    "virtualenv": "20.36.1 (stdlib venv NOT available — embeddable limitation)",
+    "virtualenv": "20.36.1 (use this, NOT stdlib venv — L117)",
     "sqlite": "3.50.4",
-    "installed": "44 packages — Doksn document processing ONLY",
-    "missing": "torch, transformers, accelerate, scikit-learn, datasketch, dateparser, networkx, nltk, bitsandbytes, peft, sentencepiece, safetensors, numpy, scipy",
-    "wheelhouse": "C:\\dev\\ocritd\\wheelhouse\\ — 44 Doksn wheels only, no ML wheels",
-    "rules": "NEVER touch system PATH. Self-contained. Invoke by full path only. One instance for all DOCKSN components."
+    "installed": "44 packages — Doksn document processing ONLY (L116)",
+    "missing": "torch, transformers, accelerate, scikit-learn, datasketch, dateparser, networkx, nltk, bitsandbytes, peft, sentencepiece, safetensors",
+    "rules": "NEVER touch system PATH. Self-contained. Full path only. One instance for all DOCKSN components."
   },
   "rename": {
-    "script": "C:\\dev\\ocritd\\RENAME_TO_DOKSN.ps1 (exists since 2026-03-02, NEVER RUN)",
-    "partialState": "src\\doksn.Launcher exists (7 files) AND src\\OCRITD.Launcher exists (1 file: PythonRuntimeDetector.cs). Both present.",
-    "githubRepo": "kawaisunn/ocritd (needs rename to kawaisunn/doksn)",
-    "sequence": "See section 2 of DEFINITIVE_STATE_AUDIT.md for 13-step execution plan"
-  },
-  "crossMachineSync": {
-    "status": "NO AUTOMATIC SYNC EXISTS. Every sync has been manual.",
-    "winrm": "Working to Intrusion via DPAPI cred at C:\\dev\\.credentials\\intrusion_cred.xml",
-    "syncScript": "Sync-Workspaces.ps1 has parse error. Inline version worked once.",
-    "antiquarian": "Reachable via TCP 3389 only (ICMP blocked)"
-  },
-  "researchCompleted": {
-    "report": "C:\\dev\\_DOCKSN\\docs\\RESEARCH_Proven_Methods_20260321.md",
-    "licensing": "ALL CLEAR — MIT/BSD/Apache/public domain for every recommended library",
-    "deployment": "$0, zero new infrastructure, existing hardware sufficient"
+    "script": "C:\\dev\\ocritd\\RENAME_TO_DOKSN.ps1 (never run — L118)",
+    "partialState": "Both src dirs exist. PythonRuntimeDetector.cs must be copied first.",
+    "sequence": "See DEFINITIVE_STATE_AUDIT.md section 2"
   },
   "infrastructure": {
-    "shellPreference": "pwsh.exe > powershell.exe > cmd.exe — ALWAYS",
-    "gpu": "RTX A5000, 24564 MiB, 24250 MiB free — sitting idle",
+    "shellPreference": "pwsh.exe > powershell.exe > cmd.exe — ALWAYS (L114)",
+    "gpu": "RTX A5000, 24564 MiB free",
     "connectivityModel": "Cisco AnyConnect VPN ONLY. Tailscale deprecated.",
-    "gitAccess": "C:\\Program Files\\Git\\cmd\\git.exe — NOT in MCP PATH, use full path, use cmd shell for git commands"
+    "gitAccess": "C:\\Program Files\\Git\\cmd\\git.exe — NOT in MCP PATH, use full path, use cmd shell"
   },
   "gitState": {
-    "ksnlabs": "DIRTY — buffer v1.0.25, 3 handoffs, research doc uncommitted",
-    "ocritd": "CLEAN at 407e926 — pending rename to doksn",
-    "ktreesn": "clean at 267d1b6"
+    "ksnlabs": "CLEAN at b4d3e67, pushed to origin/main",
+    "ocritd": "CLEAN at 407e926 — pending rename to doksn (L118)",
+    "ktreesn": "CLEAN at 267d1b6"
   },
-  "learningsPending": ["L114: shell preference", "L115: ephemeral DBs", "L116: deployable Python is doc-processing only", "L117: use virtualenv not venv", "L118: rename script never executed"]
+  "learnings": "consolidated_epoch-003 v3.1.0, L001-L118, nextID L119"
 }
