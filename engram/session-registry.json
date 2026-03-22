@@ -225,7 +225,7 @@
       "machine": "HOME",
       "bootProtocol": "auto",
       "handoffWritten": "partial",
-      "focus": "ITD_MaterialSources database — Excel spec to working SQL Server deployment",
+      "focus": "ITD_MaterialSources database â€” Excel spec to working SQL Server deployment",
       "outcome": "SUCCESS",
       "learningsContributed": [],
       "workflowsContributed": [],
@@ -293,7 +293,60 @@
         ".ai/projects/ktreesn/handoffs/2026-03-08_opus46_desktop_ktreesn_001.md"
       ],
       "durationEstimate": "~2 hours",
-      "notes": "First ktreesn project session. Bootstrapped from claude.ai project context (no formal boot protocol — session ran via web interface with MCP tools, not Desktop). Analyzed full Doksn codebase (MainForm.cs, scanner.py, doksn.py, architecture spec) to design integration layer. Git push required bat-file workaround (L072 confirms L068). Concurrent session on bigspider acknowledged — only touched ktreesn project scope + append-only shared resources."
+      "notes": "First ktreesn project session. Bootstrapped from claude.ai project context (no formal boot protocol â€” session ran via web interface with MCP tools, not Desktop). Analyzed full Doksn codebase (MainForm.cs, scanner.py, doksn.py, architecture spec) to design integration layer. Git push required bat-file workaround (L072 confirms L068). Concurrent session on bigspider acknowledged â€” only touched ktreesn project scope + append-only shared resources."
+    }
+      ,
+    {
+      "sessionId": "opus46_web_cait-spec_001",
+      "model": "opus-4.6",
+      "interface": "claude.ai-web",
+      "project": "cait-training",
+      "machine": "IGS-Antiquarian/ctate",
+      "signedIn": "2026-03-13T16:00:00Z",
+      "signedOut": "2026-03-13T18:30:00Z",
+      "bootProtocol": "context-from-memory+filesystem",
+      "handoffWritten": "yes",
+      "focus": "CAIT training system full specification: three-actor model (Opus/Lumo/CAIT), data security model, behavioral modes, curriculum phases, demo model requirements, training engram structure",
+      "outcome": "SUCCESS",
+      "learningsContributed": [],
+      "workflowsContributed": [],
+      "filesCreated": [
+        "C:\\dev\\_DOCKSN\\CAIT_SPEC.json",
+        "C:\\dev\\_DOCKSN\\Sync-EngramToIntrusion.ps1",
+        "C:\\dev\\ksnlabs\\.ai\\projects\\cait-training\\buffer",
+        "C:\\dev\\ksnlabs\\.ai\\projects\\cait-training\\curriculum\\manifest.json",
+        "C:\\dev\\ksnlabs\\.ai\\SESSION_HANDOFF_cait_spec_antiquarian.md",
+        "C:\\dev\\ksnlabs\\engram\\session-handovers\\2026-03-13_cait_spec_antiquarian.md"
+      ],
+      "durationEstimate": "~2.5 hours",
+      "notes": "Designed complete CAIT training architecture. ITD bi-weekly demo deadline ~2026-03-17 drove priorities. Surveyed N:\\ and X:\\ drives — found 100+ years of IMIR annual reports as training corpus. Surveyed Lumo Electron dashboard (7-tab workspace). Discovered PayAttention exists on Bigspider only. Established ITD data security model: all private, 4 authorized persons, CAIT trains but never shares. Three behavioral modes for filesystem access. Disk image strategy for model checkpoints."
+    },
+    {
+      "sessionId": "opus46-web-antiq-phase0-001",
+      "date": "2026-03-14",
+      "model": "claude-opus-4.6",
+      "interface": "claude.ai-web",
+      "project": "cait-training",
+      "machine": "IGS-Antiquarian/ctate",
+      "signedIn": "2026-03-14T18:00:00Z",
+      "bootProtocol": "context-from-memory+filesystem",
+      "handoffWritten": "yes",
+      "focus": "Phase 0 Q&A corpus (201 pairs), real SFT training script, Lumo onboard doc, progress dashboard, training_framework.py audit (critical: not training), block-sealing addendum, SESSION_CATALOG.md, hidden audit folder on Intrusion",
+      "outcome": "SUCCESS",
+      "learningsContributed": [],
+      "workflowsContributed": [],
+      "filesCreated": [
+        "C:\\dev\\cait\\training_data\\phase0_identity_corpus.jsonl",
+        "C:\\dev\\cait\\sft_train.py",
+        "C:\\dev\\cait\\Get-CaitProgress.ps1",
+        "C:\\dev\\ksnlabs\\.ai\\projects\\cait-training\\CAIT_TRAINING_ONBOARD.md",
+        "C:\\dev\\ksnlabs\\engram\\session-handovers\\2026-03-14_opus46-web-antiquarian-cait-phase0.md",
+        "C:\\dev\\ksnlabs\\engram\\session-handovers\\2026-03-14_ADDENDUM_block-sealing-problem.md",
+        "C:\\dev\\ksnlabs\\engram\\SESSION_CATALOG.md",
+        "\\\\IGS-Intrusion\\C$\\Users\\ctate\\Desktop\\.cait_audit\\CAIT_Training_Assessment.md"
+      ],
+      "durationEstimate": "~3 hours",
+      "notes": "Major session. CRITICAL FINDING: training_framework.py runs inference, not training — no optimizer, no loss, no backprop. Wrote real SFT script (sft_train.py) using LoRA+SFTTrainer. Phase 0 corpus researched from live IGS website + local AggDB reference docs. Introduced SESSION_CATALOG.md as human-scannable session index. Addendum on cognitive load management and block-sealing problem. Action logging vs shadow observation resolved: action logging first (80/20 rule). Added trl+datasets to requirements.txt."
     }
   ]
 }
