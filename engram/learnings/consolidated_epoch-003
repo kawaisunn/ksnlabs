@@ -1,4 +1,4 @@
-# learnings epoch-003 v3.4.0 | 2026-03-22T16:30Z | nextID:L127
+# learnings epoch-003 v3.5.0 | 2026-03-22T22:00Z | nextID:L131
 # carried forward from epoch-002 (L001-L023) + epoch-003 additions
 # format: ENCODING.md v1.0 compact (primary). JSON audit at .audit suffix
 # NOTE: L025-L048 exist on IGS only (not yet synced). L078-L082 gap (session files, not consolidated).
@@ -237,3 +237,19 @@ After `claude login` on a machine, the Agent SDK in TQDon picks up Max subscript
 L126:to:!c:opus46-desktop-bigspider-session-20260322e
 Claude Code auth login: pipe auth code via echo into claude auth login in cmd shell
 `claude auth login` opens browser URL, browser shows auth code, terminal can't receive paste in MCP context. Fix: `echo AUTH_CODE | claude auth login` in cmd shell. `claude auth status` returns JSON with loggedIn/authMethod/email. setup-token requires raw mode (fails in MCP). Auth stored internally by Claude Code binary, not in files on disk.
+
+L127:bd:!c:opus46-code-bigspider-session-20260322f
+ocritd→doksn rename EXECUTED — C:\dev\doksn is now the canonical path
+Directory renamed, engine verified on embedded Python 3.13.11, all imports pass. Relative ._pth paths survived the move (portable). GitHub remote still kawaisunn/ocritd — rename on GitHub pending (auto-redirects). Old OCRITD.Launcher dir deleted, PythonRuntimeDetector.cs moved to doksn.Launcher. obj/ build artifacts purged (regenerate on next build).
+
+L128:bd:c:opus46-code-bigspider-session-20260322f
+cp1252 Unicode traps exist in multiple engine files — grep for emoji before shipping
+doksn.py had ✓/✗ (fixed), plugins/manager.py had ✓/✗/✅/❌ (fixed), PythonRuntimeDetector.cs had ✅/❌ (still present but runs in WinForms not console). Pattern: any file that prints to console on Windows MUST use ASCII-safe symbols. Grep for U+2713/U+2717/U+2705/U+274C before release.
+
+L129:ar:c:opus46-code-bigspider-session-20260322f
+Agent SDK bypassPermissions + claude_code preset gives TQDon full Claude Code capability
+options: { tools: { type: 'preset', preset: 'claude_code' }, permissionMode: 'bypassPermissions', allowDangerouslySkipPermissions: true }. Personal-use only. Never deploy externally.
+
+L130:ar:c:opus46-code-bigspider-session-20260322f
+Webview-to-filesystem bridge pattern: 3-layer IPC through Electron
+webview preload (window.lumoTools) → ipcRenderer.sendToHost → renderer bridge (ipc-message listener) → main process IPC handlers. Request/response matched by ID with 30s timeout. Enables any web app loaded in webview to read/write local files and execute commands.

@@ -294,6 +294,63 @@
       ],
       "durationEstimate": "~2 hours",
       "notes": "First ktreesn project session. Bootstrapped from claude.ai project context (no formal boot protocol — session ran via web interface with MCP tools, not Desktop). Analyzed full Doksn codebase (MainForm.cs, scanner.py, doksn.py, architecture spec) to design integration layer. Git push required bat-file workaround (L072 confirms L068). Concurrent session on bigspider acknowledged — only touched ktreesn project scope + append-only shared resources."
+    },
+    {
+      "sessionId": "opus46-desktop-bigspider-20260321c",
+      "date": "2026-03-21",
+      "model": "claude-opus-4.6",
+      "interface": "claude-desktop",
+      "machine": "HOME/BIGSPIDER",
+      "bootProtocol": "context-from-project-files",
+      "handoffWritten": "yes",
+      "focus": "DOCKSN paradigm shift (linear→iterative), architecture v0.2+v0.3, proven methods research, definitive state audit, connectivity/remoting setup",
+      "outcome": "SUCCESS",
+      "learningsContributed": ["L114","L115","L116","L117","L118"],
+      "workflowsContributed": [],
+      "notes": "Marathon session spanning multiple sub-sessions (21a through 21c). Paradigm shift from linear pipeline to iterative multi-pass workspace. Architecture v0.2 written. Research doc on proven methods (MinHash, dateparser, Louvain, etc). Definitive state audit of all components. PowerShell remoting to Intrusion confirmed. Handovers: 2026-03-21_oversight1_paradigm_shift.md, 2026-03-21b_connectivity_tqdon_lumo-v2.md, 2026-03-21_bigspider_audit_remoting.md, 2026-03-21c_DEFINITIVE_STATE_AUDIT.md, 2026-03-21c_research_proven_methods.md"
+    },
+    {
+      "sessionId": "opus46-desktop-bigspider-session-20260322d",
+      "date": "2026-03-22",
+      "model": "claude-opus-4.6",
+      "interface": "claude-desktop",
+      "machine": "HOME/BIGSPIDER",
+      "bootProtocol": "context-from-project-files",
+      "handoffWritten": "yes",
+      "focus": "Python 3.13.11 full 97-package install (4 tiers), Windows shell folder registry fixes",
+      "outcome": "SUCCESS",
+      "learningsContributed": ["L119","L120","L121","L122"],
+      "workflowsContributed": [],
+      "notes": "Installed all 97 packages including torch+cu124 on A5000. CUDA confirmed. pip cache reused torch wheels. Handover: 2026-03-22_session-d_python-complete.md"
+    },
+    {
+      "sessionId": "opus46-desktop-bigspider-session-20260322e",
+      "date": "2026-03-22",
+      "model": "claude-opus-4.6",
+      "interface": "claude-desktop",
+      "machine": "HOME/BIGSPIDER",
+      "bootProtocol": "context-from-project-files",
+      "handoffWritten": "yes",
+      "focus": "TQDon v0.4.0 — Claude Agent SDK integration, auth, steerage, expanded console, first successful pipeline message",
+      "outcome": "SUCCESS",
+      "learningsContributed": ["L123","L124","L125","L126"],
+      "workflowsContributed": [],
+      "notes": "Replaced claude.ai webview with native Agent SDK chat. Auth via subscription (no API key). Steerage button. Expanded console. First message through TQDon→SDK→Claude Code→response confirmed. Handover: 2026-03-22_session-e_tqdon-final.md"
+    },
+    {
+      "sessionId": "opus46-code-bigspider-session-20260322f",
+      "date": "2026-03-22",
+      "model": "claude-opus-4.6",
+      "interface": "claude-code",
+      "machine": "HOME/BIGSPIDER",
+      "bootProtocol": "none",
+      "handoffWritten": "yes",
+      "focus": "ocritd→doksn rename execution, TQDon stdout/kill/filesystem bridge, cp1252 fixes, engine verification on ITD data",
+      "outcome": "SUCCESS",
+      "learningsContributed": ["L127","L128","L129","L130"],
+      "workflowsContributed": [],
+      "durationEstimate": "~3 hours",
+      "notes": "First Claude Code session on BIGSPIDER. Ran from C:\\Users\\kawaisunn. Executed the directory rename C:\\dev\\ocritd→C:\\dev\\doksn. Fixed all MUST FIX code references. Verified engine on embedded Python. Built TQDon stdout popout, kill-all, full Claude Code preset, Lumo webview filesystem bridge. Verified doksn on 14 real ITD files. Located all 48-hour documentation. Handover: 2026-03-22_session-f_rename-complete.md"
     }
   ]
 }

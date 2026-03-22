@@ -3,50 +3,66 @@
   "@type": "DigitalDocument",
   "name": "engram-buffer",
   "description": "Working memory buffer — latest session state",
-  "dateModified": "2026-03-06T09:00:00-07:00",
+  "dateModified": "2026-03-22T22:00:00-07:00",
   "version": "epoch-003",
 
   "active_session": {
     "status": "HANDOVER_COMPLETE",
-    "model": "claude-opus-4.6-desktop",
-    "machine": "IGS/ctate.IGS2 → deployed IGS-Intrusion",
-    "session_id": "aggdb-frontend-deploy-intrusion",
-    "handover": "session-handovers/2026-03-06_aggdb-frontend-deploy-intrusion.json"
+    "model": "claude-opus-4.6-code",
+    "machine": "HOME/BIGSPIDER",
+    "session_id": "opus46-code-bigspider-session-20260322f",
+    "handover": "session-handovers/2026-03-22_session-f_rename-complete.md"
   },
 
   "current_task": {
-    "name": "AggDB Frontend + API — DEPLOYED",
-    "status": "PRODUCTION (1-week exception)",
-    "url": "http://IGS-Intrusion/aggdb",
-    "stack": "FastAPI + single-file HTML + IIS reverse proxy + scheduled task",
-    "next_priority": "Doksn development — Christopher's primary focus now"
+    "name": "ocritd→doksn rename COMPLETE + TQDon v0.4 enhancements",
+    "status": "RENAME DONE, TQDon UNTESTED",
+    "doksn_path": "C:\\dev\\doksn",
+    "lumo_path": "C:\\dev\\lumo",
+    "next_priority": "Cross-machine sync, first pipeline run on ITD data, test TQDon changes"
   },
 
   "recent_accomplishments": [
-    "Built FastAPI backend aligned to real v2 schema (63 tables, link table pattern)",
-    "Fixed all link table PK inserts with next_id() helper (8 locations)",
-    "Built v4 frontend with Browse/Data Entry/New Site tabs + welcome modal",
-    "Deployed to IGS-Intrusion: embedded Python 3.12, IIS ARR reverse proxy, scheduled task",
-    "Secured with Windows Authentication — Rebecca and Christopher confirmed working",
-    "Added LU_RecType.IsVisible, hid SWPPP (RecTypeID 6)",
-    "Created Quick Start Guide and Cleanup Guide docs",
-    "Identified and documented Sonnet's schema hallucinations (QAMSCert, wrong column names)"
+    "RENAMED C:\\dev\\ocritd → C:\\dev\\doksn — engine verified on embedded Python 3.13.11",
+    "Fixed all code-breaking ocritd references (plugins, PythonRuntimeDetector, requirements)",
+    "Deleted orphaned src/OCRITD.Launcher/, moved PythonRuntimeDetector.cs to doksn.Launcher",
+    "Purged stale obj/ build artifacts",
+    "Fixed cp1252 Unicode in plugins/manager.py (same ✓/✗ issue as doksn.py)",
+    "TQDon: stdout popout window, kill-all button, full Claude Code preset, Lumo filesystem bridge",
+    "TQDon: sidebar file browser, terminal panel, MCP server loading from .config/mcp-servers.json",
+    "Doksn engine verification: 14/14 ITD files processed (AD-62s Blacks Creek)",
+    "Located all documentation from last 48 hours across _DOCKSN, ksnlabs, session-handovers"
   ],
 
   "key_pending": {
     "immediate": [
-      "Rebecca: begin data entry via http://IGS-Intrusion/aggdb",
-      "Clean up stale C:\\dev\\aggdb\\python314\\ on Intrusion (634MB botched copy)",
-      "Git push: ksnlabs (new aggdb/api + frontend), ocritd (merge conflicts resolved)"
+      "Git commit+push doksn rename changes from C:\\dev\\doksn",
+      "GitHub repo rename: kawaisunn/ocritd → kawaisunn/doksn (Settings → Repository name)",
+      "Test-launch TQDon with all changes (stdout window, kill all, sidebar, webview bridge)",
+      "Update SHOULD FIX docs (9 .md files still say ocritd)"
     ],
     "thisWeek": [
-      "Doksn development (Christopher's primary focus)",
-      "Policy exception cleanup by ~2026-03-13"
+      "Cross-machine sync: fix Sync-Workspaces.ps1, deploy to Intrusion+Antiquarian",
+      "First pipeline run: 15 real ITD site folders → demonstrate usable output",
+      "CAIT inference test: Phi-3.5 on A5000",
+      "Weekly ITD meetings starting"
     ],
-    "pipeline_vision": "Doc → Doksn OCR → AggDB pre-fill → Rebecca review → commit → J:\\ + SiteEntrySource → cait observes"
+    "pipeline_vision": "Doc → ktreesn catalog → doksn OCR → keywrds → datectx → dedup → reconstruct → cait review → prefill → AggDB"
   },
 
   "infrastructure": {
+    "doksn": {
+      "path": "C:\\dev\\doksn",
+      "python": "C:\\dev\\doksn\\dist\\python_runtime_amd64\\ (3.13.11 embeddable)",
+      "runtime_alt": "C:\\dev\\doksn\\runtime\\python\\ (full 97-package install)",
+      "remote": "kawaisunn/ocritd (RENAME PENDING)"
+    },
+    "tqdon": {
+      "path": "C:\\dev\\lumo",
+      "version": "0.4.0",
+      "sdk": "@anthropic-ai/claude-agent-sdk@0.2.81",
+      "remote": "kawaisunn/lumo (private)"
+    },
     "intrusion": {
       "api": "C:\\dev\\aggdb\\api\\ (FastAPI on localhost:8000)",
       "python": "C:\\dev\\aggdb\\python\\ (3.12.8 embeddable)",
@@ -54,9 +70,6 @@
       "task": "AggDB_API (SYSTEM, AtStartup)",
       "auth": "Windows Auth (anon disabled)"
     },
-    "workstation": {
-      "devCopy": "C:\\dev\\ksnlabs\\aggdb\\{api,frontend}\\",
-      "deployScripts": "fix_deploy_intrusion.ps1 (use this one)"
-    }
+    "connectivity": "Cisco AnyConnect VPN bidirectional — BIGSPIDER, Intrusion, Antiquarian"
   }
 }

@@ -30,7 +30,7 @@
       "id": "epoch-003",
       "name": "compact-operational",
       "range": "2026-02-25 to present",
-      "description": "Compact encoding primary. Engram is operational infrastructure, not the project itself. Focus shifts to IGS deliverables: aggdb, OCRITD, ITD workflows.",
+      "description": "Compact encoding primary. Engram is operational infrastructure, not the project itself. Focus shifts to IGS deliverables: aggdb, doksn (renamed from OCRITD 2026-03-22), ITD workflows.",
       "ksnlabsCommit": "pending"
     }
   ],
@@ -65,7 +65,7 @@
         "location": "C:\\dev\\ksnlabs\\engram\\learnings\\consolidated_epoch-003",
         "format": "compact (ENCODING.md v1.0)",
         "audit": "C:\\dev\\ksnlabs\\engram\\learnings\\consolidated_epoch-002.json.audit",
-        "nextId": "L025"
+        "nextId": "L131"
       },
       "workflows": {
         "file": "2026-02-16_session-and-git-workflows.json",
