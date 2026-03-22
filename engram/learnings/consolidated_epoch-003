@@ -1,6 +1,7 @@
-# learnings epoch-003 v3.0.0 | 2026-02-25T08:30Z | nextID:L024
+# learnings epoch-003 v3.1.0 | 2026-03-21T20:30Z | nextID:L119
 # carried forward from epoch-002 (L001-L023) + epoch-003 additions
 # format: ENCODING.md v1.0 compact (primary). JSON audit at .audit suffix
+# NOTE: L025-L048 exist on IGS only (not yet synced). L078-L082 gap (session files, not consolidated).
 
 L001:to:c:orientation-survival-001
 MCP Shell swallows git stdout
@@ -32,7 +33,7 @@ C:\dev\keywrd\(standalone,nltk/sklearn) vs C:\dev\ocritd\engine\keywards\(integr
 
 L008:bd:c:multiple
 System Python != embedded Python
-System:3.14+3.11. Embedded:3.13.11@C:\dev\ocritd\runtime\python\. ALWAYS use embedded.
+System:3.14+3.11. Embedded:3.13.11@C:\dev\ocritd\runtime\python\. ALWAYS use embedded. NEVER touch sys/user PATH.
 
 L009:or:!c:cf:ocritd-stabilize-001+opus46-coldstart-recon-001
 CRITICAL: bash_tool is Linux — check UDC/Windows-MCP first
@@ -93,92 +94,111 @@ Named pandering,subterfuge,misdirection. Respond with transparency through actio
 L023:or:pm:opus46-coldstart-recon-001
 Cold-start sessions WILL misidentify environment
 Without boot protocol: bash>Linux>"web-only". Confirmed Sonnet+Opus. User redirects manually.
-  
-L024:cc:p:opus46-web-epoch003-001  
-Concurrency protocol deployed - project isolation via .ai/projects/{name}/buffer  
-Multiple AI sessions work simultaneously. Each claims a project. Shared resources append-only. Lock files in .ai/active/. Read .ai/ONBOARD.md + .ai/CONCURRENCY.md. 
+
+L024:cc:p:opus46-web-epoch003-001
+Concurrency protocol deployed - project isolation via .ai/projects/{name}/buffer
+Multiple AI sessions work simultaneously. Each claims a project. Shared resources append-only. Lock files in .ai/active/. Read .ai/ONBOARD.md + .ai/CONCURRENCY.md.
 
 L049:si:!c:desktop-recovery-20260225
 CRITICAL: Claude Desktop config is the fragile link in continuity
-Engram survives crashes (L046 validated). MCP server config does NOT. claude_desktop_config.json in C:\Users\kawaisunn\AppData\Roaming\Claude\ destroyed on reinstall. Backup to C:\dev\ AND git. Machine-specific (HOME vs IGS). Recovery pattern: claude_desktop_config_{MACHINE}_RECOVERY.json in C:\dev\ and git bootstrap/.
+Engram survives crashes (L046 validated). MCP server config does NOT. claude_desktop_config.json in C:\Users\kawaisunn\AppData\Roaming\Claude\ destroyed on reinstall. Backup to C:\dev\ AND git. Machine-specific (HOME vs IGS).
 
 L050:si:c:desktop-recovery-20260225
 HOME and IGS engrams diverged during epoch-003
-HOME has compact encoding + concurrency (L001-L024). IGS has L025-L048 + 52-table schema + SQL work + buffer.jsonld with full schema detail. Neither fully synced. Git reflects HOME state only. IGS content must be pulled to git when access restored. Priority: consolidated_epoch-003.json (L025-L048) and buffer.jsonld (52-table schema).
+HOME has compact encoding + concurrency (L001-L024). IGS has L025-L048 + 52-table schema + SQL work. Neither fully synced. Git reflects HOME state only.
 
 L063:db:!c:sonnet46-web-aggdb-frontend-entry-001
 Never infer or add data without an explicit source
-No counties, districts, material types, statuses unless passed in by user. Each addition without audit trail is a liability. Caused two full workbook rebuilds.
+No counties, districts, material types, statuses unless passed in by user. Each addition without audit trail is a liability.
 
 L064:db:c:sonnet46-web-aggdb-frontend-entry-001
 ITD_AggDB SiteID suffix: -c = commercial, -s = state
-NOT material type. Material type is a separate attribute. Previous sessions inferred material from suffix — wrong.
+NOT material type. Material type is a separate attribute.
 
 L065:wf:p:sonnet46-web-aggdb-frontend-entry-001
 Excel COUNTIF cross-sheet FK validation pattern
-Commit?=YES/NO/HOLD + RecID Valid?=COUNTIF(Rec!$A:$A) → MATCHED/NOT FOUND IN Rec. Reusable offline FK staging pattern for any table pair before DB import.
+Commit?=YES/NO/HOLD + RecID Valid?=COUNTIF(Rec!$A:$A). Reusable offline FK staging.
 
 L066:wf:c:sonnet46-web-aggdb-frontend-entry-001
 Standalone HTML + FastAPI with live/offline banner is viable IGS dev frontend
-Auto-detects API on load, falls back to mock silently, commit wires to POST /api/commit. No install, no framework, works from file://.
+Auto-detects API on load, falls back to mock silently.
 
 L067:ops:!c:opus46-desktop-aggdb-frontend-deploy-001
-Git not in system PATH on Antiquarian breaks Git LFS, Chrome extension, MCP shell git operations
-Git installed at C:\Program Files\Git\bin\git.exe but not in PATH. Full-path git commands work for log/branch/add but LFS filter subprocess fails on commit/status because LFS invokes bare 'git'. Fix: add Git dirs to system PATH (admin required). Likely root cause of Chrome extension blocking same day.
+Git not in system PATH on Antiquarian breaks Git LFS, Chrome extension, MCP shell git
+Fix: add Git dirs to system PATH (admin required).
 
 L068:ops:c:opus46-desktop-aggdb-frontend-deploy-001
 MCP Shell on Antiquarian: use bat files with set GIT= variable for git commands
-cmd.exe set PATH= does not reliably persist in MCP-spawned shells. Workaround: write .bat files using set GIT="full\path" and %GIT% variable for all git commands. Git Bash is another option but harder to invoke from MCP. Start-Process pwsh -File works for non-git PowerShell scripts.
+cmd.exe set PATH= does not reliably persist in MCP-spawned shells.
 
 L069:db:c:opus46-desktop-aggdb-frontend-deploy-001
 RecLink table is the visibility gate for Recs in Browse
-Browse detail only shows Recs joined through RecLink.RelateID = SiteID. Orphan recs (no RecLink or linked to nonexistent SiteID) are invisible. Added All Records view (GET /api/recs) to catch orphans.
+Orphan recs invisible. Added All Records view to catch orphans.
 
 L070:ops:c:opus46-desktop-aggdb-frontend-deploy-001
 Deploy to Intrusion pattern: copy via admin share, restart API
-Admin share \\IGS-Intrusion\C$\dev\aggdb\ works from Antiquarian. Copy main.py, models.py, frontend HTML. Intrusion db.py uses localhost\SQLEXPRESS. API restart needed for backend changes, Ctrl+F5 only for frontend. deploy_update.ps1 automates the copy.
+deploy_update.ps1 automates the copy.
 
 L071:fe:c:opus46-desktop-aggdb-frontend-deploy-001
 Browser JavaScript cannot access client OS username
-No browser API for Windows auth username. Health check returns server-side user only (always ctate). Solution: one-time localStorage prompt with alias resolution (rka->rkanderson, cat->ctate). Blocked username list prevents generic entries.
+Solution: one-time localStorage prompt with alias resolution.
 
 L072:to:c:opus46_desktop_ktreesn_001
-MCP Shell git PATH issue confirmed on IGS2 (ctate.IGS2) — same as Antiquarian L068
-cmd.exe bat file with full-path "C:\Program Files\Git\cmd\git.exe" is the reliable pattern. env:PATH assignment in PowerShell MCP shell does not persist. HOME must be set for GCM credential resolution. Pattern: write bat > redirect to log > read log.
+MCP Shell git PATH issue confirmed on IGS2 — same as L068
+cmd.exe bat file with full-path git.exe is the reliable pattern.
 
 L073:to:c:opus46_desktop_ktreesn_001
 [IO.Path]::GetExtension only returns last segment — compound extensions silently fail
-.shp.xml returns .xml not .shp.xml. .aux.xml returns .xml not .aux.xml. Must split on dots and check last-two-segment compound. Affects any sidecar-detection logic for GIS files. Built Get-CompoundExtension helper in Ktreesn module.
+Must split on dots and check last-two-segment compound for GIS sidecars.
 
 L074:to:c:opus46_desktop_ktreesn_001
 PowerShell undeclared parameters silently evaluate $null — no error
-$Geo referenced 8 times in Get-Ktreesn but never in param() block. Every if($Geo) silently failed. Geo mode was completely broken with zero indication. Always cross-check $Variable references against param() declarations. PowerShell strict mode doesn't catch this for switch parameters.
+Always cross-check $Variable references against param() declarations.
 
 L075:ops:c:opus46_desktop_aggdb_frontend_009
 Intrusion deploy: source edits don't reach Intrusion until explicitly copied
-Editing C:\dev\ksnlabs\aggdb\frontend\ on Antiquarian only changes the source. The API on Intrusion serves from C:\dev\aggdb\frontend\ (deployed copy). Must copy updated file via admin share \\IGS-Intrusion\C$\dev\aggdb\frontend\ after every edit. deploy_to_intrusion.ps1 and deploy_update.ps1 handle this; ad hoc edits require manual copy.
+deploy_to_intrusion.ps1 and deploy_update.ps1 handle this.
 
 L076:fe:c:opus46_desktop_aggdb_frontend_009
 Chrome profile selection for Claude extension: --profile-directory flag
-Claude subscription on ctate.igs.uidaho@gmail.com lives in Chrome "Profile 3". Default profile (kawaisunn@gmail.com) doesn't have it. Launch with: Start-Process chrome.exe -ArgumentList '--profile-directory="Profile 3"','http://url'. Chrome MCP extension blocked on Profile 3 (not installed there); use Windows-MCP:Shell or Scrape instead.
+Claude subscription on ctate.igs.uidaho@gmail.com lives in Chrome "Profile 3".
 
 L077:fe:c:opus46_desktop_aggdb_frontend_009
 Light/dark mode toggle: make it visible and labeled for non-technical users
-Original 28px icon-only toggle (sun character ☼) was invisible to Rebecca. Replaced with labeled button showing "☼ Light" / "☽ Dark" with background, border, padding. CSS: .theme-toggle with gap, font-weight 600, 11px font. JS: separate #themeIcon and #themeLabel spans, update both on toggle and on init. localStorage key: aggdb_theme.
-
+Original icon-only toggle was invisible to Rebecca.
 
 L086-CORRECTED:nw:!c:opus46-web-antiquarian-vpn-architecture
 CORRECTION: VPN is BIDIRECTIONAL, not a diode
-Previous L086 wrong. Bigspider on AnyConnect gets university IP 129.101.139.84 — it IS a campus node. Proven: Antiquarian pings Bigspider VPN IP at 54ms. TCP ports filtered = Windows Firewall Public profile on VPN adapter, NOT network block. Fix: Set-NetConnectionProfile -InterfaceAlias "Ethernet 2" -NetworkCategory Private, or targeted New-NetFirewallRule. No HTTPS proxy/SBC/DDNS/domain/cert needed. Scraps entire reverse-proxy architecture from prior session.
+Bigspider on AnyConnect gets university IP 129.101.139.84. TCP ports filtered = Windows Firewall Public profile, NOT network block.
 
 L089:nw:c:opus46-web-antiquarian-vpn-architecture
 Windows Firewall Public profile blocks all inbound TCP on VPN adapter
-AnyConnect VPN adapter defaults to Public network category. This silently drops all inbound TCP even though routing works (ICMP passes). One command fix: Set-NetConnectionProfile or targeted New-NetFirewallRule scoped to university subnets (172.20.0.0/16, 129.101.0.0/16).
+One command fix: Set-NetConnectionProfile or targeted New-NetFirewallRule.
 
 L090:ar:c:opus46-web-antiquarian-vpn-architecture
 Three-machine architecture: Bigspider=train+infer, Intrusion=data+API, Antiquarian=eval+fallback
-Not just CAIT — this is the full dev architecture. Bigspider (A5000 24GB): SFT training, full-precision inference, Lumo. Intrusion (2x CPU): AggDB API, shadow consolidation, corpus preprocessing, production data. Antiquarian (RTX 4000 8GB): QLoRA/quantized eval, fallback inference, daily driver, shadow observer. Graceful degradation: VPN up=full GPU from IGS, VPN down=local quantized model, total isolation=shadow logs accumulate.
+Graceful degradation model documented.
 
 L091:pm:e:opus46-web-antiquarian-vpn-architecture
 VPN bidirectional access resolves 15 years of remote access friction
-Christopher's development workflow has been hampered by inability to reach home workstation from IGS. VPN was always the answer — university built it for exactly this. Cisco AnyConnect assigns a university IP, making the home machine a campus node. This is not a workaround or exploit — it is using university infrastructure as designed. Impacts all projects, not just CAIT.
+University built VPN for exactly this. Not a workaround.
+
+L114:to:!c:opus46-desktop-bigspider-20260321c
+Shell preference policy: pwsh.exe > powershell.exe > cmd.exe ALWAYS
+All scripts, tool calls, Lumo shell detection must follow this order. pwsh is PowerShell 7 (modern, cross-platform features). powershell.exe is Windows PowerShell 5.1 (legacy). cmd.exe is last resort. Christopher's explicit directive.
+
+L115:ar:c:opus46-desktop-bigspider-20260321c
+Ephemeral databases for processing jobs — SQLite per directory
+Temporary SQLite (or similar lightweight Windows-native DB) may be created and destroyed per processing job. Working memory for cross-file queries during active processing. Per-file JSON remains the persistent long-term store. Two-tier: ephemeral DB = working memory, JSON = long-term. Christopher's explicit revision to ARCHITECTURE_v0.2.
+
+L116:bd:!c:opus46-desktop-bigspider-20260321c
+Deployable Python 3.13.11 has Doksn doc-processing deps ONLY — no ML/CAIT/research stack
+C:\dev\ocritd\runtime\python\ has 44 packages (ocrmypdf, pdfplumber, pillow, etc). torch, transformers, scikit-learn, datasketch, dateparser, networkx, nltk are ALL MISSING. Wheelhouse has Doksn wheels only. Every session since epoch-003 assumed torch was available — it is not. Must install via pip with --extra-index-url for cu124.
+
+L117:bd:c:opus46-desktop-bigspider-20260321c
+stdlib venv unavailable in embeddable Python — use virtualenv package
+Python 3.13.11 embeddable distribution does not include the venv module. `import venv` fails. virtualenv 20.36.1 IS installed and works (Scripts\virtualenv.exe). All venv creation must use virtualenv, not stdlib venv.
+
+L118:pj:!c:opus46-desktop-bigspider-20260321c
+RENAME_TO_DOKSN.ps1 exists since 2026-03-02 but was NEVER EXECUTED
+Comprehensive rename script (224 lines, -DryRun mode) covers C# source, namespaces, UI strings, env vars, paths, build artifacts, folder rename, BUILD.ps1 refs, docs. But: partial manual rename already happened — both src\doksn.Launcher (7 files) and src\OCRITD.Launcher (1 file: PythonRuntimeDetector.cs) exist simultaneously. PythonRuntimeDetector.cs must be copied to doksn.Launcher before running the script. GitHub repo still named kawaisunn/ocritd. Local dir still C:\dev\ocritd. 13-step execution plan in DEFINITIVE_STATE_AUDIT.md.

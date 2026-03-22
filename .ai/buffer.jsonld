@@ -1,57 +1,63 @@
 {
   "@context": "https://ksnlabs.dev/memory/buffer/v1",
   "@type": "BufferMemory",
-  "version": "1.0.19",
-  "lastUpdated": "2026-03-21T20:00:00Z",
-  "updatedBy": "opus46-claude-web-bigspider-session-end",
+  "version": "1.0.25",
+  "lastUpdated": "2026-03-21T20:30:00Z",
+  "updatedBy": "opus46-desktop-bigspider-session-20260321c",
   "epoch": "epoch-003",
   "immediateContext": {
-    "whatWeWereWorkingOn": "Session resume: corrected VPN/Tailscale confusion (L111), established TQdon identity and policy (L113), upgraded Lumo core.js v2.0 (pwsh preference). Got sidetracked into TQdon electron-builder setup — deferred.",
-    "whereWeLeftOff": "Handoff written. Lumo v2.0 on disk but not active (needs Claude Desktop restart). TQdon build incomplete (aside). DOCKSN work not started this session.",
+    "whatWeWereWorkingOn": "Comprehensive state audit. Discovered: Python 3.13.11 runtime has Doksn deps only — NO torch/ML/CAIT/research packages. Rename script exists since Mar 2 but never run. Partial manual rename left both src dirs. No cross-machine sync mechanism. torch not on BIGSPIDER anywhere.",
+    "whereWeLeftOff": "DEFINITIVE STATE AUDIT written to engram. This is the PRIMARY handoff for next session. Research report also written (proven methods, licensing, deployment). Buffer at v1.0.25.",
+    "READ_THIS_FIRST": "C:\\dev\\ksnlabs\\engram\\session-handovers\\2026-03-21c_DEFINITIVE_STATE_AUDIT.md",
     "whatComesNext": [
-      "0. Restart Claude Desktop to activate Lumo v2.0 (pwsh default shell)",
-      "1. Admin elevation: Set-Item WSMan TrustedHosts to add Antiquarian (172.28.196.231)",
-      "2. Fix Start-Session.ps1 — TCP check for Antiquarian, remove Tailscale refs",
-      "3. **DOCKSN FRAMEWORK AND DEV PROGRESS — PRIMARY FOCUS**",
-      "4. Determine scope of Docksn_Full_Run.zip on Intrusion",
-      "5. keywrds thesaurus -> tag rules",
-      "6. Metadata writeback",
-      "7. ktreesn dir monitoring",
-      "8. TQdon electron-builder build (DEFERRED ASIDE)",
-      "9. CAIT attention (when Christopher ready)",
-      "10. NGGDPP catalog (May 2026)"
+      "A. Complete ocritd -> doksn rename (script exists, sequence documented in audit)",
+      "B. Install ML deps into deployable Python (torch+cu124, transformers, datasketch, dateparser, etc.)",
+      "C. Sort out git (commit ksnlabs, push doksn to renamed repo)",
+      "D. Cross-machine deployment via VPN+WinRM",
+      "E. First CAIT inference test (date context classification)"
     ],
-    "urgency": "NORMAL — DOCKSN is the priority, not tooling"
+    "urgency": "HIGH — Python and rename are blocking everything. Each session that doesn't complete these re-discovers the same gaps."
+  },
+  "pythonRuntime": {
+    "location": "C:\\dev\\ocritd\\runtime\\python\\",
+    "futureLocation": "C:\\dev\\doksn\\runtime\\python\\",
+    "version": "3.13.11",
+    "type": "embeddable amd64",
+    "pip": "26.0",
+    "virtualenv": "20.36.1 (stdlib venv NOT available — embeddable limitation)",
+    "sqlite": "3.50.4",
+    "installed": "44 packages — Doksn document processing ONLY",
+    "missing": "torch, transformers, accelerate, scikit-learn, datasketch, dateparser, networkx, nltk, bitsandbytes, peft, sentencepiece, safetensors, numpy, scipy",
+    "wheelhouse": "C:\\dev\\ocritd\\wheelhouse\\ — 44 Doksn wheels only, no ML wheels",
+    "rules": "NEVER touch system PATH. Self-contained. Invoke by full path only. One instance for all DOCKSN components."
+  },
+  "rename": {
+    "script": "C:\\dev\\ocritd\\RENAME_TO_DOKSN.ps1 (exists since 2026-03-02, NEVER RUN)",
+    "partialState": "src\\doksn.Launcher exists (7 files) AND src\\OCRITD.Launcher exists (1 file: PythonRuntimeDetector.cs). Both present.",
+    "githubRepo": "kawaisunn/ocritd (needs rename to kawaisunn/doksn)",
+    "sequence": "See section 2 of DEFINITIVE_STATE_AUDIT.md for 13-step execution plan"
+  },
+  "crossMachineSync": {
+    "status": "NO AUTOMATIC SYNC EXISTS. Every sync has been manual.",
+    "winrm": "Working to Intrusion via DPAPI cred at C:\\dev\\.credentials\\intrusion_cred.xml",
+    "syncScript": "Sync-Workspaces.ps1 has parse error. Inline version worked once.",
+    "antiquarian": "Reachable via TCP 3389 only (ICMP blocked)"
+  },
+  "researchCompleted": {
+    "report": "C:\\dev\\_DOCKSN\\docs\\RESEARCH_Proven_Methods_20260321.md",
+    "licensing": "ALL CLEAR — MIT/BSD/Apache/public domain for every recommended library",
+    "deployment": "$0, zero new infrastructure, existing hardware sufficient"
   },
   "infrastructure": {
+    "shellPreference": "pwsh.exe > powershell.exe > cmd.exe — ALWAYS",
+    "gpu": "RTX A5000, 24564 MiB, 24250 MiB free — sitting idle",
     "connectivityModel": "Cisco AnyConnect VPN ONLY. Tailscale deprecated.",
-    "bigspiderToIntrusion": "172.20.222.123 via VPN. ICMP + WinRM working. 54-67ms. Credential: C:\\dev\\.credentials\\intrusion_cred.xml",
-    "bigspiderToAntiquarian": "172.28.196.231 via VPN. ICMP BLOCKED. TCP works (RDP 3389 confirmed ESTABLISHED). WinRM needs TrustedHosts update (admin required). Same AD credential works.",
-    "intrusionToAntiquarian": "LAN, <1ms, all protocols",
-    "antiquarianToBigspider": "129.101.139.84 via VPN. ICMP 54ms. TCP may be filtered by Windows Firewall Public profile (L089).",
-    "credentialNote": "AD credentials identical for Intrusion and Antiquarian. Inherited from UI AD via IGS-Rift (DNS primary) and IGS-Tarn (backup). BIGSPIDER not domain-joined but MACs registered with UI.",
-    "tailscaleStatus": "DEPRECATED. Do not use.",
-    "authorityModel": "Intrusion=DOCKSN suite+aggdb+CAIT shadow. BIGSPIDER=source code+docs+TQdon canonical. Shared=engram (newer wins)."
-  },
-  "toiqadon": {
-    "identity": "C:\\dev\\lumo on BIGSPIDER IS TQdon (7-tab Electron workspace). Directory never renamed from 'lumo'. C:\\dev\\toiqadon on Intrusion is a separate smaller scaffold.",
-    "policy": "Private to Christopher. AI-independent. BIGSPIDER-authoritative. Updates cascade outward. No other users without explicit instruction.",
-    "buildStatus": "electron-builder installed but first build failed (dependency resolution). DEFERRED."
-  },
-  "lumoUpgrade": {
-    "status": "core.js v2.0 + mcp-server.mjs v2.0.0 ON DISK but not active. Needs Claude Desktop restart.",
-    "changes": "pwsh default shell, enriched PATH, shell override param, shell_info diagnostic tool (14 tools total)",
-    "verified": "pwsh 7.5.4 detected and executing commands correctly via node direct test"
-  },
-  "databaseState": {
-    "server": "172.20.222.123\\SQLEXPRESS",
-    "databases": ["ITD_AggDB (63 tables, 241 sites, 84 recs)", "ITD_AggDB_DEV (63 tables)"],
-    "backups": "Nightly 2AM Task Scheduler. Confirmed 2026-03-21."
+    "gitAccess": "C:\\Program Files\\Git\\cmd\\git.exe — NOT in MCP PATH, use full path, use cmd shell for git commands"
   },
   "gitState": {
-    "ksnlabs": "DIRTY — new learnings, buffer, handoff not committed",
-    "ocritd": "clean at 407e926",
+    "ksnlabs": "DIRTY — buffer v1.0.25, 3 handoffs, research doc uncommitted",
+    "ocritd": "CLEAN at 407e926 — pending rename to doksn",
     "ktreesn": "clean at 267d1b6"
   },
-  "docskn_full_run": "C:\\dev\\Docksn_Full_Run.zip on INTRUSION (2026-03-19, scope TBD)"
+  "learningsPending": ["L114: shell preference", "L115: ephemeral DBs", "L116: deployable Python is doc-processing only", "L117: use virtualenv not venv", "L118: rename script never executed"]
 }
