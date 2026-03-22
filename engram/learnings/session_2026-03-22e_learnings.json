@@ -1,0 +1,55 @@
+{
+  "session": "opus46-desktop-bigspider-session-20260322e",
+  "date": "2026-03-22",
+  "machine": "BIGSPIDER",
+  "learnings": [
+    {
+      "id": "L119",
+      "category": "bd",
+      "importance": "c",
+      "source": "opus46-desktop-bigspider-session-20260322d",
+      "title": "pip HTTP cache preserves torch+cu124 wheels — always check before downloading",
+      "detail": "pip caches .whl files in HTTP cache from prior installs. torch+cu124 (~2.5GB) was fully cached from earlier session. pip install --extra-index-url reuses cache automatically. Check before assuming fresh download needed."
+    },
+    {
+      "id": "L120",
+      "category": "to",
+      "importance": "!c",
+      "source": "opus46-desktop-bigspider-session-20260322d",
+      "title": "Desktop Commander hangs on long ops and System32 binaries",
+      "detail": "DC start_process/execute_command stalls on long-running operations and System32 binaries (robocopy, etc). Prefer Lumo tools for reliability. For large ops, pass command to Christopher's live terminal."
+    },
+    {
+      "id": "L121",
+      "category": "ar",
+      "importance": "!c",
+      "source": "opus46-desktop-bigspider-session-20260322d",
+      "title": "TQDon as primary interface eliminates DC dependency, enables Lumo-only MCP config",
+      "detail": "Building TQDon (C:\\dev\\lumo) as Claude API wrapper replaces Claude Desktop app. Benefits: controlled system prompt, Lumo-only MCP (no DC hangs), kill/launch buttons, expanded console, queue-next-message."
+    },
+    {
+      "id": "L122",
+      "category": "ops",
+      "importance": "c",
+      "source": "opus46-desktop-bigspider-session-20260322d",
+      "title": "Windows shell folder GUIDs for Downloads and Documents",
+      "detail": "Downloads: {374DE290-123F-4565-9164-39C4925E467B} + {7D83EE9B-2244-4E70-B1F5-5393042AF1E4}. Documents: Personal + {F42EE2D3-909F-4907-9028-64B5BF3E9AF0}. Registry: HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\User Shell Folders."
+    },
+    {
+      "id": "L123",
+      "category": "hc",
+      "importance": "!e",
+      "source": "opus46-desktop-bigspider-session-20260322e",
+      "title": "Pause-and-steer preferred over stop-and-restart during Claude processing",
+      "detail": "Stop destroys loaded context. Real need is course-correction mid-processing, not cancellation. Pause preserves working state and allows user to inject clarification, then resume. Submitted as Anthropic feedback. Implementing in TQDon as queue-next-message + interrupt."
+    },
+    {
+      "id": "L124",
+      "category": "hc",
+      "importance": "!c",
+      "source": "opus46-desktop-bigspider-session-20260322e",
+      "title": "Expandable console output needed to diagnose MCP tool call hangs",
+      "detail": "Claude Desktop collapses tool calls and code blocks. Users cannot distinguish 'thinking hard' from 'stuck waiting on dead MCP connection'. Full expandable view of all tool calls, requests sent, and responses pending is critical for power users running MCP servers. Submitted as Anthropic feedback. Implementing in TQDon."
+    }
+  ]
+}

@@ -1,4 +1,4 @@
-# learnings epoch-003 v3.1.0 | 2026-03-21T20:30Z | nextID:L119
+# learnings epoch-003 v3.4.0 | 2026-03-22T16:30Z | nextID:L127
 # carried forward from epoch-002 (L001-L023) + epoch-003 additions
 # format: ENCODING.md v1.0 compact (primary). JSON audit at .audit suffix
 # NOTE: L025-L048 exist on IGS only (not yet synced). L078-L082 gap (session files, not consolidated).
@@ -202,3 +202,38 @@ Python 3.13.11 embeddable distribution does not include the venv module. `import
 L118:pj:!c:opus46-desktop-bigspider-20260321c
 RENAME_TO_DOKSN.ps1 exists since 2026-03-02 but was NEVER EXECUTED
 Comprehensive rename script (224 lines, -DryRun mode) covers C# source, namespaces, UI strings, env vars, paths, build artifacts, folder rename, BUILD.ps1 refs, docs. But: partial manual rename already happened — both src\doksn.Launcher (7 files) and src\OCRITD.Launcher (1 file: PythonRuntimeDetector.cs) exist simultaneously. PythonRuntimeDetector.cs must be copied to doksn.Launcher before running the script. GitHub repo still named kawaisunn/ocritd. Local dir still C:\dev\ocritd. 13-step execution plan in DEFINITIVE_STATE_AUDIT.md.
+
+
+L119:bd:c:opus46-desktop-bigspider-session-20260322d
+pip HTTP cache preserves torch+cu124 wheels — check cache before downloading
+pip caches .whl in HTTP cache. torch+cu124 (~2.5GB) fully cached. --extra-index-url reuses automatically.
+
+L120:to:!c:opus46-desktop-bigspider-session-20260322d
+Desktop Commander hangs on long ops and System32 binaries — prefer Lumo or manual terminal
+DC start_process/execute_command stalls on long-running ops and System32 bins (robocopy). Use Lumo or pass to Christopher.
+
+L121:ar:!c:opus46-desktop-bigspider-session-20260322d
+TQDon as primary interface eliminates DC dependency, enables Lumo-only MCP
+C:\dev\lumo. Claude API wrapper. Controlled system prompt, Lumo+GitHub MCP only, kill/launch, expanded console, queue-next-message.
+
+L122:ops:c:opus46-desktop-bigspider-session-20260322d
+Windows shell folder GUIDs: Downloads={374DE290...}+{7D83EE9B...}, Documents=Personal+{F42EE2D3...}
+Registry: HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders.
+
+L123:hc:!e:opus46-desktop-bigspider-session-20260322e
+Pause-for-steerage preferred over stop-and-restart during Claude processing
+Stop destroys context. Steerage button pauses mid-stream, user injects correction/redirect, Claude incorporates and continues. NOT queue-next-message (deferred). Real-time course correction. Anthropic feedback. Implementing in TQDon.
+
+L124:hc:!c:opus46-desktop-bigspider-session-20260322e
+Expandable console output needed to diagnose MCP tool call hangs
+Collapsed tool calls hide whether Claude is thinking vs stuck on dead MCP. Full view critical for MCP power users. Anthropic feedback. Implementing in TQDon.
+
+
+L125:ar:!c:opus46-desktop-bigspider-session-20260322e
+Agent SDK inherits Claude Code subscription auth from ~/.claude/ — no API key needed
+After `claude login` on a machine, the Agent SDK in TQDon picks up Max subscription auth automatically. API key is fallback only. ANTHROPIC_API_KEY env var must NOT be set or it overrides subscription with per-token billing. setup_claude_code.ps1 checks for this conflict.
+
+
+L126:to:!c:opus46-desktop-bigspider-session-20260322e
+Claude Code auth login: pipe auth code via echo into claude auth login in cmd shell
+`claude auth login` opens browser URL, browser shows auth code, terminal can't receive paste in MCP context. Fix: `echo AUTH_CODE | claude auth login` in cmd shell. `claude auth status` returns JSON with loggedIn/authMethod/email. setup-token requires raw mode (fails in MCP). Auth stored internally by Claude Code binary, not in files on disk.
