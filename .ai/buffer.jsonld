@@ -1,50 +1,79 @@
 {
   "@context": "https://ksnlabs.dev/memory/buffer/v1",
   "@type": "BufferMemory",
-  "version": "1.0.26",
-  "lastUpdated": "2026-03-21T21:00:00Z",
-  "updatedBy": "opus46-desktop-bigspider-session-20260321c",
+  "version": "1.0.29",
+  "lastUpdated": "2026-03-22T07:45:00Z",
+  "updatedBy": "opus46-desktop-bigspider-session-20260322d",
   "epoch": "epoch-003",
   "immediateContext": {
-    "whatWeWereWorkingOn": "State audit, research, learnings, git cleanup. All done.",
-    "whereWeLeftOff": "Git clean. Learnings L114-L118 written and pushed. DEFINITIVE_STATE_AUDIT.md is the primary handoff for next session. Research report on disk at _DOCKSN.",
-    "READ_THIS_FIRST": "C:\\dev\\ksnlabs\\engram\\session-handovers\\2026-03-21c_DEFINITIVE_STATE_AUDIT.md",
+    "whatWeWereWorkingOn": "Python 3.13.11 standalone COMPLETE. TQDon migration discussed. Git cleaned.",
+    "whereWeLeftOff": "All 97 packages installed and verified. Handoff written. Git clean on all repos.",
+    "READ_THIS_FIRST": "C:\\dev\\ksnlabs\\engram\\session-handovers\\2026-03-22_session-d_python-complete.md",
     "whatComesNext": [
-      "A. Complete ocritd -> doksn rename (script exists, 13-step sequence in audit doc)",
-      "B. Install ML deps into deployable Python 3.13.11 (torch+cu124, transformers, datasketch, dateparser, etc.)",
-      "C. Cross-machine deployment via VPN+WinRM",
-      "D. First CAIT inference test (date context classification)",
-      "E. First pipeline run on 15 real ITD site folders"
+      "A. TQDon migration: build Claude wrapper in Electron (kill/launch buttons, expanded verbose, queue-next-message, Lumo-only MCP)",
+      "B. Rename ocritd -> doksn (fix PythonRuntimeDetector.cs namespace+json, regenerate requirements.lock, update wheelhouse, run script)",
+      "C. Cross-machine sync (fix Sync-Workspaces.ps1, establish authority model)",
+      "D. First pipeline run on 15 real ITD site folders (SHOW RESULTS — grant pressure)",
+      "E. CAIT inference test (date context classification on A5000)"
     ],
-    "urgency": "HIGH — Python and rename are blocking everything."
+    "urgency": "HIGH — Christopher under grant pressure to demonstrate results. TQDon migration first (improves all subsequent sessions), then rename, then pipeline.",
+    "IMPORTANT_CONTEXT": "Do NOT overwrite or obscure ANY previously established project objectives. This is an additive session. All architecture decisions from OVERSIGHT1, ARCHITECTURE_v0.2/v0.3, and research doc remain authoritative."
   },
   "pythonRuntime": {
     "location": "C:\\dev\\ocritd\\runtime\\python\\",
     "futureLocation": "C:\\dev\\doksn\\runtime\\python\\",
     "version": "3.13.11",
-    "type": "embeddable amd64, self-contained, NOT on PATH",
-    "pip": "26.0",
-    "virtualenv": "20.36.1 (use this, NOT stdlib venv — L117)",
-    "sqlite": "3.50.4",
-    "installed": "44 packages — Doksn document processing ONLY (L116)",
-    "missing": "torch, transformers, accelerate, scikit-learn, datasketch, dateparser, networkx, nltk, bitsandbytes, peft, sentencepiece, safetensors",
-    "rules": "NEVER touch system PATH. Self-contained. Full path only. One instance for all DOCKSN components."
+    "STATUS": "COMPLETE — 97 PACKAGES, ALL 4 TIERS, ALL IMPORTS VERIFIED, CUDA CONFIRMED",
+    "gpu": "NVIDIA RTX A5000 — torch.cuda.is_available()=True",
+    "requirementsFiles": {
+      "human": "C:\\dev\\ocritd\\requirements-docksn-standalone.txt",
+      "frozen": "C:\\dev\\ocritd\\requirements-docksn-frozen.txt"
+    },
+    "rules": "NEVER touch system PATH. Self-contained. Full path only. One instance for all DOCKSN components.",
+    "cacheNote": "All torch/ML wheels in pip HTTP cache from prior installs — no fresh download needed for rebuild."
+  },
+  "tqdonMigration": {
+    "status": "DISCUSSED — next session priority A",
+    "location": "C:\\dev\\lumo (ToiQaDon = TQDon)",
+    "features": [
+      "Kill Claude processes button (clean session starts)",
+      "Launch Claude button",
+      "Expanded verbose view (no collapsed tool calls)",
+      "Queue-next-message (type while Claude works, auto-send on completion)",
+      "Lumo-only MCP config (eliminates DC hangs)",
+      "Streamlined Lumo tool upgrades"
+    ],
+    "approach": "Direct API wrapper in Electron, NOT wrapping Claude Desktop app",
+    "mcpConfig": "Lumo + GitHub only. NO Desktop Commander.",
+    "priorDiscussion": "Lumo self-improvement discussed in earlier project sessions — check engram/session chats"
   },
   "rename": {
     "script": "C:\\dev\\ocritd\\RENAME_TO_DOKSN.ps1 (never run — L118)",
-    "partialState": "Both src dirs exist. PythonRuntimeDetector.cs must be copied first.",
-    "sequence": "See DEFINITIVE_STATE_AUDIT.md section 2"
+    "blockers": [
+      "PythonRuntimeDetector.cs in OCRITD.Launcher namespace, refs _ocritd_runtime_info.json (old name)",
+      "PythonRuntimeDetector.cs not referenced by doksn.Launcher — dead code",
+      "requirements.lock only has 11 doc-processing packages — stale",
+      "Wheelhouse only has 44 doc-processing wheels, not full 97"
+    ],
+    "sequence": "Fix blockers first, then run RENAME_TO_DOKSN.ps1 -DryRun, then execute"
   },
   "infrastructure": {
     "shellPreference": "pwsh.exe > powershell.exe > cmd.exe — ALWAYS (L114)",
-    "gpu": "RTX A5000, 24564 MiB free",
+    "gpu": "RTX A5000, 24564 MiB, torch.cuda confirmed",
     "connectivityModel": "Cisco AnyConnect VPN ONLY. Tailscale deprecated.",
-    "gitAccess": "C:\\Program Files\\Git\\cmd\\git.exe — NOT in MCP PATH, use full path, use cmd shell"
+    "gitAccess": "C:\\Program Files\\Git\\cmd\\git.exe — NOT in MCP PATH, use full path, use cmd shell",
+    "mcpNote": "Desktop Commander hangs frequently. Prefer Lumo tools. For large ops pass to Christopher's terminal."
   },
+  "TODO_human": [
+    "Sort mixed content in D:\\Desktop\\Downloads — Documents stuff to D:\\Documents, then delete old copy",
+    "Check D:\\Desktop\\New folder (4 DOCKSN .docx drafts) — move somewhere intentional",
+    "Restart Explorer or sign out/in for shell folder registry changes",
+    "Bump DC config: fileReadLineLimit=5000, fileWriteLineLimit=200"
+  ],
   "gitState": {
-    "ksnlabs": "CLEAN at b4d3e67, pushed to origin/main",
-    "ocritd": "CLEAN at 407e926 — pending rename to doksn (L118)",
+    "ksnlabs": "will be CLEAN after handoff commit",
+    "ocritd": "CLEAN at a3e2d36, pushed to origin/main",
     "ktreesn": "CLEAN at 267d1b6"
   },
-  "learnings": "consolidated_epoch-003 v3.1.0, L001-L118, nextID L119"
+  "learnings": "consolidated_epoch-003 v3.1.0, L001-L118, nextID L119. Pending: L119-L122 (see handoff)"
 }
