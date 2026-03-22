@@ -1,73 +1,62 @@
 {
   "@context": "https://ksnlabs.dev/memory/buffer/v1",
   "@type": "BufferMemory",
-  "version": "1.0.12",
-  "lastUpdated": "2026-03-09T22:00:00Z",
-  "updatedBy": "opus46-desktop-aggdb-frontend-009",
+  "version": "1.0.34",
+  "lastUpdated": "2026-03-22T21:00:00Z",
+  "updatedBy": "opus46-web-bigspider-session-20260322g",
   "epoch": "epoch-003",
   "immediateContext": {
-    "whatWeWereWorkingOn": "AggDB frontend v4 light/dark mode toggle deployed to Intrusion for Rebecca",
-    "whyItMatters": "Rebecca needs light mode for data entry comfort. Toggle was present in v4 source but invisible (tiny icon). Made it a labeled button and deployed to Intrusion via admin share.",
-    "whereWeLeftOff": "Light/dark toggle deployed and confirmed working on http://172.20.222.123:8000. Chrome Profile 3 (ctate.igs.uidaho@gmail.com) identified for Claude extension. API running on Intrusion PID active.",
+    "whatWeWereWorkingOn": "Connectivity audit + Antiquarian git merge. All repos clean and pushed.",
+    "whereWeLeftOff": "All 4 repos pushed. Antiquarian's 3 diverged commits merged via bundle. Doksn A-to-Z test pipeline staged at C:\\dev\\docksntest.",
+    "READ_THIS_FIRST": "C:\\dev\\ksnlabs\\engram\\session-handovers\\2026-03-22_session-g_connectivity-merge.md",
     "whatComesNext": [
-      "1. Fix Git PATH on Antiquarian (add C:\\Program Files\\Git\\bin to system PATH, admin required)",
-      "2. Complete git commit from BIGSPIDER or Antiquarian after PATH fix",
-      "3. Reconcile master/main branch divergence (HEAD=master, remote=main)",
-      "4. Send ITD_AggDB_DataEntry.xlsx to Rebecca",
-      "5. Build Excel→DB import script (reads Commit?=YES rows, INSERTs via pyodbc)",
-      "6. Continue spec audit rows 39-84",
-      "7. Implement LU_MaterialType + MaterialTypeLink tables",
-      "8. Regroup LU_TestType by AASHTO standards",
-      "9. Update commodities (remove General Stone, add Rejects/Chips)",
-      "10. Verify QAMS data against J:\\ source docs",
-      "11. Push ocritd resolved merge conflicts (BUILD.ps1, version.py, MainForm.cs)"
+      "0. Feed engram into TQDon system prompt (15 min fix)",
+      "1. First pipeline run on real ITD site folders (GRANT PRESSURE)",
+      "2. Cross-machine sync — fix Antiquarian GitHub credential, sync all machines",
+      "3. CAIT inference test on A5000",
+      "4. GitHub repo rename: kawaisunn/ocritd → kawaisunn/doksn"
     ],
-    "urgency": "NORMAL — Excel workbook ready, send to Rebecca immediately"
+    "urgency": "HIGH — grant pressure. Pipeline must produce demonstrable output."
   },
-  "databaseState": {
-    "server": "IGS-Intrusion\\SQLEXPRESS",
-    "database": "ITD_AggDB",
-    "tables": 63,
-    "docReferences": "ZERO — rename complete 2026-03-05",
-    "dataState": "LU tables populated, all operational tables empty",
-    "backup": "ITD_AggDB_20260220_pre-demo.bak"
+  "vpnConnectivity": {
+    "bigspiderIP": "129.101.139.85 (was .84, changes on VPN reconnect)",
+    "intrusion": "172.20.222.123 — ICMP+TCP+WinRM all working",
+    "antiquarian": "172.28.196.231 — ICMP blocked, RDP (3389) works, WinRM blocked",
+    "note": "VPN is bidirectional (L086-CORRECTED). Tailscale deprecated (L111)."
   },
-  "aggdbFrontend": {
-    "html": "ITD_AggDB_v3.html — live API-wired, mock fallback, connection banner",
-    "api": "aggdb_api.py — FastAPI + pyodbc, endpoints: health/sites/sites/{id}/lut/testtypes/lut/doctypes/commit",
-    "runner": "aggdb_api_run.ps1 — installs deps, tests SQL Server, starts uvicorn on 127.0.0.1:8000",
-    "targetPath": "C:\\dev\\ksnlabs\\aggdb\\"
+  "gitState": {
+    "ksnlabs": "CLEAN @ e295ceb — kawaisunn/ksnlabs (pushed)",
+    "doksn": "CLEAN @ 82d2670 — kawaisunn/ocritd (pushed, GitHub rename pending)",
+    "ktreesn": "CLEAN @ 267d1b6 — kawaisunn/ktreesn (pushed)",
+    "lumo": "CLEAN @ 32411e6 — kawaisunn/lumo (private, pushed)"
   },
-  "excelWorkbook": {
-    "file": "ITD_AggDB_DataEntry.xlsx",
-    "buildScript": "build_aggdb_workbook.py",
-    "sheets": ["Instructions", "Rec", "QAMSCert", "TestResult", "Sites", "LU_TestType"],
-    "password": "itdaggdb",
-    "sites": 39,
-    "testTypes": 15,
-    "entryRows": 300,
-    "status": "READY — send to Rebecca"
+  "pythonRuntime": {
+    "location": "C:\\dev\\doksn\\runtime\\python\\",
+    "version": "3.13.11",
+    "status": "COMPLETE — 97 packages including torch+cu124, CUDA confirmed on A5000"
   },
-  "conventions": {
-    "id": "INT IDENTITY(1,1) leftmost, never PK",
-    "strings": "NVARCHAR",
-    "scriptNaming": "TIDY_{DB}_{YYYYMMDD}.sql",
-    "confirmBeforeWrite": "ALWAYS",
-    "hideNotDrop": "Deprecated items hidden via extended properties or IsVisible, never deleted",
-    "siteIDSuffix": "-c = commercial source, -s = state source. NOT material type.",
-    "recID": "filename without extension",
-    "accessID": "SiteID + 'Axs'"
+  "tqdon": {
+    "location": "C:\\dev\\lumo",
+    "version": "0.4.0",
+    "status": "OPERATIONAL — auth working, pipeline proven, needs engram in system prompt",
+    "shortcut": "D:\\Desktop\\TQDon.lnk"
   },
-  "repoState": {
-    "ksnlabs": {
-      "path": "C:\\dev\\ksnlabs",
-      "github": "kawaisunn/ksnlabs",
-      "status": "aggdb outputs pending commit"
-    },
-    "ocritd": {
-      "path": "C:\\dev\\ocritd",
-      "github": "kawaisunn/ocritd",
-      "status": "Merge conflicts resolved locally. COMMIT+PUSH STILL PENDING."
-    }
-  }
+  "docksnTest": {
+    "location": "C:\\dev\\docksntest",
+    "status": "STAGED — copied from Antiquarian, not yet deployed or tested",
+    "files": ["doksn_pipeline.py (46KB, 13 stages)", "doksn_api_routes.py (12KB)", "doksn_dashboard_preview.html (32KB)", "deploy_doksn_test.ps1 (12KB)", "README.md"]
+  },
+  "pendingIssues": {
+    "antiquarianGitCredential": "Cached as kawaisun@github.com (wrong). Needs cmdkey /delete + fresh auth.",
+    "antiquarianSync": "Needs: git fetch origin && git reset --hard origin/main",
+    "aggdbAPIonIntrusion": "Port 8000 listener False from inside — may need restart",
+    "vpnIPReferences": "Old .84 references in engram/scripts need updating to .85 (or made dynamic)"
+  },
+  "infrastructure": {
+    "shellPreference": "pwsh.exe > powershell.exe > cmd.exe ALWAYS (L114)",
+    "gpu": "RTX A5000 24GB, torch.cuda confirmed",
+    "connectivityModel": "Cisco AnyConnect VPN ONLY (L111)",
+    "winrmCredential": "C:\\dev\\.credentials\\intrusion_cred.xml (IGS2\\ctate, DPAPI)"
+  },
+  "learnings": "consolidated_epoch-003 v3.5.0, L001-L130, nextID L131"
 }
