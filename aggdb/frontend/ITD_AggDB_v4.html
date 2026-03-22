@@ -29,8 +29,8 @@
 .light .btn-commit { color:#ffffff; }
 .light input, .light select, .light textarea { background:#fff; }
 .light select option { background:#fff; }
-.theme-toggle { background:none; border:1px solid var(--border); color:var(--dim); font-size:14px; width:28px; height:28px; cursor:pointer; border-radius:3px; display:flex; align-items:center; justify-content:center; padding:0; line-height:1; }
-.theme-toggle:hover { border-color:var(--gold); color:var(--gold); }
+.theme-toggle { background:var(--surface); border:1px solid var(--border); color:var(--muted); font-size:11px; height:30px; cursor:pointer; border-radius:4px; display:flex; align-items:center; gap:5px; padding:0 10px; line-height:1; font-family:inherit; font-weight:600; letter-spacing:.3px; }
+.theme-toggle:hover { border-color:var(--gold); color:var(--gold); background:var(--panel); }
 
 body { background:var(--bg); color:var(--text); font-family:'Segoe UI',system-ui,sans-serif; font-size:13px; height:100vh; display:flex; flex-direction:column; overflow:hidden; }
 
@@ -228,7 +228,7 @@ label { font-size:11px; color:var(--dim); display:block; margin-bottom:4px; lett
   </nav>
   <div class="hdr-right">
     <div id="userBadge" style="font-size:11px;color:var(--gold);font-family:var(--mono);cursor:pointer;border:1px solid var(--border);padding:3px 8px" onclick="localStorage.removeItem('aggdb_username');location.reload()" title="Click to change user"></div>
-    <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" title="Toggle light/dark mode">&#9788;</button>
+    <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" title="Toggle light/dark mode"><span id="themeIcon">&#9788;</span> <span id="themeLabel">Light</span></button>
     <button class="help-btn" onclick="showWelcome()">? Help</button>
     <div class="hdr-meta">IGS-Intrusion\SQLEXPRESS &bull; RP-315</div>
   </div>
@@ -407,15 +407,18 @@ function toggleTheme() {
   const html = document.documentElement;
   const isLight = html.classList.toggle('light');
   localStorage.setItem('aggdb_theme', isLight ? 'light' : 'dark');
-  document.getElementById('themeToggle').innerHTML = isLight ? '&#9790;' : '&#9788;';
+  document.getElementById('themeIcon').innerHTML = isLight ? '&#9790;' : '&#9788;';
+  document.getElementById('themeLabel').textContent = isLight ? 'Dark' : 'Light';
 }
 (function initTheme() {
   const saved = localStorage.getItem('aggdb_theme');
   if (saved === 'light') {
     document.documentElement.classList.add('light');
     document.addEventListener('DOMContentLoaded', () => {
-      const btn = document.getElementById('themeToggle');
-      if (btn) btn.innerHTML = '&#9790;';
+      const icon = document.getElementById('themeIcon');
+      const label = document.getElementById('themeLabel');
+      if (icon) icon.innerHTML = '&#9790;';
+      if (label) label.textContent = 'Dark';
     });
   }
 })();

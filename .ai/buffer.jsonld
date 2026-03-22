@@ -1,51 +1,73 @@
 {
   "@context": "https://ksnlabs.dev/memory/buffer/v1",
   "@type": "BufferMemory",
-  "version": "1.0.33",
-  "lastUpdated": "2026-03-22T18:30:00Z",
-  "updatedBy": "opus46-desktop-bigspider-session-20260322e",
+  "version": "1.0.12",
+  "lastUpdated": "2026-03-09T22:00:00Z",
+  "updatedBy": "opus46-desktop-aggdb-frontend-009",
   "epoch": "epoch-003",
   "immediateContext": {
-    "whatWeWereWorkingOn": "TQDon v0.4.0 — OPERATIONAL. Agent SDK chat working. Auth working. All repos clean and pushed.",
-    "whereWeLeftOff": "TQDon pipeline proven. System prompt needs engram context so Claude in TQDon has project history.",
-    "READ_THIS_FIRST": "C:\\dev\\ksnlabs\\engram\\session-handovers\\2026-03-22_session-e_tqdon-final.md",
+    "whatWeWereWorkingOn": "AggDB frontend v4 light/dark mode toggle deployed to Intrusion for Rebecca",
+    "whyItMatters": "Rebecca needs light mode for data entry comfort. Toggle was present in v4 source but invisible (tiny icon). Made it a labeled button and deployed to Intrusion via admin share.",
+    "whereWeLeftOff": "Light/dark toggle deployed and confirmed working on http://172.20.222.123:8000. Chrome Profile 3 (ctate.igs.uidaho@gmail.com) identified for Claude extension. API running on Intrusion PID active.",
     "whatComesNext": [
-      "0. IMMEDIATE: Feed engram into TQDon system prompt (15 min fix)",
-      "1. Rename ocritd -> doksn (fix blockers, run script)",
-      "2. Cross-machine sync + deploy Claude Code to Antiquarian/Intrusion",
-      "3. First pipeline run on 15 real ITD site folders (GRANT PRESSURE)",
-      "4. CAIT inference test on A5000"
+      "1. Fix Git PATH on Antiquarian (add C:\\Program Files\\Git\\bin to system PATH, admin required)",
+      "2. Complete git commit from BIGSPIDER or Antiquarian after PATH fix",
+      "3. Reconcile master/main branch divergence (HEAD=master, remote=main)",
+      "4. Send ITD_AggDB_DataEntry.xlsx to Rebecca",
+      "5. Build Excel→DB import script (reads Commit?=YES rows, INSERTs via pyodbc)",
+      "6. Continue spec audit rows 39-84",
+      "7. Implement LU_MaterialType + MaterialTypeLink tables",
+      "8. Regroup LU_TestType by AASHTO standards",
+      "9. Update commodities (remove General Stone, add Rejects/Chips)",
+      "10. Verify QAMS data against J:\\ source docs",
+      "11. Push ocritd resolved merge conflicts (BUILD.ps1, version.py, MainForm.cs)"
     ],
-    "urgency": "HIGH — grant pressure. TQDon operational, needs context tuning."
+    "urgency": "NORMAL — Excel workbook ready, send to Rebecca immediately"
   },
-  "tqdonMigration": {
-    "status": "OPERATIONAL — auth working, pipeline proven, needs engram in system prompt",
-    "location": "C:\\dev\\lumo",
-    "version": "0.4.0",
-    "shortcut": "D:\\Desktop\\TQDon.lnk",
-    "sdk": "@anthropic-ai/claude-agent-sdk@0.2.81",
-    "claudeCode": "v2.1.69 via winget",
-    "authStatus": "LOGGED IN — ctate.igs.uidaho@gmail.com, Max subscription",
-    "authMethod": "echo AUTH_CODE | claude auth login (cmd shell)",
-    "github": "kawaisunn/lumo (private), commit 6966fbb"
+  "databaseState": {
+    "server": "IGS-Intrusion\\SQLEXPRESS",
+    "database": "ITD_AggDB",
+    "tables": 63,
+    "docReferences": "ZERO — rename complete 2026-03-05",
+    "dataState": "LU tables populated, all operational tables empty",
+    "backup": "ITD_AggDB_20260220_pre-demo.bak"
   },
-  "pythonRuntime": {
-    "location": "C:\\dev\\ocritd\\runtime\\python\\",
-    "version": "3.13.11",
-    "STATUS": "COMPLETE — 97 PACKAGES"
+  "aggdbFrontend": {
+    "html": "ITD_AggDB_v3.html — live API-wired, mock fallback, connection banner",
+    "api": "aggdb_api.py — FastAPI + pyodbc, endpoints: health/sites/sites/{id}/lut/testtypes/lut/doctypes/commit",
+    "runner": "aggdb_api_run.ps1 — installs deps, tests SQL Server, starts uvicorn on 127.0.0.1:8000",
+    "targetPath": "C:\\dev\\ksnlabs\\aggdb\\"
   },
-  "infrastructure": {
-    "shellPreference": "pwsh.exe > powershell.exe > cmd.exe — ALWAYS (L114)",
-    "gpu": "RTX A5000, torch.cuda confirmed",
-    "connectivityModel": "Cisco AnyConnect VPN ONLY",
-    "deployScript": "C:\\dev\\scripts\\setup_claude_code.ps1",
-    "sharedAuth": "C:\\dev\\.credentials\\claude_auth.json"
+  "excelWorkbook": {
+    "file": "ITD_AggDB_DataEntry.xlsx",
+    "buildScript": "build_aggdb_workbook.py",
+    "sheets": ["Instructions", "Rec", "QAMSCert", "TestResult", "Sites", "LU_TestType"],
+    "password": "itdaggdb",
+    "sites": 39,
+    "testTypes": 15,
+    "entryRows": 300,
+    "status": "READY — send to Rebecca"
   },
-  "gitState": {
-    "ksnlabs": "CLEAN at 75eca64 (will be dirty after this buffer write)",
-    "ocritd": "CLEAN at a3e2d36",
-    "ktreesn": "CLEAN at 267d1b6",
-    "lumo": "CLEAN at 6966fbb — kawaisunn/lumo (private)"
+  "conventions": {
+    "id": "INT IDENTITY(1,1) leftmost, never PK",
+    "strings": "NVARCHAR",
+    "scriptNaming": "TIDY_{DB}_{YYYYMMDD}.sql",
+    "confirmBeforeWrite": "ALWAYS",
+    "hideNotDrop": "Deprecated items hidden via extended properties or IsVisible, never deleted",
+    "siteIDSuffix": "-c = commercial source, -s = state source. NOT material type.",
+    "recID": "filename without extension",
+    "accessID": "SiteID + 'Axs'"
   },
-  "learnings": "consolidated_epoch-003 v3.4.0, L001-L126, nextID L127"
+  "repoState": {
+    "ksnlabs": {
+      "path": "C:\\dev\\ksnlabs",
+      "github": "kawaisunn/ksnlabs",
+      "status": "aggdb outputs pending commit"
+    },
+    "ocritd": {
+      "path": "C:\\dev\\ocritd",
+      "github": "kawaisunn/ocritd",
+      "status": "Merge conflicts resolved locally. COMMIT+PUSH STILL PENDING."
+    }
+  }
 }

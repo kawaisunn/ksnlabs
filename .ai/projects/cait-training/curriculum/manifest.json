@@ -1,0 +1,14 @@
+{
+  "specLocation": "C:\\dev\\_DOCKSN\\CAIT_SPEC.json",
+  "specVersion": "1.0.0",
+  "phases": {
+    "phase0": {"status": "NOT_STARTED", "corpus": null, "exercisesRun": 0, "accuracy": null},
+    "phase1": {"status": "NOT_STARTED", "corpus": null, "exercisesRun": 0, "accuracy": null},
+    "phase2": {"status": "NOT_STARTED", "corpus": null, "exercisesRun": 0, "accuracy": null},
+    "phase3": {"status": "NOT_STARTED", "corpus": null, "exercisesRun": 0, "accuracy": null},
+    "securityPhase": {"status": "NOT_STARTED", "corpus": null, "exercisesRun": 0, "accuracy": null}
+  },
+  "dataSourcesProcessed": [],
+  "lastUpdated": "2026-03-13",
+  "updatedBy": "opus46-web-antiquarian"
+}

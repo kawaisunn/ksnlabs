@@ -1,0 +1,8 @@
+# buffer:cait-training | active | 2026-03-14T22:15Z | epoch-003
+@now Phase 0 corpus DRAFTED (201 pairs). sft_train.py WRITTEN. Action logging deployed (action_log.py on both machines). _LAUNCH hub built and deployed to Antiquarian + Intrusion. Root cleanup: 158+ files and 9 dirs archived. CAIT_TRAINING_ONBOARD.md, Get-CaitProgress.ps1, SESSION_CATALOG.md all written. Block-sealing addendum written.
+@left Christopher review Phase 0 corpus. Bigspider: verify venv, CUDA, install trl+datasets. Run sft_train.py. Wire action_log.py into main.py (4 edits per integration guide). Review 16 directories for archival. Delete cait.zip (5.5GB, already extracted).
+@next Bigspider session → venv verify → pip install trl datasets → python sft_train.py → test checkpoint → Lumo reads onboard doc. Intrusion session → wire action_log into main.py → restart API.
+@blk Cannot train from Antiquarian. Bigspider venv unverified. trl not installed. training_framework.py is BROKEN (inference only) — use sft_train.py.
+@owner opus46-web-antiq-phase0-001
+@authorized christopher, rebecca, liam, claudio
+@security ITD data: train yes, share no.

@@ -296,6 +296,36 @@
       "notes": "First ktreesn project session. Bootstrapped from claude.ai project context (no formal boot protocol — session ran via web interface with MCP tools, not Desktop). Analyzed full Doksn codebase (MainForm.cs, scanner.py, doksn.py, architecture spec) to design integration layer. Git push required bat-file workaround (L072 confirms L068). Concurrent session on bigspider acknowledged — only touched ktreesn project scope + append-only shared resources."
     },
     {
+      "sessionId": "opus46_web_cait-spec_001",
+      "date": "2026-03-13",
+      "model": "claude-opus-4.6",
+      "interface": "claude.ai-web",
+      "machine": "IGS-Antiquarian/ctate",
+      "bootProtocol": "context-from-memory+filesystem",
+      "handoffWritten": "yes",
+      "focus": "CAIT training system full specification: three-actor model, data security, behavioral modes, curriculum phases",
+      "outcome": "SUCCESS",
+      "learningsContributed": [],
+      "workflowsContributed": [],
+      "durationEstimate": "~2.5 hours",
+      "notes": "Designed complete CAIT training architecture. Surveyed N:\\ and X:\\ drives. Established ITD data security model. Three behavioral modes for filesystem access. Handoff: 2026-03-13_cait_spec_antiquarian.md"
+    },
+    {
+      "sessionId": "opus46-web-antiq-phase0-001",
+      "date": "2026-03-14",
+      "model": "claude-opus-4.6",
+      "interface": "claude.ai-web",
+      "machine": "IGS-Antiquarian/ctate",
+      "bootProtocol": "context-from-memory+filesystem",
+      "handoffWritten": "yes",
+      "focus": "Phase 0 Q&A corpus (201 pairs), real SFT training script, block-sealing addendum, SESSION_CATALOG.md",
+      "outcome": "SUCCESS",
+      "learningsContributed": [],
+      "workflowsContributed": [],
+      "durationEstimate": "~3 hours",
+      "notes": "CRITICAL: training_framework.py runs inference not training. Wrote real SFT script (sft_train.py). Phase 0 corpus from live IGS website. Introduced SESSION_CATALOG.md. Handoff: 2026-03-14_opus46-web-antiquarian-cait-phase0.md"
+    },
+    {
       "sessionId": "opus46-desktop-bigspider-20260321c",
       "date": "2026-03-21",
       "model": "claude-opus-4.6",
