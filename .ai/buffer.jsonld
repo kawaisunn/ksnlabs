@@ -1,24 +1,22 @@
 {
   "@context": "https://ksnlabs.dev/memory/buffer/v1",
   "@type": "BufferMemory",
-  "version": "1.0.32",
-  "lastUpdated": "2026-03-22T16:30:00Z",
+  "version": "1.0.33",
+  "lastUpdated": "2026-03-22T18:30:00Z",
   "updatedBy": "opus46-desktop-bigspider-session-20260322e",
   "epoch": "epoch-003",
   "immediateContext": {
-    "whatWeWereWorkingOn": "TQDon v0.4.0 — Agent SDK chat WORKING. Auth WORKING. Pipeline proven.",
-    "whereWeLeftOff": "Claude responds through TQDon Agent SDK. Auth via Max subscription confirmed. System prompt needs engram context so Claude in TQDon knows the project history.",
-    "READ_THIS_FIRST": "C:\\dev\\ksnlabs\\engram\\session-handovers\\2026-03-22_session-e_tqdon-built.md",
+    "whatWeWereWorkingOn": "TQDon v0.4.0 — OPERATIONAL. Agent SDK chat working. Auth working. All repos clean and pushed.",
+    "whereWeLeftOff": "TQDon pipeline proven. System prompt needs engram context so Claude in TQDon has project history.",
+    "READ_THIS_FIRST": "C:\\dev\\ksnlabs\\engram\\session-handovers\\2026-03-22_session-e_tqdon-final.md",
     "whatComesNext": [
-      "0. IMMEDIATE: Feed engram into TQDon system prompt so Claude has project context on startup",
-      "1. TQDon polish: console panel visible by default (done), fix settings.json parse warning",
-      "2. Rename ocritd -> doksn",
-      "3. Cross-machine sync + deploy Claude Code to Antiquarian/Intrusion", 
-      "4. First pipeline run on 15 real ITD site folders (GRANT PRESSURE)",
-      "5. CAIT inference test on A5000"
+      "0. IMMEDIATE: Feed engram into TQDon system prompt (15 min fix)",
+      "1. Rename ocritd -> doksn (fix blockers, run script)",
+      "2. Cross-machine sync + deploy Claude Code to Antiquarian/Intrusion",
+      "3. First pipeline run on 15 real ITD site folders (GRANT PRESSURE)",
+      "4. CAIT inference test on A5000"
     ],
-    "urgency": "HIGH — grant pressure. TQDon is operational, needs context tuning.",
-    "IMPORTANT_CONTEXT": "Do NOT overwrite ANY project objectives. OVERSIGHT1, ARCHITECTURE_v0.2/v0.3, research doc all authoritative."
+    "urgency": "HIGH — grant pressure. TQDon operational, needs context tuning."
   },
   "tqdonMigration": {
     "status": "OPERATIONAL — auth working, pipeline proven, needs engram in system prompt",
@@ -27,16 +25,9 @@
     "shortcut": "D:\\Desktop\\TQDon.lnk",
     "sdk": "@anthropic-ai/claude-agent-sdk@0.2.81",
     "claudeCode": "v2.1.69 via winget",
-    "authStatus": "LOGGED IN — ctate.igs.uidaho@gmail.com, Max subscription, firstParty",
-    "authMethod": "echo AUTH_CODE | claude auth login (pipe auth code from browser into cmd shell)",
-    "features": [
-      "Steerage: pause mid-stream, inject correction",
-      "Expandable console: visible by default, all tool calls logged",
-      "Agent SDK built-in tools: Read, Edit, Bash, Glob, Grep",
-      "Model selector: Opus 4.6 / Sonnet 4.6 / Haiku 4.5",
-      "Subscription auth (Max) — no API key needed"
-    ],
-    "nextFix": "System prompt must include engram buffer + learnings so Claude in TQDon has project context"
+    "authStatus": "LOGGED IN — ctate.igs.uidaho@gmail.com, Max subscription",
+    "authMethod": "echo AUTH_CODE | claude auth login (cmd shell)",
+    "github": "kawaisunn/lumo (private), commit 6966fbb"
   },
   "pythonRuntime": {
     "location": "C:\\dev\\ocritd\\runtime\\python\\",
@@ -51,10 +42,10 @@
     "sharedAuth": "C:\\dev\\.credentials\\claude_auth.json"
   },
   "gitState": {
-    "ksnlabs": "DIRTY — learnings + handoff + buffer",
+    "ksnlabs": "CLEAN at 75eca64 (will be dirty after this buffer write)",
     "ocritd": "CLEAN at a3e2d36",
     "ktreesn": "CLEAN at 267d1b6",
-    "lumo": "DIRTY — TQDon v0.4.0 uncommitted"
+    "lumo": "CLEAN at 6966fbb — kawaisunn/lumo (private)"
   },
   "learnings": "consolidated_epoch-003 v3.4.0, L001-L126, nextID L127"
 }
